@@ -5,8 +5,7 @@ program CompraVenda;
 uses
   SysUtils,
   uPessoa in 'uPessoa.pas',
-  uProduto in 'uProduto.pas',
-  uOrdem in 'uOrdem.pas';
+  uProduto in 'uProduto.pas';
 
 begin
   try
