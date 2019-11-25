@@ -3,7 +3,8 @@ program CompraVenda;
 {$APPTYPE CONSOLE}
 
 uses
-  SysUtils;
+  SysUtils,
+  uPessoa in 'uPessoa.pas';
 
 begin
   try
