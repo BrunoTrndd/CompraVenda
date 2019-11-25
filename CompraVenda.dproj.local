@@ -1,14 +1,16 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
-  <Transactions>
-    <Transaction>2019/11/25 11:03:35.794,C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\CompraVenda.dproj=C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\Project1.dproj</Transaction>
-    <Transaction>2019/11/25 11:04:23.301,=C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2019/11/25 11:04:37.185,C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\uPessoa.pas=C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2019/11/25 11:04:41.211,=C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2019/11/25 11:04:54.125,C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\uOrdem.pas=C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2019/11/25 11:16:00.803,C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\CompraVenda\CompraVenda.dproj=C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\CompraVenda.dproj</Transaction>
-    <Transaction>2019/11/25 11:16:45.148,C:\Bruno\Projetos\Projetos2019\ProjetoCompraVenda\CompraVenda.dproj=C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\CompraVenda\CompraVenda.dproj</Transaction>
-    <Transaction>2019/11/25 11:20:59.776,=C:\Bruno\Projetos\Projetos2019\ProjetoCompraVenda\Unit1.pas</Transaction>
-    <Transaction>2019/11/25 11:21:13.169,C:\Bruno\Projetos\Projetos2019\ProjetoCompraVenda\uPessoa.pas=C:\Bruno\Projetos\Projetos2019\ProjetoCompraVenda\Unit1.pas</Transaction>
+	<Transactions>
+    <Transaction>2019/11/25 11:03:35.000.794,C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\Project1.dproj=C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\CompraVenda.dproj</Transaction>
+    <Transaction>2019/11/25 11:04:23.000.301,=C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2019/11/25 11:04:37.000.185,C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\Unit1.pas=C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\uPessoa.pas</Transaction>
+    <Transaction>2019/11/25 11:04:41.000.211,=C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2019/11/25 11:04:54.000.125,C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\Unit1.pas=C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\uOrdem.pas</Transaction>
+    <Transaction>2019/11/25 11:16:00.000.803,C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\CompraVenda.dproj=C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\CompraVenda\CompraVenda.dproj</Transaction>
+    <Transaction>2019/11/25 11:16:45.000.148,C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\CompraVenda\CompraVenda.dproj=C:\Bruno\Projetos\Projetos2019\ProjetoCompraVenda\CompraVenda.dproj</Transaction>
+    <Transaction>2019/11/25 11:20:59.000.776,=C:\Bruno\Projetos\Projetos2019\ProjetoCompraVenda\Unit1.pas</Transaction>
+    <Transaction>2019/11/25 11:21:13.000.169,C:\Bruno\Projetos\Projetos2019\ProjetoCompraVenda\Unit1.pas=C:\Bruno\Projetos\Projetos2019\ProjetoCompraVenda\uPessoa.pas</Transaction>
+    <Transaction>2019/11/25 11:28:36.697,=C:\Users\Maycom\Documents\GitHub\CompraVenda\Unit1.pas</Transaction>
+    <Transaction>2019/11/25 11:28:50.784,C:\Users\Maycom\Documents\GitHub\CompraVenda\uProduto.pas=C:\Users\Maycom\Documents\GitHub\CompraVenda\Unit1.pas</Transaction>
   </Transactions>
 </BorlandProject>
