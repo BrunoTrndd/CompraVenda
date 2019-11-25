@@ -6,6 +6,7 @@ uses
   SysUtils,
   uPessoa in 'uPessoa.pas',
   uProduto in 'uProduto.pas',
+  uEmpresa in 'uEmpresa.pas',
   uOrdem in 'uOrdem.pas';
 
 begin
