@@ -2,7 +2,7 @@ unit uEmpresa;
 
 interface
 
-uses SysUtils, Generics.Collections, uOrdem, uPessoa;
+uses SysUtils, Generics.Collections, uOrdem, uPessoa, uProduto;
 
 type
   TEmpresa = class
@@ -13,10 +13,11 @@ type
     FPessoas : TList<TPessoa>;
 
   public
-    property Nome    : string          read FNome    write FNome;
-    property Saldo   : currency        read FSaldo   write FSaldo;
-    property Ordens  : TList<TOrdem>   read FOrdens  write FOrdens;
-    property Pessoas : TList<TPessoa>  read FPessoas write FPessoas;
+    property Nome     : string          read FNome     write FNome;
+    property Saldo    : currency        read FSaldo    write FSaldo;
+    property Ordens   : TList<TOrdem>   read FOrdens   write FOrdens;
+    property Pessoas  : TList<TPessoa>  read FPessoas  write FPessoas;
+    property Produtos : TList<TProduto> read FProdutos write FProdutos;
 
   //CONSTRUCTOR
   constructor Create;
