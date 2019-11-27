@@ -66,15 +66,15 @@ implementation
 
 constructor TOrdem.Create;
 begin
-  FHandle = 0;
-  FTipoOrdem = 0;
-  FItens = TList<TOrdemProduto>.Create;
-  FDataEmissao = 0;
-  FValorTotal = 0;
-  FStatus = 0;
-  FPessoa = TPessoa.Create;
-  FDataCadastro = 0;
-  FParcelas = TList<TParcela>.Create;
+  FHandle       := 0;
+  FTipoOrdem    := TTipoOrdem.Compra;  //FIXADO PARA CRIAR COMO COMPRA
+  FItens        := TList<TOrdemProduto>.Create;
+  FDataEmissao  := 0;
+  FValorTotal   := 0;
+  FStatus       := TStatus.Cadastrado;
+  FPessoa       := TPessoa.Create;
+  FDataCadastro := 0;
+  FParcelas     := TList<TParcela>.Create;
 end;
 
 destructor TOrdem.Destroy;
@@ -146,12 +146,12 @@ end;
 function TOrdem.ToString: string;
 begin
   Result := '------------------------------------------------------------------'+sLineBreak+
-            'Handle: '+FHandle                                                  +sLineBreak+
+            'Handle: '+IntToStr(FHandle)                                        +sLineBreak+
             'Tipo da Ordem: '+ListaTipo()                                       +sLineBreak+
             'Itens: '+ListaItens()                                              +sLineBreak+
             'Data Emissao: '+FormatDateTime('dd-mm-yyyy',FDataEmissao)          +sLineBreak+
             'Data Cadastro: '+FormatDateTime('dd-mm-yyyy',FDataCadastro)        +sLineBreak+
-            'Pessoa: '+IntToStr(FPessoa.Nome)                                   +sLineBreak+
+            'Pessoa: '+FPessoa.Nome                                             +sLineBreak+
             'Parcelas: '+ListaParcelas()                                        +sLineBreak+
             'Valor Total: '+FormatCurr('#.##0,00', FValorTotal)                 +sLineBreak+
             'Status: '+ListaStatus()                                            +sLineBreak+
