@@ -2,7 +2,7 @@ unit uEmpresa;
 
 interface
 
-uses SysUtils, Generics.Collections, uOrdem, uPessoa, uEstoque;
+uses SysUtils, Generics.Collections, uOrdem, uPessoa;
 
 type
   TEmpresa = class
@@ -11,23 +11,36 @@ type
     FSaldo   : currency;
     FOrdens  : TList<TOrdem>;
     FPessoas : TList<TPessoa>;
-    FEstoque : TList<TEstoque>;
 
   public
     property Nome    : string          read FNome    write FNome;
     property Saldo   : currency        read FSaldo   write FSaldo;
     property Ordens  : TList<TOrdem>   read FOrdens  write FOrdens;
     property Pessoas : TList<TPessoa>  read FPessoas write FPessoas;
-    property Estoque : TList<TEstoque> read FEstoque write FEstoque;
 
   //CONSTRUCTOR
-  constructor TEmpresa.Create;
+  constructor Create;
 
   //DESTRUCTOR
-  destructor TEmpresa.Destroy;override;
+  destructor Destroy;override;
 
   end;
 
 implementation
 
+{ TEmpresa }
+
+constructor TEmpresa.Create();
+begin
+  FNome := '';
+  FSaldo := 0.00;
+  FOrdens := TList<TOrdem>.Create;
+  FPessoas := TList<TPessoa>.Create;
+end;
+
+destructor TEmpresa.Destroy();
+begin
+  FOrdens.Free;
+  FPessoas.Free;
+end;
 end.
