@@ -23,6 +23,9 @@ type
   //CONSTRUCTOR
   constructor TEmpresa.Create;
 
+  //DESTRUCTOR
+  destructor TEmpresa.Destroy;override;
+
   end;
 
 implementation
