@@ -3,7 +3,7 @@ unit uPessoa;
 interface
 
 uses
-  uEmpresa;
+  uEmpresa, Generics.Collections;
 
 type
   TPessoa = class
