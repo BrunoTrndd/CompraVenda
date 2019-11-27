@@ -2,7 +2,7 @@ unit uProduto;
 
 interface
 
-uses SysUtils, Generics.Collections, uEnums, uEmpresa;
+uses SysUtils, Generics.Collections, uEnums, uEmpresa, uNaturezaMercadoria;
 
 type
   TProduto = class
