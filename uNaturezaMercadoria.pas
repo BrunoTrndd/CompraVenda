@@ -46,7 +46,6 @@ end;
 procedure TNaturezaMercadoria.SolicitarInformacao;
 var
   vAux : integer;
-
 begin
   write('Nome: ');
   readln(FNome);
@@ -62,3 +61,4 @@ begin
 end;
 
 end.
+

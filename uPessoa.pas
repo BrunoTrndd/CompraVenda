@@ -3,7 +3,7 @@ unit uPessoa;
 interface
 
 uses
-  uEmpresa, Generics.Collections;
+  Generics.Collections;
 
 type
   TPessoa = class
@@ -17,7 +17,7 @@ type
     property EhCliente    : Boolean       read FEhCliente     write FEhCliente;
     property EhFornecedor : Boolean       read FEhFornecedor  write FEhFornecedor;
 
-    constructor Create(prLista: TList<TPessoa>);
+    constructor Create();
     destructor Destroy;
 
     //PPROCEDURES
@@ -36,9 +36,9 @@ implementation
 
 { TPessoa }
 
-constructor TPessoa.Create(prLista: TList<TPessoa>);
+constructor TPessoa.Create();
 begin
-  FHandle       := prLista.Count + 1;
+  FHandle       := 0;
   FNome         := '';
   FEhCliente    := False;
   FEhFornecedor := False;
@@ -46,12 +46,12 @@ end;
 
 destructor TPessoa.Destroy;
 begin
-
+   inherited;
 end;
 
 procedure TPessoa.SolicitarInformacoes;
 var vOpcao: string;
-begin
+begin{
   Writeln('Informe o Nome:');
   Read(FNome);
   repeat
@@ -70,8 +70,8 @@ begin
     'S':  FEhFornecedor  := True;
     'N':  FEhFornecedor  := False;
   end;
-  Writeln('Cadastro concluido com sucesso!');
-  end;
+  Writeln('Cadastro concluido com sucesso!');   }
+end;
 
 procedure TPessoa.ToString;
 begin
@@ -87,5 +87,7 @@ begin
   else
     Writeln('Não');
 end;
+
+
 
 end.

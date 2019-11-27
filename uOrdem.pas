@@ -3,10 +3,9 @@ unit uOrdem;
 interface
 uses uProduto,
      uParcela,
-     //uOrdemProduto,
+     uOrdemProduto,
      uEnums,
      uPessoa,
-     uEmpresa,
      SysUtils,
      Generics.Collections;
 
@@ -23,7 +22,6 @@ TOrdem = class
     FPessoa : TPessoa;
     FDataCadastro : TDateTime;
     FParcelas : TList<TParcela>;
-    FEmpresa : TEmpresa;
 
   public
     property Handle       : Integer              read FHandle       write FHandle;
@@ -35,7 +33,6 @@ TOrdem = class
     property Pessoa       : TPessoa              read FPessoa       write FPessoa;
     property DataCadastro : TDateTime            read FDataCadastro write FDataCadastro;
     property Parcelas     : TList<TParcela>      read FParcelas     write FParcelas;
-    property Empresa      : TEmpresa             read FEmpresa      write FEmpresa;
 
 // CONSTRUCTOR
   constructor Create();
@@ -59,10 +56,9 @@ TOrdem = class
 
 end;
 var
-//vOrdemProduto : TOrdemProduto;
+vOrdemProduto : TOrdemProduto;
 vPessoa       : TPessoa;
 vParcela      : TParcela;
-vEmpresa      : TEmpresa;
 
 implementation
 
@@ -70,16 +66,15 @@ implementation
 
 constructor TOrdem.Create;
 begin
-  FHandle = 0;
-  FTipoOrdem = 0;
-  FItens = TList<TOrdemProduto>.Create;
-  FDataEmissao = 0;
-  FValorTotal = 0;
-  FStatus = 0;
-  FPessoa = TPessoa.Create;
-  FDataCadastro = 0;
-  FParcelas = TList<TParcela>.Create;
-  FEmpresa = TEmpresa.Create;
+  FHandle       := 0;
+  FTipoOrdem    := TTipoOrdem.Compra;  //FIXADO PARA CRIAR COMO COMPRA
+  FItens        := TList<TOrdemProduto>.Create;
+  FDataEmissao  := 0;
+  FValorTotal   := 0;
+  FStatus       := TStatus.Cadastrado;
+  FPessoa       := TPessoa.Create;
+  FDataCadastro := 0;
+  FParcelas     := TList<TParcela>.Create;
 end;
 
 destructor TOrdem.Destroy;
@@ -96,7 +91,6 @@ begin
   Itens.Free;
   Parcelas.Free;
   FPessoa.Destroy();
-  FEmpresa.Destroy();
 
 end;
 
@@ -152,14 +146,13 @@ end;
 function TOrdem.ToString: string;
 begin
   Result := '------------------------------------------------------------------'+sLineBreak+
-            'Handle: '+FHandle                                                  +sLineBreak+
+            'Handle: '+IntToStr(FHandle)                                        +sLineBreak+
             'Tipo da Ordem: '+ListaTipo()                                       +sLineBreak+
             'Itens: '+ListaItens()                                              +sLineBreak+
             'Data Emissao: '+FormatDateTime('dd-mm-yyyy',FDataEmissao)          +sLineBreak+
             'Data Cadastro: '+FormatDateTime('dd-mm-yyyy',FDataCadastro)        +sLineBreak+
-            'Pessoa: '+IntToStr(FPessoa.Nome)                                   +sLineBreak+
+            'Pessoa: '+FPessoa.Nome                                             +sLineBreak+
             'Parcelas: '+ListaParcelas()                                        +sLineBreak+
-            'Empresa: '+FEmpresa.Nome                                           +sLineBreak+
             'Valor Total: '+FormatCurr('#.##0,00', FValorTotal)                 +sLineBreak+
             'Status: '+ListaStatus()                                            +sLineBreak+
             '------------------------------------------------------------------'+sLineBreak;

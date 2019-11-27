@@ -2,26 +2,27 @@ unit uOrdemProduto;
 
 interface
 
-uses
-  uProduto,
-  uOrdem,
-  Generics.Collections,
-  SysUtils;
+uses SysUtils, uProduto;
 
 type
   TOrdemProduto = class
-  public
+
+  private
     FHandle     : Integer;
     FProduto    : TProduto;
     FValor      : Currency;
     FQuantidade : Integer;
 
-    property  Produto     : TProduto  read FProduto;
-    property  Valor       : Currency  read FValor;
-    property  Quantidade  : Integer   read FQuantidade;
+  public
+    property Handle      : Integer   read FHandle      write FHandle;
+    property Produto     : TProduto  read FProduto     write FProduto;
+    property Valor       : Currency  read FValor       write FValor;
+    property Quantidade  : Integer   read FQuantidade  write FQuantidade;
 
     //CONSTRUCTOR
-    constructor Create(prLista: TList<TOrdemProduto>);
+    constructor Create();
+
+    //DESTRUCTOR
     destructor Destroy;
 
     //PROCEDURE
