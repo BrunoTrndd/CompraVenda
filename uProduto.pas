@@ -30,7 +30,7 @@ type
 
   //CONSTRUCTORS
   constructor Create();
-  destructor  destroy;override;
+  destructor  Destroy;override;
 
   //PROCEDURES
   procedure SolicitarInformacao();
