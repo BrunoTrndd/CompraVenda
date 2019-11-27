@@ -2,14 +2,14 @@ unit uProduto;
 
 interface
 
-uses SysUtils, Generics.Collections;
+uses SysUtils, Generics.Collections, uEnums, uEmpresa;
 
 type
   TProduto = class
   private
     FNome               : string;
     FValorUnit          : currency;
-    FTipoProduto        : string; //TTipoProduto
+    FTipoProduto        : TTipoProduto;
     FEmpresa            : TEmpresa;
     FValorCompra        : currency;
     FValorVenda         : currency;
@@ -18,14 +18,14 @@ type
     FNaturezaMercadoria : TNaturezaMercadoria;
 
   public
-    property Nome               : string read FNome write FNome;
-    property ValorUnit          : currency read FValorUnit write FValorUnit;
-    property TipoProduto        : string read FTipoProduto write FTipoProduto;
-    property Empresa            : TEmpresa read FEmpresa write FEmpresa;
-    property ValorCompra        : currency read FValorCompra write FValorCompra;
-    property ValorVenda         : currency read FValorVenda write FValorVenda;
-    property SaldoDisponivel    : integer read FSaldoDisponivel write FSaldoDisponivel;
-    property SaldoVenda         : integer read FSaldoVenda write FSaldoVenda;
+    property Nome               : string              read FNome write FNome;
+    property ValorUnit          : currency            read FValorUnit write FValorUnit;
+    property TipoProduto        : TTipoProduto        read FTipoProduto write FTipoProduto;
+    property Empresa            : TEmpresa            read FEmpresa write FEmpresa;
+    property ValorCompra        : currency            read FValorCompra write FValorCompra;
+    property ValorVenda         : currency            read FValorVenda write FValorVenda;
+    property SaldoDisponivel    : integer             read FSaldoDisponivel write FSaldoDisponivel;
+    property SaldoVenda         : integer             read FSaldoVenda write FSaldoVenda;
     property NaturezaMercadoria : TNaturezaMercadoria read FNaturezaMercadoria write FNaturezaMercadoria;
 
   //CONSTRUCTORS
@@ -34,9 +34,10 @@ type
 
   //PROCEDURES
   procedure SolicitarInformacao();
-  procedure ToString();
 
   //FUNCTIONS
+  function ToString() : string;
+
 
   end;
 
@@ -70,7 +71,33 @@ begin
   write('Valor unitário: ');
   readln(FValorUnit);
 
-  write('Produto: ');
+  write('1 - Produto | 2 - Servico: ');
+  readln(FTipoProduto);
+
+  write('Valor de compra: ');
+  readln(FValorCompra);
+
+  write('Valor de venda: ');
+  readln(FValorVenda);
+
+  write('Saldo inicial: ');
+  readln(FSaldoDisponivel);
+
+  write('Natureza de mercadoria: ');
+  readln(FNaturezaMercadoria);
+end;
+
+function TProduto.ToString: String;
+begin
+  Result := '-------------------------------Parcela----------------------------'+sLineBreak+
+            'Nome: '+ FNome                                                     +sLineBreak+
+            'Valor unitario: ' + FormatCurr('#.#00,00',FValorUnit)              +sLineBreak+
+            'Tipo: ' + FTipoProduto                                             +sLineBreak+
+            'Valor compra: ' + FValorCompra                                     +sLineBreak+
+            'Valor venda: ' + FValorVenda                                       +sLineBreak+
+            'Saldo disponivel: ' + FSaldoDisponivel                             +sLineBreak+
+            'Natureza: ' + FNaturezaMercadoria                                  +sLineBreak+
+            '------------------------------------------------------------------'+sLineBreak;
 end;
 
 end.
