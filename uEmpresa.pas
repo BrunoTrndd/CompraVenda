@@ -7,10 +7,11 @@ uses SysUtils, Generics.Collections, uOrdem, uPessoa, uProduto;
 type
   TEmpresa = class
   private
-    FNome    : string;
-    FSaldo   : currency;
-    FOrdens  : TList<TOrdem>;
-    FPessoas : TList<TPessoa>;
+    FNome     : string;
+    FSaldo    : currency;
+    FOrdens   : TList<TOrdem>;
+    FPessoas  : TList<TPessoa>;
+    FProdutos : TList<TProduto>;
 
   public
     property Nome     : string          read FNome     write FNome;
