@@ -2,32 +2,71 @@ unit uEmpresa;
 
 interface
 
-uses SysUtils, Generics.Collections, uOrdem, uPessoa, uEstoque;
+uses SysUtils, Generics.Collections, uOrdem, uPessoa, uProduto;
 
 type
   TEmpresa = class
   private
-    FNome    : string;
-    FSaldo   : currency;
-    FOrdens  : TList<TOrdem>;
-    FPessoas : TList<TPessoa>;
-    FEstoque : TList<TEstoque>;
+    FNome     : string;
+    FSaldo    : currency;
+    FOrdens   : TList<TOrdem>;
+    FPessoas  : TList<TPessoa>;
+    FProdutos : TList<TProduto>;
 
   public
-    property Nome    : string          read FNome    write FNome;
-    property Saldo   : currency        read FSaldo   write FSaldo;
-    property Ordens  : TList<TOrdem>   read FOrdens  write FOrdens;
-    property Pessoas : TList<TPessoa>  read FPessoas write FPessoas;
-    property Estoque : TList<TEstoque> read FEstoque write FEstoque;
+    property Nome     : string          read FNome     write FNome;
+    property Saldo    : currency        read FSaldo    write FSaldo;
+    property Ordens   : TList<TOrdem>   read FOrdens   write FOrdens;
+    property Pessoas  : TList<TPessoa>  read FPessoas  write FPessoas;
+    property Produtos : TList<TProduto> read FProdutos write FProdutos;
 
   //CONSTRUCTOR
-  constructor TEmpresa.Create;
+  constructor Create;
 
   //DESTRUCTOR
-  destructor TEmpresa.Destroy;override;
+  destructor Destroy;override;
 
+  //PROCEDIMENTOS
+  procedure SolicitarInformacao();
+
+  //FUNCTIONS
+  function Tostring(): string;
   end;
 
 implementation
 
+{ TEmpresa }
+
+constructor TEmpresa.Create();
+begin
+  FNome := '';
+  FSaldo := 0.00;
+  FOrdens := TList<TOrdem>.Create;
+  FPessoas := TList<TPessoa>.Create;
+  FProdutos := TList<TProduto>.Create;
+end;
+
+destructor TEmpresa.Destroy();
+begin
+  FOrdens.Free;
+  FPessoas.Free;
+  FProdutos.Free;
+end;
+
+procedure TEmpresa.SolicitarInformacao();
+begin
+  write('Nome: ');
+  readln(FNome);
+
+  write('Saldo inicial: ');
+  readln(FSaldo);
+end;
+
+function TEmpresa.ToString;
+begin
+  Result := '-------------------------------Empresa----------------------------'+sLineBreak+
+            'Nome : '+FNome                                                     +sLineBreak+
+            'Saldo inicial: '+FormatCurr('#.#00,00',FSaldo)                     +sLineBreak+
+            '------------------------------------------------------------------'+sLineBreak;
+end;
 end.
