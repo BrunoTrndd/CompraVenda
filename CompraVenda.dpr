@@ -27,12 +27,12 @@ begin
         Writeln('SISTEMA DE COMPRA E VENDA');
         Writeln('--------------------------------------------------------------');
         Writeln('10   : Informacoes iniciais da empresa');
-        Writeln('11   : Cadastrar Pessoa      | 12 : Cadastrar Produto    | 13 : Cadastrar Ordem de Compra   | 14 : Cadastrar Ordem de Venda');
-        Writeln('21   : Consultar Pessoa      | 22 : Consultar Produto    | 23 : Consultar Ordem de Compra/Venda');
-        Writeln('24   : Listar Itens da Ordem |');
-        Writeln('31   : Alterar Pessoa        | 32 : Alterar Produto      | 33 : Alterar Ordem de Compra/Venda');
-        Writeln('41   : Listar Parcelas de Compra Vencidas                | 42 : Listar Parcelas de Venda Vencidas');
-        Writeln('51   : Efetuar Baixa de Parcelas');
+        Writeln('11   : Cadastrar Pessoa                  | 12 : Cadastrar Produto    | 13 : Cadastrar Ordem de Compra   | 14 : Cadastrar Ordem de Venda');
+        Writeln('21   : Consultar Pessoa                  | 22 : Consultar Produto    | 23 : Consultar Ordem de Compra/Venda');
+        Writeln('31   : Alterar Pessoa                    | 32 : Alterar Produto      | 33 : Alterar Ordem de Compra/Venda');
+        Writeln('41   : Listar Parcelas de Compra Vencidas|                           | 42 : Listar Parcelas de Venda Vencidas');
+        Writeln('51   : Listar Itens da Ordem             |                           |');
+        Writeln('61   : Efetuar Baixa de Parcelas         |                           |');
         Writeln('--------------------------------------------------------------');
         Readln(FIndice);
         case FIndice of
@@ -68,10 +68,6 @@ begin
             begin
 
             end;
-          24:{Listar Itens da Ordem}
-            begin
-
-            end;
           31:{Alterar Pessoa}
             begin
 
@@ -92,7 +88,11 @@ begin
             begin
 
             end;
-          51:{Efetuar Baixa de Parcelas}
+          51:{Listar Itens da Ordem}
+            begin
+
+            end;
+          61:{Efetuar Baixa de Parcelas}
             begin
 
             end;

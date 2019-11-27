@@ -54,7 +54,6 @@
 			<DCCReference Include="uEmpresa.pas"/>
 			<DCCReference Include="uOrdem.pas"/>
 			<DCCReference Include="uParcela.pas"/>
-			<DCCReference Include="uEnums.pas"/>
 			<DCCReference Include="uBaixaParcela.pas"/>
 			<DCCReference Include="uOrdemProduto.pas"/>
 			<DCCReference Include="uEnums.pas"/>
