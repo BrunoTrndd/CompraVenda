@@ -43,12 +43,14 @@ begin
   FSaldo := 0.00;
   FOrdens := TList<TOrdem>.Create;
   FPessoas := TList<TPessoa>.Create;
+  FProdutos := TList<TProduto>.Create;
 end;
 
 destructor TEmpresa.Destroy();
 begin
   FOrdens.Free;
   FPessoas.Free;
+  FProdutos.Free;
 end;
 
 procedure TEmpresa.SolicitarInformacao();
