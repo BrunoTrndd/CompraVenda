@@ -79,7 +79,8 @@ begin
               'Handle     : '+IntToStr(FHandle)+
               'Produto    : '+FProduto.Nome+
               'Valor      : '+FormatCurr('R$#,##0.00',FValor)+
-              'Quantidade : '+IntToStr(FQuantidade);
+              'Quantidade : '+IntToStr(FQuantidade)+
+              '-------------------------------------------------------------';
 end;
 
 end.
