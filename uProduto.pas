@@ -44,7 +44,6 @@ implementation
 
 { TProduto }
 
-
 constructor TProduto.Create;
 begin
   FNome               := '';
@@ -62,4 +61,16 @@ destructor TProduto.Destroy;
 begin
 
 end;
+
+procedure TProduto.SolicitarInformacao;
+begin
+  write('Nome do produto: ');
+  readln(FNome);
+
+  write('Valor unitário: ');
+  readln(FValorUnit);
+
+  write('Produto: ');
+end;
+
 end.
