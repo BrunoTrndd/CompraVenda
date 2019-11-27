@@ -41,9 +41,9 @@ implementation
 //CREATE
 constructor TBaixaParcela.Create;
 begin
-  FHandle = 0;
-  FParcelas = TList<TParcela>.Create;
-  FTipoOrdem = 0;
+  FHandle     := 0;
+  FParcelas   := TList<TParcela>.Create;
+  FTipoOrdem  := TTipoOrdem.Compra;
 end;
 //DESTROY
 destructor TBaixaParcela.Destroy;
@@ -80,7 +80,7 @@ end;
 function TBaixaParcela.ToString: string;
 begin
   Result := '-----------------------Baixa das Parcelas-------------------------'+sLineBreak+
-            'Handle: '+FHandle                                                  +sLineBreak+
+            'Handle: '+IntToStr(FHandle)                                        +sLineBreak+
             'Parcelas: '+ListarParcelas()                                       +sLineBreak+
             'Tipo da Baixa: '+ListarTipo()                                      +sLineBreak+
             '------------------------------------------------------------------'+sLineBreak;

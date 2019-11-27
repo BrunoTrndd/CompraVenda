@@ -27,7 +27,8 @@ TParcela = class
   destructor Destroy();
 
 // FUNCTIONS
-  function ToString() : String;
+  function ToString()  : string;
+  function ListaPago() : string;
 
 // PROCEDURES
 
@@ -58,14 +59,26 @@ end;
 
 
 
+function TParcela.ListaPago: string;
+begin
+  if FPago then
+  begin
+    Result := 'Pago';
+  end else
+  begin
+    Result := 'Nao pago';
+  end;
+
+end;
+
 function TParcela.ToString: String;
 begin
   Result := '-------------------------------Parcela----------------------------'+sLineBreak+
-            'Handle : '+FHandle                                                 +sLineBreak+
+            'Handle : '+IntToStr(FHandle)                                       +sLineBreak+
             'Data de Cadastro: '+FormatDateTime('dd-mm-yyyy',FDataCadastro)     +sLineBreak+
             'Vencimento: '+FormatDateTime('dd-mm-yyyy',FDataVencimento)         +sLineBreak+
-            'Valor Total: '+FValorTotal                                         +sLineBreak+
-            'Pago: '+FPago                                                      +sLineBreak+
+            'Valor Total: '+FormatCurr('#.##0,00',FValorTotal)                  +sLineBreak+
+            'Pago: '+ListaPago()                                                +sLineBreak+
             '------------------------------------------------------------------'+sLineBreak;
 end;
 

@@ -10,7 +10,7 @@ uses
   uOrdem in 'uOrdem.pas',
   uParcela in 'uParcela.pas',
   uBaixaParcela in 'uBaixaParcela.pas',
-  uOrdemProduto in 'uOrdemProduto.pas';
+  uOrdemProduto in 'uOrdemProduto.pas',
   uEnums in 'uEnums.pas',
   uInclude in 'uInclude.pas';
 
