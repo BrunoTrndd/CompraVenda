@@ -2,11 +2,7 @@ unit uOrdemProduto;
 
 interface
 
-uses
-  uProduto,
-  uOrdem,
-  Generics.Collections,
-  SysUtils;
+uses SysUtils, uProduto;
 
 type
   TOrdemProduto = class
@@ -24,7 +20,7 @@ type
     property Quantidade  : Integer   read FQuantidade  write FQuantidade;
 
     //CONSTRUCTOR
-    constructor Create(prLista: TList<TOrdemProduto>);
+    constructor Create();
 
     //DESTRUCTOR
     destructor Destroy;
