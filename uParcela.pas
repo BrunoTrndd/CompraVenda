@@ -11,7 +11,6 @@ TParcela = class
     FDataCadastro   : TDateTime;
     FDataVencimento : TDateTime;
     FValorTotal     : Currency;
-//    FOrdem          : TOrdem;
     FPago           : Boolean;
 
   public
@@ -19,7 +18,6 @@ TParcela = class
     property DataCadastro   : TDateTime read FDataCadastro write FDataCadastro;
     property DataVencimento : TDateTime read FDataVencimento write FDataVencimento;
     property ValorTotal     : Currency read FValorTotal write FValorTotal;
-//    property Ordem          : TOrdem read FOrdem write FOrdem;
     property Pago           : Boolean read FPago write FPago;
 
 // CONSTRUCTOR
@@ -43,11 +41,11 @@ implementation
 
 constructor TParcela.Create;
 begin
-  FHandle         = 0;
-  FDataCadastro   = 0;
-  FDataVencimento = 0;
-  FValorTotal     = 0;
-  FPago           = False;
+  FHandle         := 0;
+  FDataCadastro   := 0;
+  FDataVencimento := 0;
+  FValorTotal     := 0;
+  FPago           := False;
 end;
 
 destructor TParcela.Destroy;
