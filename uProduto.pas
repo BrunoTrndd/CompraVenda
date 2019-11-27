@@ -2,7 +2,7 @@ unit uProduto;
 
 interface
 
-uses SysUtils, Generics.Collections, uEnums, uEmpresa, uNaturezaMercadoria;
+uses SysUtils, Generics.Collections, uEnums, uNaturezaMercadoria;
 
 type
   TProduto = class
@@ -10,7 +10,6 @@ type
     FNome               : string;
     FValorUnit          : currency;
     FTipoProduto        : TTipoProduto;
-    FEmpresa            : TEmpresa;
     FValorCompra        : currency;
     FValorVenda         : currency;
     FSaldoVenda         : integer;
@@ -21,7 +20,6 @@ type
     property Nome               : string              read FNome write FNome;
     property ValorUnit          : currency            read FValorUnit write FValorUnit;
     property TipoProduto        : TTipoProduto        read FTipoProduto write FTipoProduto;
-    property Empresa            : TEmpresa            read FEmpresa write FEmpresa;
     property ValorCompra        : currency            read FValorCompra write FValorCompra;
     property ValorVenda         : currency            read FValorVenda write FValorVenda;
     property SaldoDisponivel    : integer             read FSaldoDisponivel write FSaldoDisponivel;
@@ -50,7 +48,6 @@ begin
   FNome               := '';
   FValorUnit          := 0.00;
   FTipoProduto        := ''; //TTipoProduto
-  FEmpresa            := nil;
   FValorCompra        := 0.00;
   FValorVenda         := 0.00;
   FSaldoVenda         := 0;
@@ -89,7 +86,7 @@ end;
 
 function TProduto.ToString: String;
 begin
-  Result := '-------------------------------Parcela----------------------------'+sLineBreak+
+  Result := '-------------------------------Produto----------------------------'+sLineBreak+
             'Nome: '+ FNome                                                     +sLineBreak+
             'Valor unitario: ' + FormatCurr('#.#00,00',FValorUnit)              +sLineBreak+
             'Tipo: ' + FTipoProduto                                             +sLineBreak+
