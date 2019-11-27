@@ -13,15 +13,16 @@ type
 TOrdem = class
 
   private
-    FHandle : Integer;
-    FTipoOrdem : TTipoOrdem;
-    FItens : TList<TOrdemProduto>;
-    FDataEmissao : TDateTime;
-    FValorTotal : Currency;
-    FStatus : TStatus;
-    FPessoa : TPessoa;
-    FDataCadastro : TDateTime;
-    FParcelas : TList<TParcela>;
+    FHandle        : Integer;
+    FTipoOrdem     : TTipoOrdem;
+    FItens         : TList<TOrdemProduto>;
+    FDataEmissao   : TDateTime;
+    FValorTotal    : Currency;
+    FStatus        : TStatus;
+    FPessoa        : TPessoa;
+    FDataCadastro  : TDateTime;
+    FParcelas      : TList<TParcela>;
+    FQtdParcelas   : Integer;
 
   public
     property Handle       : Integer              read FHandle       write FHandle;
@@ -33,6 +34,8 @@ TOrdem = class
     property Pessoa       : TPessoa              read FPessoa       write FPessoa;
     property DataCadastro : TDateTime            read FDataCadastro write FDataCadastro;
     property Parcelas     : TList<TParcela>      read FParcelas     write FParcelas;
+    property QtdParcelas  : Integer              read FQtdParcelas  write FQtdParcelas;
+
 
 // CONSTRUCTOR
   constructor Create();
