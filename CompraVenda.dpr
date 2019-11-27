@@ -7,7 +7,8 @@ uses
   uPessoa in 'uPessoa.pas',
   uProduto in 'uProduto.pas',
   uEmpresa in 'uEmpresa.pas',
-  uOrdem in 'uOrdem.pas';
+  uOrdem in 'uOrdem.pas',
+  uEnums in 'uEnums.pas';
 
 begin
   try
