@@ -57,4 +57,12 @@ begin
   write('Saldo inicial: ');
   readln(FSaldo);
 end;
+
+function TEmpresa.ToString;
+begin
+  Result := '-------------------------------Empresa----------------------------'+sLineBreak+
+            'Nome : '+FNome                                                     +sLineBreak+
+            'Saldo inicial: '+FormatCurr('#.#00,00',FSaldo)                     +sLineBreak+
+            '------------------------------------------------------------------'+sLineBreak;
+end;
 end.
