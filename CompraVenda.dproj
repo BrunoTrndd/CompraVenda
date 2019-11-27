@@ -53,7 +53,7 @@
 			<DCCReference Include="uProduto.pas"/>
 			<DCCReference Include="uEmpresa.pas"/>
 			<DCCReference Include="uOrdem.pas"/>
-			<DCCReference Include="uEnums.pas"/>
+			<DCCReference Include="uParcela.pas"/>
 			<BuildConfiguration Include="Release">
 				<Key>Cfg_2</Key>
 				<CfgParent>Base</CfgParent>
