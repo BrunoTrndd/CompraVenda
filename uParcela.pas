@@ -39,6 +39,7 @@ implementation
 
 { TParcela }
 
+//CREATE
 constructor TParcela.Create;
 begin
   FHandle         := 0;
@@ -48,6 +49,7 @@ begin
   FPago           := False;
 end;
 
+//DESTROY
 destructor TParcela.Destroy;
 begin
 //  FOrdem.Free;
