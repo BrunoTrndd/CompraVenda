@@ -38,13 +38,14 @@ implementation
 
 { TBaixaParcela }
 
+//CREATE
 constructor TBaixaParcela.Create;
 begin
   FHandle = 0;
   FParcelas = TList<TParcela>.Create;
   FTipoOrdem = 0;
 end;
-
+//DESTROY
 destructor TBaixaParcela.Destroy;
 begin
   for vParcela in Parcelas do
@@ -64,7 +65,7 @@ begin
   end;
   Result := vRetorno;
 end;
-
+//RETORNA O TIPO EM STRING
 function TBaixaParcela.ListarTipo: string;
 begin
 if FTipoOrdem = TTipoOrdem.Compra then
@@ -75,7 +76,7 @@ if FTipoOrdem = TTipoOrdem.Compra then
     Result := 'Venda';
   end;
 end;
-
+//TO STRING
 function TBaixaParcela.ToString: string;
 begin
   Result := '-----------------------Baixa das Parcelas-------------------------'+sLineBreak+

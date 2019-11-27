@@ -1,21 +1,25 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>2019/11/25 11:03:35.000.794,C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\CompraVenda.dproj=C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>2019/11/25 11:03:35.000.794,C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\Project1.dproj=C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\CompraVenda.dproj</Transaction>
     <Transaction>2019/11/25 11:04:23.000.301,=C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2019/11/25 11:04:37.000.185,C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\uPessoa.pas=C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2019/11/25 11:04:37.000.185,C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\Unit1.pas=C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\uPessoa.pas</Transaction>
     <Transaction>2019/11/25 11:04:41.000.211,=C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2019/11/25 11:04:54.000.125,C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\uOrdem.pas=C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2019/11/25 11:16:00.000.803,C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\CompraVenda\CompraVenda.dproj=C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\CompraVenda.dproj</Transaction>
-    <Transaction>2019/11/25 11:16:45.000.148,C:\Bruno\Projetos\Projetos2019\ProjetoCompraVenda\CompraVenda.dproj=C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\CompraVenda\CompraVenda.dproj</Transaction>
+    <Transaction>2019/11/25 11:04:54.000.125,C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\Unit1.pas=C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\uOrdem.pas</Transaction>
+    <Transaction>2019/11/25 11:16:00.000.803,C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\CompraVenda.dproj=C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\CompraVenda\CompraVenda.dproj</Transaction>
+    <Transaction>2019/11/25 11:16:45.000.148,C:\Users\Bruno Trindade\Documents\RAD Studio\Projects\CompraVenda\CompraVenda.dproj=C:\Bruno\Projetos\Projetos2019\ProjetoCompraVenda\CompraVenda.dproj</Transaction>
     <Transaction>2019/11/25 11:20:59.000.776,=C:\Bruno\Projetos\Projetos2019\ProjetoCompraVenda\Unit1.pas</Transaction>
-    <Transaction>2019/11/25 11:21:13.000.169,C:\Bruno\Projetos\Projetos2019\ProjetoCompraVenda\uPessoa.pas=C:\Bruno\Projetos\Projetos2019\ProjetoCompraVenda\Unit1.pas</Transaction>
+    <Transaction>2019/11/25 11:21:13.000.169,C:\Bruno\Projetos\Projetos2019\ProjetoCompraVenda\Unit1.pas=C:\Bruno\Projetos\Projetos2019\ProjetoCompraVenda\uPessoa.pas</Transaction>
     <Transaction>2019/11/25 11:28:36.000.697,=C:\Users\Maycom\Documents\GitHub\CompraVenda\Unit1.pas</Transaction>
-    <Transaction>2019/11/25 11:28:50.000.784,C:\Users\Maycom\Documents\GitHub\CompraVenda\Unit1.pas=C:\Users\Maycom\Documents\GitHub\CompraVenda\uProduto.pas</Transaction>
+    <Transaction>2019/11/25 11:28:50.000.784,C:\Users\Maycom\Documents\GitHub\CompraVenda\uProduto.pas=C:\Users\Maycom\Documents\GitHub\CompraVenda\Unit1.pas</Transaction>
     <Transaction>2019/11/25 11:29:55.000.339,=C:\Users\Maycom\Documents\GitHub\CompraVenda\Unit1.pas</Transaction>
-    <Transaction>2019/11/25 11:30:05.000.452,C:\Users\Maycom\Documents\GitHub\CompraVenda\Unit1.pas=C:\Users\Maycom\Documents\GitHub\CompraVenda\uEmpresa.pas</Transaction>
+    <Transaction>2019/11/25 11:30:05.000.452,C:\Users\Maycom\Documents\GitHub\CompraVenda\uEmpresa.pas=C:\Users\Maycom\Documents\GitHub\CompraVenda\Unit1.pas</Transaction>
     <Transaction>2019/11/25 11:30:11.000.154,=C:\Users\Maycom\Documents\GitHub\CompraVenda\Unit1.pas</Transaction>
-    <Transaction>2019/11/25 11:30:18.000.736,C:\Users\Maycom\Documents\GitHub\CompraVenda\Unit1.pas=C:\Users\Maycom\Documents\GitHub\CompraVenda\uOrdem.pas</Transaction>
-    <Transaction>2019/11/27 09:23:10.624,=C:\Users\Maycom\Documents\GitHub\CompraVenda\uEnums.pas</Transaction>
+    <Transaction>2019/11/25 11:30:18.000.736,C:\Users\Maycom\Documents\GitHub\CompraVenda\uOrdem.pas=C:\Users\Maycom\Documents\GitHub\CompraVenda\Unit1.pas</Transaction>
+    <Transaction>2019/11/27 08:23:43.000.249,=C:\Users\Administrador\Documents\RAD Studio\Projects\GitHub\CompraVenda\Unit1.pas</Transaction>
+    <Transaction>2019/11/27 08:25:22.000.831,C:\Users\Administrador\Documents\RAD Studio\Projects\GitHub\CompraVenda\Unit1.pas=C:\Users\Administrador\Documents\RAD Studio\Projects\GitHub\CompraVenda\uParcela.pas</Transaction>
+    <Transaction>2019/11/27 09:05:31.312,=C:\Users\Administrador\Documents\RAD Studio\Projects\CompraVenda\uEnums.pas</Transaction>
+    <Transaction>2019/11/27 10:49:18.195,=C:\Users\Administrador\Documents\RAD Studio\Projects\CompraVenda\Unit1.pas</Transaction>
+    <Transaction>2019/11/27 10:49:54.554,C:\Users\Administrador\Documents\RAD Studio\Projects\CompraVenda\uInclude.pas=C:\Users\Administrador\Documents\RAD Studio\Projects\CompraVenda\Unit1.pas</Transaction>
   </Transactions>
 </BorlandProject>
