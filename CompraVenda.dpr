@@ -9,7 +9,9 @@ uses
   uEmpresa in 'uEmpresa.pas',
   uOrdem in 'uOrdem.pas',
   uParcela in 'uParcela.pas',
-  uEnums in 'uEnums.pas';
+  uEnums in 'uEnums.pas',
+  uBaixaParcela in 'uBaixaParcela.pas',
+  uOrdemProduto in 'uOrdemProduto.pas';
 
 begin
   try
