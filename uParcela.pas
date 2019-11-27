@@ -43,11 +43,11 @@ implementation
 
 constructor TParcela.Create;
 begin
-  FHandle         = 0;
-  FDataCadastro   = 0;
-  FDataVencimento = 0;
-  FValorTotal     = 0;
-  FPago           = False;
+  FHandle         := 0;
+  FDataCadastro   := 0;
+  FDataVencimento := 0;
+  FValorTotal     := 0;
+  FPago           := False;
 end;
 
 destructor TParcela.Destroy;
