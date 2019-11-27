@@ -24,6 +24,11 @@ type
   //DESTRUCTOR
   destructor Destroy;override;
 
+  //PROCEDIMENTOS
+  procedure SolicitarInformacao();
+
+  //FUNCTIONS
+  function Tostring(): string;
   end;
 
 implementation
@@ -42,5 +47,14 @@ destructor TEmpresa.Destroy();
 begin
   FOrdens.Free;
   FPessoas.Free;
+end;
+
+procedure TEmpresa.SolicitarInformacao();
+begin
+  write('Nome: ');
+  readln(FNome);
+
+  write('Saldo inicial: ');
+  readln(FSaldo);
 end;
 end.
