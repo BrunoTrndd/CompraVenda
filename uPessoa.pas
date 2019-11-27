@@ -17,7 +17,7 @@ type
     property EhCliente    : Boolean       read FEhCliente     write FEhCliente;
     property EhFornecedor : Boolean       read FEhFornecedor  write FEhFornecedor;
 
-    constructor Create(prLista: TList<TPessoa>);
+    constructor Create();
     destructor Destroy;
 
     //PPROCEDURES
@@ -36,9 +36,9 @@ implementation
 
 { TPessoa }
 
-constructor TPessoa.Create(prLista: TList<TPessoa>);
+constructor TPessoa.Create();
 begin
-  FHandle       := prLista.Count + 1;
+  FHandle       := 0;
   FNome         := '';
   FEhCliente    := False;
   FEhFornecedor := False;
