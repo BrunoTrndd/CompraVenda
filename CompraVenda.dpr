@@ -39,6 +39,7 @@ begin
     begin
       Result := TTipoOrdem.Venda;
     end else
+    vPessoa   : TPessoa;
     begin
       Writeln('Digite um valor valido');
     end;
@@ -74,6 +75,13 @@ begin
           11:{Cadastrar Pessoa}
             begin
               //EVERTON
+              vPessoa   :=  TPessoa.Create;  //EVERTON
+              try
+                vPessoa.SolicitarInformacoes();
+                vPessoas.Add(vPessoa);
+              except
+                raise Exception.Create('Nao foi possivel cadastrar a pessoa.');
+              end;
             end;
           12:{Cadastrar Produto}
             begin
