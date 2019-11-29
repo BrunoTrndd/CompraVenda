@@ -19,10 +19,35 @@ var vEmpresa  : TEmpresa;
     vIndice   : Integer;
     vOrdem    : TOrdem;
     vProduto  : TProduto;
+    vPessoa   : TPessoa;
     vOrdens   : TList<TOrdem>;
     vPessoas  : TList<TPessoa>;
     vProdutos : TList<TProduto>;
     vTexto : string;
+
+//PROCEDURES
+
+//FUNCTIONS
+function GetPessoa(): TPessoa;
+var vConsulta       : string;
+    vPessoaConsulta : TPessoa;
+    vEncontrou      : Boolean;
+begin
+  Result := nil;
+  Writeln('Informe o nome da pessoa: ');
+  Readln(vConsulta);
+  for vPessoaConsulta in vPessoas do
+  begin
+    if vPessoaConsulta.Nome = vConsulta then
+    begin
+      vEncontrou  := True;
+      Result      := vPessoaConsulta;
+    end;
+    Break;
+  end;
+  if vEncontrou = False then
+    raise Exception.Create('Pessoa nao encontrada.');
+end;
 
 function EscolherTipoOrdem():TTipoOrdem;
 begin
@@ -46,30 +71,30 @@ begin
   until (vTexto = '1') or (vTexto = '2');
 end;
 
+function GetProduto(callback: TProc<TProduto>): TProduto;
+var
+  vEncontrou : boolean;
+  vConsulta : string;
+begin
+  result:= nil;
 
-   function GetProduto(callback: TProc<TProduto>): TProduto;
-   var
-     vEncontrou : boolean;
-     vConsulta : string;
+  write('Produto: ');
+  readln(vConsulta);
+  vEncontrou:= false;
+
+  for vProduto in vProdutos do
+  begin
+   if(vConsulta = vProduto.Nome )then
    begin
-     result:= nil;
+     Result := vProduto;
+     callback(vProduto);
+     vEncontrou := true;
+   end;
+  end;
 
-     write('Produto: ');
-     readln(vConsulta);
-     vEncontrou:= false;
-
-     for vProduto in vProdutos do
-     begin
-       if(vConsulta = vProduto.Nome )then
-       begin
-         Result := vProduto;
-         callback(vProduto);
-         vEncontrou := true;
-       end;
-     end;
-
-   if not vEncontrou then
-     raise Exception.Create('Verifique o produto informado.');
+  if not vEncontrou then
+ raise Exception.Create('Verifique o produto informado.');
+end;
 
 begin
   try
@@ -99,11 +124,17 @@ begin
             end;
           11:{Cadastrar Pessoa}
             begin
-              //EVERTON
+              vPessoa   :=  TPessoa.Create;  //EVERTON
+              try
+                vPessoa.SolicitarInformacoes();
+                vPessoas.Add(vPessoa);
+              except
+                raise Exception.Create('Nao foi possivel cadastrar a pessoa.');
+              end;
             end;
           12:{Cadastrar Produto}
             begin
-	      try
+	            try
               begin
                 vProduto := TProduto.Create;
                 vProduto.SolicitarInformacao();
@@ -124,7 +155,7 @@ begin
             end;
           21:{Consultar Pessoa}
             begin
-
+              GetPessoa().ToString();
             end;
           22:{Consultar Produto}
             begin
