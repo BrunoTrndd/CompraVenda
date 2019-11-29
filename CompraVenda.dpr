@@ -4,6 +4,7 @@ program CompraVenda;
 
 uses
   SysUtils,
+  Generics.Collections,
   uPessoa in 'uPessoa.pas',
   uProduto in 'uProduto.pas',
   uEmpresa in 'uEmpresa.pas',
@@ -14,12 +15,19 @@ uses
   uEnums in 'uEnums.pas',
   uInclude in 'uInclude.pas';
 
-var FEmpresa  : TEmpresa;
-    FIndice   : Integer;
+var vEmpresa  : TEmpresa;
+    vIndice   : Integer;
+    vOrdens   : TList<TOrdem>;
+    vPessoas  : TList<TPessoa>;
+    vProdutos : TList<TProduto>;
+
 begin
   try
     try
-      FEmpresa  := TEmpresa.Create;
+      vEmpresa   := TEmpresa.Create;
+      vOrdens    := TList<TOrdem>.Create;
+      vPessoas   := TList<TPessoa>.Create;
+      vProdutos  := TList<TProduto>.Create;
       repeat
         {MENU:}
         Writeln('--------------------------------------------------------------');
@@ -33,11 +41,11 @@ begin
         Writeln('51   : Listar Itens da Ordem             |                           |');
         Writeln('61   : Efetuar Baixa de Parcelas         |                           |');
         Writeln('--------------------------------------------------------------');
-        Readln(FIndice);
-        case FIndice of
+        Readln(vIndice);
+        case vIndice of
           10:{Informacoes iniciais da empresa}
             begin
-              FEmpresa.SolicitarInformacao();
+              vEmpresa.SolicitarInformacao();
             end;
           11:{Cadastrar Pessoa}
             begin
@@ -96,7 +104,7 @@ begin
 
             end;
         end;
-      until (FIndice = 0);
+      until (vIndice = 0);
     finally
 
     end;

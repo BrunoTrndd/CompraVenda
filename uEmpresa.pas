@@ -9,16 +9,12 @@ type
   private
     FNome     : string;
     FSaldo    : currency;
-    FOrdens   : TList<TOrdem>;
-    FPessoas  : TList<TPessoa>;
-    FProdutos : TList<TProduto>;
+
 
   public
     property Nome     : string          read FNome     write FNome;
     property Saldo    : currency        read FSaldo    write FSaldo;
-    property Ordens   : TList<TOrdem>   read FOrdens   write FOrdens;
-    property Pessoas  : TList<TPessoa>  read FPessoas  write FPessoas;
-    property Produtos : TList<TProduto> read FProdutos write FProdutos;
+
 
   //CONSTRUCTOR
   constructor Create;
@@ -41,16 +37,12 @@ constructor TEmpresa.Create();
 begin
   FNome := '';
   FSaldo := 0.00;
-  FOrdens := TList<TOrdem>.Create;
-  FPessoas := TList<TPessoa>.Create;
-  FProdutos := TList<TProduto>.Create;
+
 end;
 
 destructor TEmpresa.Destroy();
 begin
-  FOrdens.Free;
-  FPessoas.Free;
-  FProdutos.Free;
+  inherited
 end;
 
 procedure TEmpresa.SolicitarInformacao();
