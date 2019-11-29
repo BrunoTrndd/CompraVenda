@@ -13,16 +13,19 @@ uses
   uBaixaParcela in 'uBaixaParcela.pas',
   uOrdemProduto in 'uOrdemProduto.pas',
   uEnums in 'uEnums.pas',
-  uInclude in 'uInclude.pas';
+  uInclude in 'uInclude.pas',
+  uNaturezaMercadoria in 'uNaturezaMercadoria.pas';
 
-var vEmpresa  : TEmpresa;
-    vIndice   : Integer;
-    vOrdem    : TOrdem;
-    vProduto  : TProduto;
-    vPessoa   : TPessoa;
-    vOrdens   : TList<TOrdem>;
-    vPessoas  : TList<TPessoa>;
-    vProdutos : TList<TProduto>;
+var vEmpresa            : TEmpresa;
+    vIndice             : Integer;
+    vOrdem              : TOrdem;
+    vProduto            : TProduto;
+    vPessoa             : TPessoa;
+    vNaturezaMercadoria : TNaturezaMercadoria;
+    vOrdens             : TList<TOrdem>;
+    vPessoas            : TList<TPessoa>;
+    vProdutos           : TList<TProduto>;
+    vNaturezas          : TList<TNaturezaMercadoria>;
     vTexto : string;
 
 //PROCEDURES
@@ -35,6 +38,7 @@ var
   vEncontrou      : Boolean;
 
 begin
+  vEncontrou := False;
   Result := nil;
   Writeln('Informe o nome da pessoa: ');
   Readln(vConsulta);
@@ -104,12 +108,13 @@ begin
       vOrdens    := TList<TOrdem>.Create;
       vPessoas   := TList<TPessoa>.Create;
       vProdutos  := TList<TProduto>.Create;
+      vNaturezas := tList<TNaturezaMercadoria>.Create;
       repeat
         {MENU:}
         Writeln('--------------------------------------------------------------');
         Writeln('SISTEMA DE COMPRA E VENDA');
         Writeln('--------------------------------------------------------------');
-        Writeln('11   : Cadastrar Pessoa                  | 12 : Cadastrar Produto    | 13 : Cadastrar Ordem');
+        Writeln('11   : Cadastrar Pessoa                  | 12 : Cadastrar Produto    | 13 : Cadastrar Ordem                  | 14 : Cadastrar Natureza de Mercadoria');
         Writeln('21   : Consultar Pessoa                  | 22 : Consultar Produto    | 23 : Consultar Ordem de Compra/Venda');
         Writeln('31   : Alterar Pessoa                    | 32 : Alterar Produto      | 33 : Alterar Ordem de Compra/Venda');
         Writeln('41   : Listar Parcelas de Compra Vencidas|                           | 42 : Listar Parcelas de Venda Vencidas');
@@ -157,6 +162,16 @@ begin
                 begin
                   Writeln(e.Message);
                 end;
+              end;
+            end;
+          14:{Cadastrar Natureza de Mercadoria}
+            begin
+              vNaturezaMercadoria := TNaturezaMercadoria.Create;
+              try
+                vNaturezaMercadoria.SolicitarInformacao();
+                vNaturezas.Add(vNaturezaMercadoria);
+              except
+                raise Exception.Create('Nao foi possivel criar a Natureza de Mercadoria.');
               end;
             end;
           21:{Consultar Pessoa}
