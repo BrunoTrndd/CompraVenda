@@ -12,6 +12,7 @@ TParcela = class
     FDataVencimento : TDateTime;
     FValorTotal     : Currency;
     FPago           : Boolean;
+    FSequencia      : Integer;
 
   public
     property Handle         : Integer read FHandle write FHandle;
@@ -19,6 +20,7 @@ TParcela = class
     property DataVencimento : TDateTime read FDataVencimento write FDataVencimento;
     property ValorTotal     : Currency read FValorTotal write FValorTotal;
     property Pago           : Boolean read FPago write FPago;
+    property Sequencia      : Integer read FSequencia write FSequencia;
 
 // CONSTRUCTOR
   constructor Create();
@@ -29,16 +31,33 @@ TParcela = class
 // FUNCTIONS
   function ToString()  : string;
   function ListaPago() : string;
+  function GetDate(prTipoData : string)   : TDateTime;
 
 // PROCEDURES
-
+  procedure CriarParcelas(prQtd : Integer; prValorTotal: Currency; prSequencia : Integer);
 
 end;
+
+var
+vHandle : Integer;
 
 implementation
 
 
+
 { TParcela }
+
+function TParcela.GetDate(prTipoData: string): TDateTime;
+var
+  vTexto: string;
+begin
+  repeat
+    Writeln(prTipoData + ' (dd-mm-yyyy) : ');
+    Readln(vTexto);
+    Result := StrToDateTimeDef(vTexto, 0, FormatSettings);
+  until Result <> 0;
+end;
+
 
 //CREATE
 constructor TParcela.Create;
@@ -53,8 +72,34 @@ end;
 //DESTROY
 destructor TParcela.Destroy;
 begin
-//  FOrdem.Free;
+  inherited;
 end;
+
+procedure TParcela.CriarParcelas(prQtd: Integer; prValorTotal: Currency; prSequencia : Integer);
+var
+vValorParcela : Currency;
+i : Integer;
+vData : TDateTime;
+begin
+//DATA PADRÃO: 01/01/2019 e adicionando um mes a cada parcela
+  vData := GetDate('Data da primeira parcela');
+  vHandle := vHandle + 1;
+  vValorParcela := prValorTotal/prQtd;
+
+  FSequencia      := prSequencia;
+  FValorTotal     := vValorParcela;
+  FDataCadastro   := Now();
+  if i = 1 then
+  begin
+    FDataVencimento := vData;
+  end else
+  begin
+    vData := IncMonth(vData);
+    FDataVencimento := vData;
+  end;
+end;
+
+
 
 
 

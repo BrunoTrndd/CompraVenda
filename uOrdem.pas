@@ -148,6 +148,10 @@ begin
 end;
 
 procedure TOrdem.SolicitarInformacoes(prTipoOrdem: TTipoOrdem; prPessoa : TPessoa; prProdutos : TList<TProduto>);
+var
+vNumero : Integer;
+i       : Integer;
+vValorTotal : Currency;
 begin
   vHandle := vHandle + 1;
   FHandle := vHandle;
@@ -158,6 +162,23 @@ begin
   FPessoa := prPessoa;
 
   SolicitarItens(prProdutos);
+  try
+    Writeln('Em quantas parcelas deseja fazer o pagamento?');
+    Readln(vNumero);
+
+    for i := 1 to vNumero do
+    begin
+      vParcela := TParcela.Create;
+      vParcela.CriarParcelas(vNumero, vValorTotal, i);     // VALORTOTAL NAO INSTANCIADO
+    end;
+
+
+  except
+    on E : Exception do
+      Writeln('Erro: ' + E.Message);
+  end;
+
+
 
 end;
 
