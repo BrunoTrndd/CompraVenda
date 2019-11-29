@@ -18,9 +18,34 @@ uses
 var vEmpresa  : TEmpresa;
     vIndice   : Integer;
     vOrdem    : TOrdem;
+    vPessoa   : TPessoa;
     vOrdens   : TList<TOrdem>;
     vPessoas  : TList<TPessoa>;
     vProdutos : TList<TProduto>;
+
+//PROCEDURES
+
+//FUNCTIONS
+function GetPessoa(): TPessoa;
+var vConsulta       : string;
+    vPessoaConsulta : TPessoa;
+    vEncontrou      : Boolean;
+begin
+  Result := nil;
+  Writeln('Informe o nome da pessoa: ');
+  Readln(vConsulta);
+  for vPessoaConsulta in vPessoas do
+  begin
+    if vPessoaConsulta.Nome = vConsulta then
+    begin
+      vEncontrou  := True;
+      Result      := vPessoaConsulta;
+    end;
+    Break;
+  end;
+  if vEncontrou = False then
+    raise Exception.Create('Pessoa nao encontrada.');
+end;
 
 function EscolherTipoOrdem():TTipoOrdem;
 var
@@ -98,7 +123,7 @@ begin
             end;
           21:{Consultar Pessoa}
             begin
-
+              GetPessoa().ToString();
             end;
           22:{Consultar Produto}
             begin
