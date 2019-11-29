@@ -8,13 +8,13 @@ uses
   uPessoa in 'uPessoa.pas',
   uProduto in 'uProduto.pas',
   uEmpresa in 'uEmpresa.pas',
-  uOrdem in 'uOrdem.pas';
+  uOrdem in 'uOrdem.pas',
+  uParcela in 'uParcela.pas',
+  uBaixaParcela in 'uBaixaParcela.pas',
+  uOrdemProduto in 'uOrdemProduto.pas',
+  uEnums in 'uEnums.pas',
+  uInclude in 'uInclude.pas';
 
-<<<<<<< Updated upstream
-begin
-  try
-    { TODO -oUser -cConsole Main : Insert code here }
-=======
 var vEmpresa  : TEmpresa;
     vIndice   : Integer;
     vOrdem    : TOrdem;
@@ -178,7 +178,6 @@ begin
     finally
 
     end;
->>>>>>> Stashed changes
   except
     on E: Exception do
       Writeln(E.ClassName, ': ', E.Message);
