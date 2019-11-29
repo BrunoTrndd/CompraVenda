@@ -31,8 +31,7 @@ type
 
     //FUNCTION
     function ToString : string;
-    function GetItem  : TProduto;
-  private
+
   end;
 
 implementation

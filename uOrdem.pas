@@ -77,7 +77,7 @@ begin
   FDataEmissao  := 0;
   FValorTotal   := 0;
   FStatus       := TStatus.Cadastrado;
-  FPessoa       := TPessoa.Create;
+  FPessoa       := nil;
   FDataCadastro := 0;
   FParcelas     := TList<TParcela>.Create;
 end;
@@ -178,7 +178,7 @@ begin
   begin
     if(vProduto.Nome = vTexto) then
     begin
-      vOrdemProduto.Create(vProduto);
+      vOrdemProduto := TOrdemProduto.Create(vProduto);
       vOrdemProduto.SolicitarInformacoes();
       FItens.Add(vOrdemProduto);
     end;
