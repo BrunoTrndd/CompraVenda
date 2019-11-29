@@ -1,4 +1,4 @@
-﻿unit uProduto;
+unit uProduto;
 
 interface
 
@@ -61,6 +61,10 @@ begin
 end;
 
 procedure TProduto.SolicitarInformacao;
+var
+  vTipo : integer;
+  vNatureza : string;
+
 begin
   write('Nome do produto: ');
   readln(FNome);
@@ -69,7 +73,20 @@ begin
   readln(FValorUnit);
 
   write('1 - Produto | 2 - Servico: ');
-//  readln(FTipoProduto);                     //CORRIGIR O INPUT PARA BUSCAR O TIPO
+  readln(vTipo);
+
+  case vTipo of
+    1:
+    begin
+      FTipoProduto := TTipoProduto.Produto;
+    end;
+
+    2:
+    begin
+      FTipoProduto := TTipoProduto.Servico;
+    end;
+  end;
+
 
   write('Valor de compra: ');
   readln(FValorCompra);
@@ -81,7 +98,8 @@ begin
   readln(FSaldoDisponivel);
 
   write('Natureza de mercadoria: ');
-//  readln(FNaturezaMercadoria);              //CORRIGIR O INPUT PARA BUSCAR O TIPO
+//  readln(vNatureza);
+
 end;
 
 function TProduto.ToString: String;
@@ -89,7 +107,7 @@ begin
   Result := '-------------------------------Produto----------------------------'+sLineBreak+
             'Nome: '+ FNome                                                     +sLineBreak+
             'Valor unitario: ' + FormatCurr('#.#00,00',FValorUnit)              +sLineBreak+
-//            'Tipo: ' + FTipoProduto                                             +sLineBreak+      CORRIGIR O TIPO UTILIZANDO O METODO PARA RETORNAR UMA STRING
+            'Tipo: ' + FTipoProduto                                             +sLineBreak+
             'Valor compra: ' + FormatCurr('#.##0,00',FValorCompra)              +sLineBreak+
             'Valor venda: ' + FormatCurr('#.##0,00',FValorVenda)                +sLineBreak+
             'Saldo disponivel: ' + IntToStr(FSaldoDisponivel)                   +sLineBreak+
