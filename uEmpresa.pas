@@ -23,7 +23,7 @@ type
   destructor Destroy;override;
 
   //PROCEDIMENTOS
-  procedure SolicitarInformacao();
+
 
   //FUNCTIONS
   function Tostring(): string;
@@ -35,7 +35,7 @@ implementation
 
 constructor TEmpresa.Create();
 begin
-  FNome := '';
+  FNome := 'Compra Venda';
   FSaldo := 0.00;
 
 end;
@@ -45,16 +45,9 @@ begin
   inherited
 end;
 
-procedure TEmpresa.SolicitarInformacao();
-begin
-  write('Nome: ');
-  readln(FNome);
 
-  write('Saldo inicial: ');
-  readln(FSaldo);
-end;
 
-function TEmpresa.ToString;
+function TEmpresa.ToString : string;
 begin
   Result := '-------------------------------Empresa----------------------------'+sLineBreak+
             'Nome : '+FNome                                                     +sLineBreak+

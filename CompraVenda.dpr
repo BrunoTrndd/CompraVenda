@@ -33,35 +33,35 @@ begin
         Writeln('--------------------------------------------------------------');
         Writeln('SISTEMA DE COMPRA E VENDA');
         Writeln('--------------------------------------------------------------');
-        Writeln('10   : Informacoes iniciais da empresa');
         Writeln('11   : Cadastrar Pessoa                  | 12 : Cadastrar Produto    | 13 : Cadastrar Ordem de Compra   | 14 : Cadastrar Ordem de Venda');
         Writeln('21   : Consultar Pessoa                  | 22 : Consultar Produto    | 23 : Consultar Ordem de Compra/Venda');
         Writeln('31   : Alterar Pessoa                    | 32 : Alterar Produto      | 33 : Alterar Ordem de Compra/Venda');
         Writeln('41   : Listar Parcelas de Compra Vencidas|                           | 42 : Listar Parcelas de Venda Vencidas');
         Writeln('51   : Listar Itens da Ordem             |                           |');
         Writeln('61   : Efetuar Baixa de Parcelas         |                           |');
+        Writeln('0    : Sair');
         Writeln('--------------------------------------------------------------');
         Readln(vIndice);
         case vIndice of
           10:{Informacoes iniciais da empresa}
             begin
-              vEmpresa.SolicitarInformacao();
+              Writeln(vEmpresa.ToString());
             end;
           11:{Cadastrar Pessoa}
             begin
-
+              //EVERTON
             end;
           12:{Cadastrar Produto}
             begin
-
+              //MAY
             end;
           13:{Cadastrar Ordem de Compra}
             begin
-
+              //BRUNO
             end;
           14:{Cadastrar Ordem de Venda}
             begin
-
+              //BRUNO
             end;
           21:{Consultar Pessoa}
             begin

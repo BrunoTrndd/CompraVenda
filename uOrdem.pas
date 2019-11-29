@@ -80,7 +80,7 @@ begin
   FParcelas     := TList<TParcela>.Create;
 end;
 
-destructor TOrdem.Destroy;
+destructor TOrdem.Destroy();
 begin
   for vOrdemProduto in Itens do
   begin
@@ -97,7 +97,7 @@ begin
 
 end;
 
-function TOrdem.ListaItens: string;
+function TOrdem.ListaItens(): string;
 var
 vResultado : string;
 begin
