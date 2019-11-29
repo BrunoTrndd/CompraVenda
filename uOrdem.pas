@@ -1,11 +1,6 @@
 unit uOrdem;
 
 interface
-<<<<<<< Updated upstream
-
-implementation
-
-=======
 uses uProduto,
      uParcela,
      uOrdemProduto,
@@ -206,6 +201,5 @@ begin
 
 end;
 
->>>>>>> Stashed changes
 end.
 

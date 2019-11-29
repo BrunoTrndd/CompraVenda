@@ -2,10 +2,6 @@ unit uEmpresa;
 
 interface
 
-<<<<<<< Updated upstream
-implementation
-
-=======
 uses SysUtils, Generics.Collections, uOrdem, uPessoa, uProduto;
 
 type
@@ -58,5 +54,4 @@ begin
             'Saldo inicial: '+FormatCurr('#.#00,00',FSaldo)                     +sLineBreak+
             '------------------------------------------------------------------'+sLineBreak;
 end;
->>>>>>> Stashed changes
 end.

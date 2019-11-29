@@ -2,10 +2,6 @@ unit uPessoa;
 
 interface
 
-<<<<<<< Updated upstream
-implementation
-
-=======
 uses
   Generics.Collections;
 
@@ -93,6 +89,5 @@ end;
 
 
 
->>>>>>> Stashed changes
 end.
 

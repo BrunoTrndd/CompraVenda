@@ -1,11 +1,46 @@
-unit uProduto;
+﻿unit uProduto;
 
 interface
 
+uses SysUtils, Generics.Collections, uEnums, uNaturezaMercadoria;
+
+type
+  TProduto = class
+  private
+    FNome               : string;
+    FValorUnit          : currency;
+    FTipoProduto        : TTipoProduto;
+    FValorCompra        : currency;
+    FValorVenda         : currency;
+    FSaldoVenda         : integer;
+    FSaldoDisponivel    : integer;
+    FNaturezaMercadoria : TNaturezaMercadoria;
+
+  public
+    property Nome               : string              read FNome write FNome;
+    property ValorUnit          : currency            read FValorUnit write FValorUnit;
+    property TipoProduto        : TTipoProduto        read FTipoProduto write FTipoProduto;
+    property ValorCompra        : currency            read FValorCompra write FValorCompra;
+    property ValorVenda         : currency            read FValorVenda write FValorVenda;
+    property SaldoDisponivel    : integer             read FSaldoDisponivel write FSaldoDisponivel;
+    property SaldoVenda         : integer             read FSaldoVenda write FSaldoVenda;
+    property NaturezaMercadoria : TNaturezaMercadoria read FNaturezaMercadoria write FNaturezaMercadoria;
+
+  //CONSTRUCTORS
+  constructor Create();
+  destructor  Destroy;override;
+
+  //PROCEDURES
+  procedure SolicitarInformacao();
+
+  //FUNCTIONS
+  function ToString() : string;
+
+
+  end;
+
 implementation
 
-<<<<<<< Updated upstream
-=======
 { TProduto }
 
 constructor TProduto.Create;
@@ -80,6 +115,5 @@ begin
             '------------------------------------------------------------------'+sLineBreak;
 end;
 
->>>>>>> Stashed changes
 end.
 
