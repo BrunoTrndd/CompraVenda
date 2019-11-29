@@ -35,6 +35,7 @@ type
 
   //FUNCTIONS
   function ToString() : string;
+  function ListaTipo() : string;
 
 
   end;
@@ -57,6 +58,19 @@ end;
 
 destructor TProduto.Destroy;
 begin
+
+end;
+
+function TProduto.ListaTipo(): string;
+begin
+  if FTipoProduto = TTipoProduto.Produto then
+  begin
+    Result := 'Produto';
+  end else if FTipoProduto = TTipoProduto.Servico then
+  begin
+    Result:= 'Servico';
+  end;
+
 
 end;
 
@@ -107,7 +121,7 @@ begin
   Result := '-------------------------------Produto----------------------------'+sLineBreak+
             'Nome: '+ FNome                                                     +sLineBreak+
             'Valor unitario: ' + FormatCurr('#.#00,00',FValorUnit)              +sLineBreak+
-            'Tipo: ' + FTipoProduto                                             +sLineBreak+
+            'Tipo: ' + ListaTipo()                                              +sLineBreak+
             'Valor compra: ' + FormatCurr('#.##0,00',FValorCompra)              +sLineBreak+
             'Valor venda: ' + FormatCurr('#.##0,00',FValorVenda)                +sLineBreak+
             'Saldo disponivel: ' + IntToStr(FSaldoDisponivel)                   +sLineBreak+

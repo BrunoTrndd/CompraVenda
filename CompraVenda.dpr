@@ -29,9 +29,11 @@ var vEmpresa  : TEmpresa;
 
 //FUNCTIONS
 function GetPessoa(): TPessoa;
-var vConsulta       : string;
-    vPessoaConsulta : TPessoa;
-    vEncontrou      : Boolean;
+var
+  vConsulta       : string;
+  vPessoaConsulta : TPessoa;
+  vEncontrou      : Boolean;
+
 begin
   Result := nil;
   Writeln('Informe o nome da pessoa: ');
@@ -42,8 +44,8 @@ begin
     begin
       vEncontrou  := True;
       Result      := vPessoaConsulta;
+      Exit;
     end;
-    Break;
   end;
   if vEncontrou = False then
     raise Exception.Create('Pessoa nao encontrada.');
@@ -71,7 +73,7 @@ begin
   until (vTexto = '1') or (vTexto = '2');
 end;
 
-function GetProduto(callback: TProc<TProduto>): TProduto;
+function GetProduto(): TProduto;
 var
   vEncontrou : boolean;
   vConsulta : string;
@@ -87,7 +89,6 @@ begin
    if(vConsulta = vProduto.Nome )then
    begin
      Result := vProduto;
-     callback(vProduto);
      vEncontrou := true;
    end;
   end;
@@ -108,7 +109,7 @@ begin
         Writeln('--------------------------------------------------------------');
         Writeln('SISTEMA DE COMPRA E VENDA');
         Writeln('--------------------------------------------------------------');
-        Writeln('11   : Cadastrar Pessoa                  | 12 : Cadastrar Produto    | 13 : Cadastrar Ordem de Compra   | 14 : Cadastrar Ordem de Venda');
+        Writeln('11   : Cadastrar Pessoa                  | 12 : Cadastrar Produto    | 13 : Cadastrar Ordem');
         Writeln('21   : Consultar Pessoa                  | 22 : Consultar Produto    | 23 : Consultar Ordem de Compra/Venda');
         Writeln('31   : Alterar Pessoa                    | 32 : Alterar Produto      | 33 : Alterar Ordem de Compra/Venda');
         Writeln('41   : Listar Parcelas de Compra Vencidas|                           | 42 : Listar Parcelas de Venda Vencidas');
@@ -135,23 +136,27 @@ begin
           12:{Cadastrar Produto}
             begin
 	            try
-              begin
+
                 vProduto := TProduto.Create;
                 vProduto.SolicitarInformacao();
                 vProdutos.Add(vProduto);
-              end
+
               except
                 vProduto.Free;
               end;
             end;
-          13:{Cadastrar Ordem de Compra}
+          13:{Cadastrar Ordem}
             begin
-              vOrdem.Create();
-              vOrdem.SolicitarInformacoes(EscolherTipoOrdem());
-            end;
-          14:{Cadastrar Ordem de Venda}
-            begin
-              //BRUNO
+              try
+                vOrdem := TOrdem.Create();
+                vPessoa := GetPessoa;
+                vOrdem.SolicitarInformacoes(EscolherTipoOrdem(), vPessoa, vProdutos);
+              except
+                on e : Exception do
+                begin
+                  Writeln(e.Message);
+                end;
+              end;
             end;
           21:{Consultar Pessoa}
             begin
