@@ -18,14 +18,13 @@ type
     property EhFornecedor : Boolean       read FEhFornecedor  write FEhFornecedor;
 
     constructor Create();
-    destructor Destroy;
+    destructor Destroy; override;
 
     //PPROCEDURES
     procedure SolicitarInformacoes();
-    procedure ToString();
 
     //FUNCTIONS
-
+    function ToString(): string; override;
 
   private
   protected
@@ -50,13 +49,13 @@ begin
 end;
 
 procedure TPessoa.SolicitarInformacoes;
-var vOpcao: string;
+var vOpcao: Char;
 begin
   Writeln('Informe o Nome:');
-  Read(FNome);
+  Readln(FNome);
   repeat
   Writeln('A Pessoa e um cliente?(S/N)');
-  read(vOpcao);
+  Readln(vOpcao);
   until (vOpcao = 'S') or (vOpcao = 'N');
   case vOpcao of
     'S':  FEhCliente  := True;
@@ -64,7 +63,7 @@ begin
   end;
   repeat
   Writeln('A Pessoa e um fornecedor?(S/N)');
-  read(vOpcao);
+  Readln(vOpcao);
   until (vOpcao = 'S') or (vOpcao = 'N');
   case vOpcao of
     'S':  FEhFornecedor  := True;
@@ -73,7 +72,7 @@ begin
   Writeln('Cadastro concluido com sucesso!');
 end;
 
-procedure TPessoa.ToString;
+function TPessoa.ToString: string;
 begin
   Writeln('Nome: ' + FNome);
   Write('Cliente: ');
@@ -81,7 +80,7 @@ begin
     Writeln('Sim')
   else
     Writeln('Não');
-  Writeln('Fornecedor: ');
+  Write('Fornecedor: ');
   if EhFornecedor = True then
     Writeln('Sim')
   else
