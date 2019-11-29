@@ -29,9 +29,11 @@ var vEmpresa  : TEmpresa;
 
 //FUNCTIONS
 function GetPessoa(): TPessoa;
-var vConsulta       : string;
-    vPessoaConsulta : TPessoa;
-    vEncontrou      : Boolean;
+var
+  vConsulta       : string;
+  vPessoaConsulta : TPessoa;
+  vEncontrou      : Boolean;
+
 begin
   Result := nil;
   Writeln('Informe o nome da pessoa: ');
@@ -71,7 +73,7 @@ begin
   until (vTexto = '1') or (vTexto = '2');
 end;
 
-function GetProduto(callback: TProc<TProduto>): TProduto;
+function GetProduto(): TProduto;
 var
   vEncontrou : boolean;
   vConsulta : string;
@@ -87,7 +89,6 @@ begin
    if(vConsulta = vProduto.Nome )then
    begin
      Result := vProduto;
-     callback(vProduto);
      vEncontrou := true;
    end;
   end;
@@ -135,11 +136,11 @@ begin
           12:{Cadastrar Produto}
             begin
 	            try
-              begin
+
                 vProduto := TProduto.Create;
                 vProduto.SolicitarInformacao();
                 vProdutos.Add(vProduto);
-              end
+
               except
                 vProduto.Free;
               end;
@@ -147,7 +148,8 @@ begin
           13:{Cadastrar Ordem de Compra}
             begin
               vOrdem.Create();
-              vOrdem.SolicitarInformacoes(EscolherTipoOrdem());
+              vPessoa := GetPessoa;
+              vOrdem.SolicitarInformacoes(EscolherTipoOrdem(), vPessoa, vProdutos);
             end;
           14:{Cadastrar Ordem de Venda}
             begin
