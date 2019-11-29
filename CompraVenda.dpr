@@ -22,7 +22,7 @@ var vEmpresa  : TEmpresa;
     vPessoas  : TList<TPessoa>;
     vProdutos : TList<TProduto>;
 
-   function GetProduto(): TProduto;
+   function GetProduto(callback: TProc<TProduto>): TProduto;
    var
      vEncontrou : boolean;
      vConsulta : string;
@@ -33,17 +33,18 @@ var vEmpresa  : TEmpresa;
      readln(vConsulta);
      vEncontrou:= false;
 
-      for vProduto in vProdutos do
-      begin
-        if(vConsulta = vProduto.Nome )then
-        begin
-          Result := vProduto;
-          vEncontrou := true;
-        end;
-    end;
+     for vProduto in vProdutos do
+     begin
+       if(vConsulta = vProduto.Nome )then
+       begin
+         Result := vProduto;
+         callback(vProduto);
+         vEncontrou := true;
+       end;
+     end;
 
-    if not vEncontrou then
-      raise Exception.Create('Verifique o produto informado.');
+   if not vEncontrou then
+     raise Exception.Create('Verifique o produto informado.');
 
 begin
   try
@@ -103,7 +104,12 @@ begin
             end;
           22:{Consultar Produto}
             begin
-
+              GetProduto(
+                          procedure (prProduto: TProduto)
+                          begin
+                            prProduto.ToString();
+                          end
+                        )
             end;
           23:{Consultar Ordem de Compra/Venda}
             begin
@@ -115,6 +121,13 @@ begin
             end;
           32:{Alterar Produto}
             begin
+              GetProduto(
+                          procedure (prProduto: TProduto)
+                          begin
+                            prProduto.SolicitarInformacao();
+                          end
+                        )
+            end;
 
             end;
           33:{Alterar Ordem de Compra/Venda}
