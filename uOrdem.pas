@@ -46,6 +46,7 @@ TOrdem = class
 // PROCEDURE
   procedure SolicitarInformacoes(prTipoOrdem : TTipoOrdem; prPessoa : TPessoa; prProdutos : TList<TProduto>);
   procedure SolicitarItens(prProdutos : TList<TProduto>);
+  procedure AtualizaEstoque(prStatus : integer);
 
 // FUNCTION
   function ToString() : string;
@@ -53,8 +54,6 @@ TOrdem = class
   function ListaItens() : string;
   function ListaParcelas():string;
   function ListaStatus(): string;
-
-
 
 
 
