@@ -140,7 +140,13 @@ begin
             end;
           32:{Alterar Produto}
             begin
-            	GetProduto().SolicitarInformacao;
+	GetProduto(
+                          procedure (prProduto: TProduto)
+                          begin
+                            prProduto.SolicitarInformacao();
+                          end
+                        )
+
             end;
           33:{Alterar Ordem de Compra/Venda}
             begin
