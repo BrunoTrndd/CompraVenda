@@ -21,10 +21,10 @@ type
   destructor Destroy;override;
 
   //PROCEDIMENTOS
-  procedure SolicitarInformacao();
+  procedure SolicitarInformacao(prListaQuantia: Integer);
 
   //FUNCTIONS
-  function ToString() : string;
+  function ToString() : string; override;
 
   end;
 
@@ -43,21 +43,19 @@ begin
 
 end;
 
-procedure TNaturezaMercadoria.SolicitarInformacao;
-var
-  vAux : integer;
+procedure TNaturezaMercadoria.SolicitarInformacao(prListaQuantia: integer);
+
 begin
   write('Nome: ');
   readln(FNome);
-
-  vAux := vAux + 1;
-  FHandle := vAux;
+  FHandle := prListaQuantia+1;
 end;
 
 function TNaturezaMercadoria.ToString;
 
 begin
-  Result := ('Nome: ' + FNome);
+  Result := ('Handle' + IntToStr(FHandle)+sLineBreak+
+             'Nome: ' + FNome);
 end;
 
 end.

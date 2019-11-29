@@ -101,7 +101,14 @@ begin
  raise Exception.Create('Verifique o produto informado.');
 end;
 
+function GetNatureza(): TNaturezaMercadoria;
 begin
+  result  := nil;
+end;
+
+begin
+  FormatSettings.DateSeparator:= '-';
+  FormatSettings.ShortDateFormat := 'dd-mm-yyyy';
   try
     try
       vEmpresa   := TEmpresa.Create;
@@ -168,8 +175,9 @@ begin
             begin
               vNaturezaMercadoria := TNaturezaMercadoria.Create;
               try
-                vNaturezaMercadoria.SolicitarInformacao();
+                vNaturezaMercadoria.SolicitarInformacao(vNaturezas.Count);
                 vNaturezas.Add(vNaturezaMercadoria);
+                Writeln('Cadastrado com sucesso!');
               except
                 raise Exception.Create('Nao foi possivel criar a Natureza de Mercadoria.');
               end;
@@ -180,7 +188,7 @@ begin
             end;
           22:{Consultar Produto}
             begin
-	            GetProduto().ToString;
+	            GetProduto().ToString();
             end;
           23:{Consultar Ordem de Compra/Venda}
             begin
@@ -192,7 +200,7 @@ begin
             end;
           32:{Alterar Produto}
             begin
-            	GetProduto().SolicitarInformacao;
+            	GetProduto().SolicitarInformacao();
             end;
           33:{Alterar Ordem de Compra/Venda}
             begin
