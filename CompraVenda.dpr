@@ -20,7 +20,6 @@ begin
   try
     try
       FEmpresa  := TEmpresa.Create;
-      FIndice   := 0;
       repeat
         {MENU:}
         Writeln('--------------------------------------------------------------');
