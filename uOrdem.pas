@@ -77,7 +77,7 @@ begin
   FDataEmissao  := 0;
   FValorTotal   := 0;
   FStatus       := TStatus.Cadastrado;
-  FPessoa       := TPessoa.Create;
+  FPessoa       := nil;
   FDataCadastro := 0;
   FParcelas     := TList<TParcela>.Create;
 end;

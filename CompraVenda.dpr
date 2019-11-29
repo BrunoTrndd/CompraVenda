@@ -44,8 +44,8 @@ begin
     begin
       vEncontrou  := True;
       Result      := vPessoaConsulta;
+      Exit;
     end;
-    Break;
   end;
   if vEncontrou = False then
     raise Exception.Create('Pessoa nao encontrada.');
@@ -147,9 +147,16 @@ begin
             end;
           13:{Cadastrar Ordem de Compra}
             begin
-              vOrdem.Create();
-              vPessoa := GetPessoa;
-              vOrdem.SolicitarInformacoes(EscolherTipoOrdem(), vPessoa, vProdutos);
+              try
+                vOrdem := TOrdem.Create();
+                vPessoa := GetPessoa;
+                vOrdem.SolicitarInformacoes(EscolherTipoOrdem(), vPessoa, vProdutos);
+              except
+                on e : Exception do
+                begin
+                  Writeln(e.Message);
+                end;
+              end;
             end;
           14:{Cadastrar Ordem de Venda}
             begin
