@@ -1,0 +1,14 @@
+CRONOGRAMA DO DESENVOLVIMENTO DO PROJETO
+
+25/11 - Criar diagrama das classes e estudar o processo;
+
+27/11 - Criação das classes, interação entre elas, desenvolvimento dos métodos para cadastro de produto/pessoa/nat. mercadoria e também a possibilidade de impressão de cada registro. Montar modelo de menu inicial.
+
+29/11 - Cadastro de ordem de compra/venda, criação das parcelas a partir das informações da ordem e validação de status para alteração e encerramento das ordens. Desenvolver o processo de baixa de parcelas, com atualização do saldo financeiro da empresa.
+
+02/12 - Desenvolvimento do processo de estoque, aonde devem ter tratamentos diferentes com base no tipo da ordem e também a validação nas ordens de venda com base no estoque atual.
+
+04/12 - Verificar o processo e validar possíveis erros com casos de testes específicos.
+
+06/12 - Repassar o projeto verificando melhorias na versão e desempenho.
+
