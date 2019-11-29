@@ -65,6 +65,7 @@ begin
   end;
   Result := vRetorno;
 end;
+
 //RETORNA O TIPO EM STRING
 function TBaixaParcela.ListarTipo: string;
 begin
@@ -76,6 +77,7 @@ if FTipoOrdem = TTipoOrdem.Compra then
     Result := 'Venda';
   end;
 end;
+
 //TO STRING
 function TBaixaParcela.ToString: string;
 begin

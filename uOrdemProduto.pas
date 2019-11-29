@@ -55,7 +55,7 @@ end;
 
 destructor TOrdemProduto.Destroy;
 begin
-
+  inherited;
 end;
 
 function TOrdemProduto.GetItem: TProduto;

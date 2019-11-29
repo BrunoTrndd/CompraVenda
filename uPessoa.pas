@@ -51,7 +51,7 @@ end;
 
 procedure TPessoa.SolicitarInformacoes;
 var vOpcao: string;
-begin{
+begin
   Writeln('Informe o Nome:');
   Read(FNome);
   repeat
@@ -70,7 +70,7 @@ begin{
     'S':  FEhFornecedor  := True;
     'N':  FEhFornecedor  := False;
   end;
-  Writeln('Cadastro concluido com sucesso!');   }
+  Writeln('Cadastro concluido com sucesso!');
 end;
 
 procedure TPessoa.ToString;
