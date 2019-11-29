@@ -17,10 +17,34 @@ uses
 
 var vEmpresa  : TEmpresa;
     vIndice   : Integer;
+    vOrdem    : TOrdem;
     vOrdens   : TList<TOrdem>;
     vPessoas  : TList<TPessoa>;
     vProdutos : TList<TProduto>;
 
+function EscolherTipoOrdem():TTipoOrdem;
+var
+  vTexto : string;
+begin
+  repeat
+    Writeln('Qual o tipo da ordem que deseja criar?');
+    Writeln('1 - Compra');
+    Writeln('2 - Venda');
+    Readln(vTexto);
+
+    if vTexto = '1' then
+    begin
+      Result := TTipoOrdem.Compra;
+    end else if vTexto = '2' then
+    begin
+      Result := TTipoOrdem.Venda;
+    end else
+    begin
+      Writeln('Digite um valor valido');
+    end;
+
+  until (vTexto = '1') or (vTexto = '2');
+end;
 begin
   try
     try
@@ -57,7 +81,8 @@ begin
             end;
           13:{Cadastrar Ordem de Compra}
             begin
-              //BRUNO
+              vOrdem.Create();
+              vOrdem.SolicitarInformacoes(EscolherTipoOrdem());
             end;
           14:{Cadastrar Ordem de Venda}
             begin

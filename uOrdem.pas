@@ -44,7 +44,8 @@ TOrdem = class
   destructor Destroy();
 
 // PROCEDURE
-
+  procedure SolicitarInformacoes(prTipoOrdem : TTipoOrdem; prPessoa : TPessoa; prProdutos : TList<TProduto>);
+  procedure SolicitarItens(prProdutos : TList<TProduto>);
 
 // FUNCTION
   function ToString() : string;
@@ -62,6 +63,7 @@ var
 vOrdemProduto : TOrdemProduto;
 vPessoa       : TPessoa;
 vParcela      : TParcela;
+vHandle       : Integer;
 
 implementation
 
@@ -144,6 +146,25 @@ begin
     Result := 'Venda';
   end;
 
+end;
+
+procedure TOrdem.SolicitarInformacoes(prTipoOrdem: TTipoOrdem; prPessoa : TPessoa; prProdutos : TList<TProduto>);
+begin
+  vHandle := vHandle + 1;
+  FHandle := vHandle;
+
+  FTipoOrdem := prTipoOrdem;
+  FDataCadastro := Now();
+  FStatus := TStatus.Cadastrado;
+  FPessoa := prPessoa;
+
+  SolicitarItens(prProdutos);
+
+end;
+
+procedure TOrdem.SolicitarItens(prProdutos: TList<TProduto>);
+begin
+  Writeln('PEDIR ITENS, 0 - SAIR');
 end;
 
 function TOrdem.ToString: string;
