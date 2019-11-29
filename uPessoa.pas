@@ -87,7 +87,4 @@ begin
     Writeln('Não');
 end;
 
-
-
 end.
-
