@@ -276,7 +276,6 @@ begin
     begin
       vOrdemProduto := TOrdemProduto.Create(vProduto);
       vOrdemProduto.SolicitarInformacoes();
-      vOrdemProduto.AtualizaEstoque(FTipoOrdem, FStatus);
       FItens.Add(vOrdemProduto);
     end;
   end;
