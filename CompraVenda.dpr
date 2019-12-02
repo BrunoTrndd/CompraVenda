@@ -1,4 +1,4 @@
-program CompraVenda;
+﻿program CompraVenda;
 
 {$APPTYPE CONSOLE}
 
@@ -154,7 +154,7 @@ begin
         Writeln('21   : Consultar Pessoa                  | 22 : Consultar Produto    | 23 : Consultar Ordem de Compra/Venda');
         Writeln('31   : Alterar Pessoa                    | 32 : Alterar Produto      | 33 : Alterar Ordem de Compra/Venda');
         Writeln('41   : Listar Parcelas de Compra Vencidas|                           | 42 : Listar Parcelas de Venda Vencidas');
-        Writeln('51   : Listar Itens da Ordem             |                           | 52 : Listar todas Naturezas de Mercadoria');
+        Writeln('51   : Listar Itens da Ordem             | 52 - Encerrar Ordem       | 53 : Listar todas as ordens');
         Writeln('61   : Efetuar Baixa de Parcelas         |                           |');
         Writeln('0    : Sair');
         Writeln('--------------------------------------------------------------');
@@ -266,10 +266,26 @@ begin
               end;
 
             end;
-          52:{Listar todas Naturezas de Mercadoria}
+          52: {Encerra Ordem}
             begin
-              ListarNaturezas();
+              Writeln('Qual ordem deseja encerrar? (handle)');
+              Readln(vTexto);
+              for vOrdem in vOrdens do
+              begin
+                if vOrdem.Handle = StrToInt(vTexto) then
+                begin
+                  vOrdem.EncerraOrdem();
+                end;
+              end;
             end;
+
+          53:{Lista todas as ordens}
+          begin
+            for vOrdem in vOrdens do
+            begin
+              Writeln(vOrdem.ToString);
+            end;
+          end;
           61:{Efetuar Baixa de Parcelas}
             begin
 
