@@ -30,6 +30,17 @@ var vEmpresa            : TEmpresa;
 
 //PROCEDURES
 
+procedure ListarNaturezas();
+var vNatureza: TNaturezaMercadoria;
+
+begin
+  for vNatureza in vNaturezas do
+  begin
+    Writeln(vNatureza.ToString);
+    Writeln('-----------------------------------------------');
+  end;
+end;
+
 //FUNCTIONS
 function GetPessoa(): TPessoa;
 var
@@ -102,8 +113,25 @@ begin
 end;
 
 function GetNatureza(): TNaturezaMercadoria;
+var vNatureza  : TNaturezaMercadoria;
+    vEncontrou : Boolean;
+    vPesquisa  : string;
 begin
   result  := nil;
+  Writeln('Informe o nome da natureza de mercadoria: ');
+  readln(vPesquisa);
+  vEncontrou := False;
+  for vNatureza in vNaturezas do
+  begin
+    if vPesquisa = vNatureza.Nome then
+    begin
+      vEncontrou := True;
+      Result     := vNatureza;
+      Exit;
+    end;
+  end;
+  if vEncontrou = False then
+    raise  Exception.Create('Natureza de Mercadoria não encontrada.');
 end;
 
 begin
@@ -125,7 +153,7 @@ begin
         Writeln('21   : Consultar Pessoa                  | 22 : Consultar Produto    | 23 : Consultar Ordem de Compra/Venda');
         Writeln('31   : Alterar Pessoa                    | 32 : Alterar Produto      | 33 : Alterar Ordem de Compra/Venda');
         Writeln('41   : Listar Parcelas de Compra Vencidas|                           | 42 : Listar Parcelas de Venda Vencidas');
-        Writeln('51   : Listar Itens da Ordem             |                           |');
+        Writeln('51   : Listar Itens da Ordem             |                           | 52 : Listar todas Naturezas de Mercadoria');
         Writeln('61   : Efetuar Baixa de Parcelas         |                           |');
         Writeln('0    : Sair');
         Writeln('--------------------------------------------------------------');
@@ -236,6 +264,10 @@ begin
                 end;
               end;
 
+            end;
+          52:{Listar todas Naturezas de Mercadoria}
+            begin
+              ListarNaturezas();
             end;
           61:{Efetuar Baixa de Parcelas}
             begin

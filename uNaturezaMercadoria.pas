@@ -54,8 +54,8 @@ end;
 function TNaturezaMercadoria.ToString;
 
 begin
-  Result := ('Handle' + IntToStr(FHandle)+sLineBreak+
-             'Nome: ' + FNome);
+  Result := ('Handle  : ' + IntToStr(FHandle)+sLineBreak+
+             'Nome    : ' + FNome);
 end;
 
 end.
