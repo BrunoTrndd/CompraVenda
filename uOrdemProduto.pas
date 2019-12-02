@@ -27,7 +27,7 @@ type
 
     //PROCEDURE
     procedure SolicitarInformacoes();
-    procedure AtualizarEstoque(prTipoMovimentacao, prQuantidade: Integer);
+    procedure AtualizaEstoque(prTipoMovimentacao: integer; prQuantidade: integer; prStatusOrdem: integer);
 
     //FUNCTION
     function ToString : string;
@@ -38,10 +38,11 @@ implementation
 
 { TOrdemProduto }
 
-procedure TOrdemProduto.AtualizarEstoque(prTipoMovimentacao,
-  prQuantidade: Integer);
+procedure TOrdemProduto.AtualizaEstoque(prTipoMovimentacao: integer;
+                                         prQuantidade: integer;
+                                         prStatusOrdem: integer);
 begin
-
+  FProduto.AtualizaEstoque(prQuantidade, prTipoMovimentacao, prStatusOrdem);
 end;
 
 constructor TOrdemProduto.Create(prProduto : TProduto);
