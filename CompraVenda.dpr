@@ -121,7 +121,7 @@ begin
         Writeln('--------------------------------------------------------------');
         Writeln('SISTEMA DE COMPRA E VENDA');
         Writeln('--------------------------------------------------------------');
-        Writeln('11   : Cadastrar Pessoa                  | 12 : Cadastrar Produto    | 13 : Cadastrar Ordem                  | 14 : Cadastrar Natureza de Mercadoria');
+        Writeln('11   : Cadastrar Pessoa                  | 12 : Cadastrar Produto    | 13 : Cadastrar Ordem');
         Writeln('21   : Consultar Pessoa                  | 22 : Consultar Produto    | 23 : Consultar Ordem de Compra/Venda');
         Writeln('31   : Alterar Pessoa                    | 32 : Alterar Produto      | 33 : Alterar Ordem de Compra/Venda');
         Writeln('41   : Listar Parcelas de Compra Vencidas|                           | 42 : Listar Parcelas de Venda Vencidas');
@@ -188,11 +188,20 @@ begin
             end;
           22:{Consultar Produto}
             begin
-	            GetProduto().ToString();
+	            GetProduto().ToString;
             end;
           23:{Consultar Ordem de Compra/Venda}
             begin
+              Writeln('Qual ordem deseja consultar? (handle)');
+              Readln(vTexto);
 
+              for vOrdem in vOrdens do
+              begin
+                if(vOrdem.Handle = StrToInt(vTexto)) then
+                begin
+                  vOrdem.ToString;
+                end;
+              end;
             end;
           31:{Alterar Pessoa}
             begin
@@ -216,6 +225,16 @@ begin
             end;
           51:{Listar Itens da Ordem}
             begin
+              Writeln('Qual ordem deseja listar os produtos? (handle)');
+              Readln(vTexto);
+
+              for vOrdem in vOrdens do
+              begin
+                if vOrdem.Handle = StrToInt(vTexto) then
+                begin
+                  vOrdem.ImprimirItens();
+                end;
+              end;
 
             end;
           61:{Efetuar Baixa de Parcelas}

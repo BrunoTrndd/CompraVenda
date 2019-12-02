@@ -31,13 +31,17 @@ type
 
   end;
 
+var
+  vHandle : Integer;
+
 implementation
 
 { TPessoa }
 
 constructor TPessoa.Create();
 begin
-  FHandle       := 0;
+  vHandle       := vHandle +1;
+  FHandle       := vHandle;
   FNome         := '';
   FEhCliente    := False;
   FEhFornecedor := False;

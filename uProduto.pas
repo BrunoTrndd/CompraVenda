@@ -1,4 +1,4 @@
-unit uProduto;
+﻿unit uProduto;
 
 interface
 
@@ -7,6 +7,7 @@ uses SysUtils, Generics.Collections, uEnums, uNaturezaMercadoria;
 type
   TProduto = class
   private
+    FHandle             : Integer;
     FNome               : string;
     FValorUnit          : currency;
     FTipoProduto        : TTipoProduto;
@@ -16,15 +17,17 @@ type
     FSaldoDisponivel    : integer;
     FNaturezaMercadoria : TNaturezaMercadoria;
 
+
   public
-    property Nome               : string              read FNome write FNome;
-    property ValorUnit          : currency            read FValorUnit write FValorUnit;
-    property TipoProduto        : TTipoProduto        read FTipoProduto write FTipoProduto;
-    property ValorCompra        : currency            read FValorCompra write FValorCompra;
-    property ValorVenda         : currency            read FValorVenda write FValorVenda;
-    property SaldoDisponivel    : integer             read FSaldoDisponivel write FSaldoDisponivel;
-    property SaldoVenda         : integer             read FSaldoVenda write FSaldoVenda;
-    property NaturezaMercadoria : TNaturezaMercadoria read FNaturezaMercadoria write FNaturezaMercadoria;
+    property Nome               : string              read FNome                write FNome;
+    property ValorUnit          : currency            read FValorUnit           write FValorUnit;
+    property TipoProduto        : TTipoProduto        read FTipoProduto         write FTipoProduto;
+    property ValorCompra        : currency            read FValorCompra         write FValorCompra;
+    property ValorVenda         : currency            read FValorVenda          write FValorVenda;
+    property SaldoDisponivel    : integer             read FSaldoDisponivel     write FSaldoDisponivel;
+    property SaldoVenda         : integer             read FSaldoVenda          write FSaldoVenda;
+    property NaturezaMercadoria : TNaturezaMercadoria read FNaturezaMercadoria  write FNaturezaMercadoria;
+    property Handle             : Integer             read FHandle              write FHandle;
 
   //CONSTRUCTORS
   constructor Create();
@@ -40,6 +43,8 @@ type
 
 
   end;
+var
+vHandle : Integer;
 
 implementation
 
@@ -47,6 +52,8 @@ implementation
 
 constructor TProduto.Create;
 begin
+  vHandle             := vHandle + 1;
+  FHandle             := vHandle;
   FNome               := '';
   FValorUnit          := 0.00;
   FTipoProduto        := TTipoProduto.Produto;

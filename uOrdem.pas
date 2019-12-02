@@ -50,6 +50,7 @@ TOrdem = class
   procedure AtualizaEstoque();
   procedure EncerraOrdem();
   procedure GeraParcela(prQtdParcela : Integer; prDataVencimento : TDateTime);
+  procedure ImprimirItens();
 
 // FUNCTION
   function ToString() : string;
@@ -181,6 +182,15 @@ begin
 
 end;
 
+procedure TOrdem.ImprimirItens;
+begin
+  for vOrdemProduto in Itens do
+  begin
+    Writeln(vOrdemProduto.ToString());
+  end;
+
+end;
+
 function TOrdem.ListaItens(): string;
 var
 vResultado : string;
@@ -240,7 +250,6 @@ begin
 
   FTipoOrdem := prTipoOrdem;
   FDataCadastro := Now();
-  FStatus := TStatus.Cadastrado;
   FPessoa := prPessoa;
 
   SolicitarItens(prProdutos);
@@ -249,14 +258,16 @@ end;
 
 procedure TOrdem.SolicitarItens(prProdutos: TList<TProduto>);
 var
-vProduto : TProduto;
-vTexto : string;
+  vProduto : TProduto;
+  vTexto : string;
 begin
-  Writeln('Quais desses produtos deseja selecionar? '+sLineBreak+' 0 - SAIR');
+  Writeln('Quais desses produtos deseja selecionar? '+sLineBreak+'0 - SAIR');
+  Writeln('--------------------');
   for vProduto in prProdutos do
   begin
-    Writeln(vProduto.Nome);
+    Writeln('Nome do produto : '+vProduto.Nome);
   end;
+  Writeln('--------------------');
   Readln(vTexto);
 
   for vProduto in prProdutos do

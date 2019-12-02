@@ -34,6 +34,8 @@ type
 
   end;
 
+var
+vHandle : Integer;
 implementation
 
 { TOrdemProduto }
@@ -46,7 +48,8 @@ end;
 
 constructor TOrdemProduto.Create(prProduto : TProduto);
 begin
-  FHandle     := 0;
+  vHandle     := vHandle + 1;
+  FHandle     := vHandle;
   FProduto    := prProduto;
   FValor      := 0;
   FQuantidade := 0;
@@ -69,11 +72,11 @@ end;
 function TOrdemProduto.ToString(): string;
 begin
   result  :=  '----------------------- Item da Ordem -----------------------'+sLineBreak+
-              'Handle     : '+IntToStr(FHandle)+
-              'Produto    : '+FProduto.Nome+
-              'Valor      : '+FormatCurr('R$#,##0.00',FValor)+
-              'Quantidade : '+IntToStr(FQuantidade)+
-              '-------------------------------------------------------------';
+              'Handle     : '+IntToStr(FHandle)                              +sLineBreak+
+              'Produto    : '+FProduto.Nome                                  +sLineBreak+
+              'Valor      : '+FormatCurr('R$#,##0.00',FValor)                +sLineBreak+
+              'Quantidade : '+IntToStr(FQuantidade)                          +sLineBreak+
+              '-------------------------------------------------------------'+sLineBreak;
 end;
 
 end.
