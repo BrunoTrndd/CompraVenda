@@ -32,7 +32,7 @@ type
 
   //PROCEDURES
   procedure SolicitarInformacao();
-  procedure AtualizaEstoque(prQuantidade : integer; prTipoMovimentacao : integer; prStatusOrdem : integer);
+  procedure AtualizaEstoque(prQuantidade : integer; prTipoMovimentacao : TTipoOrdem; prStatusOrdem : TStatus);
 
   //FUNCTIONS
   function ToString() : string;
@@ -132,47 +132,46 @@ end;
 
 procedure TProduto.AtualizaEstoque(prQuantidade: integer; prTipoMovimentacao: TTipoOrdem; prStatusOrdem: TStatus);
 begin
-  case prTipoMovimentacao of
-  1: //Entrada-Compra
+  if prTipoMovimentacao = TTipoOrdem.Compra then //Entrada-Compra
+  begin
+    if (prStatusOrdem = TStatus.Encerrado) then
     begin
-      if (prStatusOrdem = TStatus.Encerrado) then
-      begin
-        FSaldoDisponivel := FSaldoDisponivel + prQuantidade;
-      end;
-
-      if (prStatusOrdem = TStatus.Cancelado) then
-      begin
-        FSaldoDisponivel := FSaldoDisponivel - prQuantidade;
-      end;
+      FSaldoDisponivel := FSaldoDisponivel + prQuantidade;
     end;
 
-  2: //Saída-Venda
+    if (prStatusOrdem = TStatus.Cancelado) then
     begin
-      if (FSaldoDisponivel - prQuantidade) < 0 then
-        raise Exception.Create ('Não foi possível realizar a movimentacao de estoque.'                +sLineBreak+
-                                'Quantiade a ser movimentada é maior do que a quantidade em estoque.' +sLineBreak+
-                                'Quantidade disponivel: ' + IntToStr(FSaldoDisponivel)                +sLineBreak+
-                                'Quantidade movimentada: ' + IntToStr(prQuantidade)                   +sLineBreak);
+      FSaldoDisponivel := FSaldoDisponivel - prQuantidade;
+    end;
+  end;
 
-      //Status Cadastrado
-      if (prStatusOrdem = TStatus.Cadastrado) then
-      begin
-        FSaldoDisponivel := FSaldoDisponivel - prQuantidade;
-        FSaldoVenda := FSaldoVenda + prQuantidade;
-      end;
 
-      //Status Encerrado
-      if (prStatusOrdem = TStatus.Encerrado) then
-      begin
-        FSaldoVenda := FSaldoVenda - prQuantidade;
-      end;
+  if prTipoMovimentacao= TTipoOrdem.Venda then //Saída-Venda
+  begin
+    if (FSaldoDisponivel - prQuantidade) < 0 then
+      raise Exception.Create ('Não foi possível realizar a movimentacao de estoque.'                +sLineBreak+
+                              'Quantiade a ser movimentada é maior do que a quantidade em estoque.' +sLineBreak+
+                              'Quantidade disponivel: ' + IntToStr(FSaldoDisponivel)                +sLineBreak+
+                              'Quantidade movimentada: ' + IntToStr(prQuantidade)                   +sLineBreak);
 
-      //Status Cancelado
-      if (prStatusOrdem = TStatus.Cancelado) then
-      begin
-        FSaldoDisponivel := FSaldoDisponivel + prQuantidade;
-        FSaldoVenda := FSaldoVenda - prQuantidade;
-      end;
+    //Status Cadastrado
+    if (prStatusOrdem = TStatus.Cadastrado) then
+    begin
+      FSaldoDisponivel := FSaldoDisponivel - prQuantidade;
+      FSaldoVenda := FSaldoVenda + prQuantidade;
+    end;
+
+    //Status Encerrado
+    if (prStatusOrdem = TStatus.Encerrado) then
+    begin
+      FSaldoVenda := FSaldoVenda - prQuantidade;
+    end;
+
+    //Status Cancelado
+    if (prStatusOrdem = TStatus.Cancelado) then
+    begin
+      FSaldoDisponivel := FSaldoDisponivel + prQuantidade;
+      FSaldoVenda := FSaldoVenda - prQuantidade;
     end;
   end;
 end;
