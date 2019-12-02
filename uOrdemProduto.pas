@@ -10,14 +10,16 @@ type
   private
     FHandle     : Integer;
     FProduto    : TProduto;
-    FValor      : Currency;
+    FValorUn    : Currency;
+    FValorTotal : Currency;
     FQuantidade : Integer;
 
   public
     property Handle      : Integer   read FHandle      write FHandle;
     property Produto     : TProduto  read FProduto     write FProduto;
-    property Valor       : Currency  read FValor       write FValor;
+    property ValorUn     : Currency  read FValorUn     write FValorUn;
     property Quantidade  : Integer   read FQuantidade  write FQuantidade;
+    property ValorTotal  : Currency  read FValorTotal  write FValorTotal;
 
     //CONSTRUCTOR
     constructor Create(prProduto : TProduto);
@@ -51,7 +53,8 @@ begin
   vHandle     := vHandle + 1;
   FHandle     := vHandle;
   FProduto    := prProduto;
-  FValor      := 0;
+  FValorUn    := 0;
+  FValorTotal := 0;
   FQuantidade := 0;
 end;
 
@@ -62,11 +65,13 @@ end;
 
 procedure TOrdemProduto.SolicitarInformacoes();
 begin
-  Writeln('Informe qual o valor:');
-  read(FValor);
+  Writeln('Informe qual o valor unitario:');
+  Readln(FValorUn);
   Writeln('Informe a quantia:');
-  read(FQuantidade);
-  Writeln('Cadastro finalizado!');
+  Readln(FQuantidade);
+
+  FValorTotal := FValorUn * FQuantidade;
+
 end;
 
 function TOrdemProduto.ToString(): string;
@@ -74,7 +79,7 @@ begin
   result  :=  '----------------------- Item da Ordem -----------------------'+sLineBreak+
               'Handle     : '+IntToStr(FHandle)                              +sLineBreak+
               'Produto    : '+FProduto.Nome                                  +sLineBreak+
-              'Valor      : '+FormatCurr('R$#,##0.00',FValor)                +sLineBreak+
+              'Valor Total: '+FormatCurr('R$#,##0.00',FValorTotal)           +sLineBreak+
               'Quantidade : '+IntToStr(FQuantidade)                          +sLineBreak+
               '-------------------------------------------------------------'+sLineBreak;
 end;

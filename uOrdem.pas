@@ -122,7 +122,6 @@ vDiaVencimento : Integer;
 begin
   if FStatus = TStatus.Cadastrado then
   begin
-    //PEDIR QTD PARCELA
     Writeln('Quantas parcelas deseja criar na ordem?');
     Readln(vQtdParcela);
 
@@ -158,10 +157,10 @@ vIndice         : Integer;
 vDataVencimento : TDateTime;
 
 begin
-
+  vValorTotal := 0;
   for vOrdemProduto in Itens do
   begin
-    vValorTotal := vValorTotal + vOrdemProduto.Valor;
+    vValorTotal := vValorTotal + vOrdemProduto.ValorTotal;
   end;
 
   vValorParcela := vValorTotal/prQtdParcela;
@@ -171,7 +170,7 @@ begin
   begin
     if vIndice <> 1 then
     begin
-      IncMonth(vDataVencimento);
+      vDataVencimento := IncMonth(vDataVencimento);
     end;
 
     vParcela := TParcela.Create(FTipoOrdem, vValorParcela, vDataVencimento);
@@ -276,7 +275,6 @@ begin
     begin
       vOrdemProduto := TOrdemProduto.Create(vProduto);
       vOrdemProduto.SolicitarInformacoes();
-      vOrdemProduto.AtualizaEstoque(FTipoOrdem, FStatus);
       FItens.Add(vOrdemProduto);
     end;
   end;
