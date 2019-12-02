@@ -212,7 +212,7 @@ begin
             end;
           21:{Consultar Pessoa}
             begin
-              GetPessoa().ToString();
+              Writeln(GetPessoa().ToString());
             end;
           22:{Consultar Produto}
             begin
