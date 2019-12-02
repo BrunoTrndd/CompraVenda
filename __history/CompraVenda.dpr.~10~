@@ -19,7 +19,7 @@ uses
 var vEmpresa            : TEmpresa;
     vIndice             : Integer;
     vOrdem              : TOrdem;
-    FProduto            : TProduto;
+    vProduto            : TProduto;
     vPessoa             : TPessoa;
     vNaturezaMercadoria : TNaturezaMercadoria;
     vOrdens             : TList<TOrdem>;
@@ -91,7 +91,6 @@ end;
 function GetProduto(): TProduto;
 var
   vEncontrou : boolean;
-  vProduto : TProduto;
   vConsulta : string;
 begin
   result:= nil;
@@ -132,7 +131,7 @@ begin
     end;
   end;
   if vEncontrou = False then
-    raise  Exception.Create('Natureza de Mercadoria n√£o encontrada.');
+    raise  Exception.Create('Natureza de Mercadoria n„o encontrada.');
 end;
 
 begin
@@ -178,12 +177,12 @@ begin
             begin
 	            try
 
-                FProduto := TProduto.Create;
-                FProduto.SolicitarInformacao();
-                vProdutos.Add(FProduto);
+                vProduto := TProduto.Create;
+                vProduto.SolicitarInformacao();
+                vProdutos.Add(vProduto);
 
               except
-                FProduto.Free;
+                vProduto.Free;
               end;
             end;
           13:{Cadastrar Ordem}
