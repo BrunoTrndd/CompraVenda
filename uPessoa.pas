@@ -77,18 +77,27 @@ begin
 end;
 
 function TPessoa.ToString: string;
+
 begin
-  Writeln('Nome: ' + FNome);
-  Write('Cliente: ');
+  Result  :=  '----------------------Pessoa-------------------' +         sLineBreak+
+              'Nome     : '                                     + FNome + sLineBreak;
   if EhCliente = True then
-    Writeln('Sim')
+  begin
+    Result  :=  Result +
+              'Cliente  : Sim'                                          + sLineBreak;
+  end
   else
-    Writeln('Não');
-  Write('Fornecedor: ');
-  if EhFornecedor = True then
-    Writeln('Sim')
+    Result  :=  Result +
+              'Cliente  : Não'                                          + sLineBreak;
+
+  if EhCliente = True then
+  begin
+    Result  :=  Result +
+              'Cliente  : Sim';
+  end
   else
-    Writeln('Não');
+    Result  :=  Result +
+              'Cliente  : Não';
 end;
 
 end.
