@@ -131,6 +131,12 @@ begin
     vData := EncodeDate(YearOf(Now()),MonthOf(Now()), vDiaVencimento);
     GeraParcela(vQtdParcela, vData);
     FDataEmissao := Now();
+    FStatus := TStatus.Encerrado;
+
+    for vOrdemProduto in Itens do
+    begin
+      vOrdemProduto.AtualizaEstoque(TipoOrdem, FStatus);
+    end;
 
 
   end;

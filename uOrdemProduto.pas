@@ -2,7 +2,7 @@ unit uOrdemProduto;
 
 interface
 
-uses SysUtils, uProduto;
+uses SysUtils, uProduto, uEnums;
 
 type
   TOrdemProduto = class
@@ -27,7 +27,7 @@ type
 
     //PROCEDURE
     procedure SolicitarInformacoes();
-    procedure AtualizaEstoque(prTipoMovimentacao: integer; prQuantidade: integer; prStatusOrdem: integer);
+    procedure AtualizaEstoque(prTipoMovimentacao: TTipoOrdem; prStatusOrdem: TStatus);
 
     //FUNCTION
     function ToString : string;
@@ -38,11 +38,10 @@ implementation
 
 { TOrdemProduto }
 
-procedure TOrdemProduto.AtualizaEstoque(prTipoMovimentacao: integer;
-                                         prQuantidade: integer;
-                                         prStatusOrdem: integer);
+procedure TOrdemProduto.AtualizaEstoque(prTipoMovimentacao: TTipoOrdem;
+                                        prStatusOrdem: TStatus);
 begin
-  FProduto.AtualizaEstoque(prQuantidade, prTipoMovimentacao, prStatusOrdem);
+  FProduto.AtualizaEstoque(FQuantidade, prTipoMovimentacao, prStatusOrdem);
 end;
 
 constructor TOrdemProduto.Create(prProduto : TProduto);

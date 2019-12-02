@@ -130,17 +130,17 @@ begin
             '------------------------------------------------------------------'+sLineBreak;
 end;
 
-procedure TProduto.AtualizaEstoque(prQuantidade: integer; prTipoMovimentacao: integer; prStatusOrdem: integer);
+procedure TProduto.AtualizaEstoque(prQuantidade: integer; prTipoMovimentacao: TTipoOrdem; prStatusOrdem: TStatus);
 begin
   case prTipoMovimentacao of
   1: //Entrada-Compra
     begin
-      if (prStatusOrdem = 2) then
+      if (prStatusOrdem = TStatus.Encerrado) then
       begin
         FSaldoDisponivel := FSaldoDisponivel + prQuantidade;
       end;
 
-      if (prStatusOrdem = 3) then
+      if (prStatusOrdem = TStatus.Cancelado) then
       begin
         FSaldoDisponivel := FSaldoDisponivel - prQuantidade;
       end;
@@ -155,20 +155,20 @@ begin
                                 'Quantidade movimentada: ' + IntToStr(prQuantidade)                   +sLineBreak);
 
       //Status Cadastrado
-      if (prStatusOrdem = 1) then
+      if (prStatusOrdem = TStatus.Cadastrado) then
       begin
         FSaldoDisponivel := FSaldoDisponivel - prQuantidade;
         FSaldoVenda := FSaldoVenda + prQuantidade;
       end;
 
       //Status Encerrado
-      if (prStatusOrdem = 2) then
+      if (prStatusOrdem = TStatus.Encerrado) then
       begin
         FSaldoVenda := FSaldoVenda - prQuantidade;
       end;
 
       //Status Cancelado
-      if (prStatusOrdem = 3) then
+      if (prStatusOrdem = TStatus.Cancelado) then
       begin
         FSaldoDisponivel := FSaldoDisponivel + prQuantidade;
         FSaldoVenda := FSaldoVenda - prQuantidade;
