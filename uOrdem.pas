@@ -78,7 +78,8 @@ end;
 
 constructor TOrdem.Create;
 begin
-  FHandle       := 0;
+  Inc(vHandle);
+  FHandle       := vHandle;
   FTipoOrdem    := TTipoOrdem.Compra;  //FIXADO PARA CRIAR COMO COMPRA
   FItens        := TList<TOrdemProduto>.Create;
   FDataEmissao  := 0;
@@ -129,6 +130,7 @@ begin
 
     vData := EncodeDate(YearOf(Now()),MonthOf(Now()), vDiaVencimento);
     GeraParcela(vQtdParcela, vData);
+    FDataEmissao := Now();
 
 
   end;
@@ -228,8 +230,7 @@ vNumero : Integer;
 i       : Integer;
 vValorTotal : Currency;
 begin
-  vHandle := vHandle + 1;
-  FHandle := vHandle;
+
 
   FTipoOrdem := prTipoOrdem;
   FDataCadastro := Now();
