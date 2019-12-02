@@ -1,7 +1,7 @@
 unit uParcela;
 
 interface
-uses DateUtils, SysUtils;
+uses DateUtils, SysUtils, uEnums;
 
 type
 TParcela = class
@@ -10,20 +10,21 @@ TParcela = class
     FHandle         : Integer;
     FDataCadastro   : TDateTime;
     FDataVencimento : TDateTime;
-    FValorTotal     : Currency;
+    FValor          : Currency;
     FPago           : Boolean;
     FSequencia      : Integer;
+    FAbrangencia    : TTipoOrdem;
 
   public
     property Handle         : Integer read FHandle write FHandle;
     property DataCadastro   : TDateTime read FDataCadastro write FDataCadastro;
     property DataVencimento : TDateTime read FDataVencimento write FDataVencimento;
-    property ValorTotal     : Currency read FValorTotal write FValorTotal;
+    property ValorTotal     : Currency read FValor write FValor;
     property Pago           : Boolean read FPago write FPago;
     property Sequencia      : Integer read FSequencia write FSequencia;
 
 // CONSTRUCTOR
-  constructor Create();
+  constructor Create(prAbrangencia : TTipoOrdem; prValor : Currency; prDataVencimento : TDateTime);
 
 // DESTRUCTOR
   destructor Destroy();
@@ -60,13 +61,15 @@ end;
 
 
 //CREATE
-constructor TParcela.Create;
+constructor TParcela.Create(prAbrangencia : TTipoOrdem; prValor : Currency; prDataVencimento : TDateTime);
 begin
-  FHandle         := 0;
-  FDataCadastro   := 0;
-  FDataVencimento := 0;
-  FValorTotal     := 0;
+  Inc(vHandle);
+  FHandle         := vHandle;
+  FDataCadastro   := Now();
+  FDataVencimento := prDataVencimento;
+  FValor          := prValor;
   FPago           := False;
+  FAbrangencia    := prAbrangencia;
 end;
 
 //DESTROY
@@ -87,7 +90,7 @@ begin
   vValorParcela := prValorTotal/prQtd;
 
   FSequencia      := prSequencia;
-  FValorTotal     := vValorParcela;
+  FValor          := vValorParcela;
   FDataCadastro   := Now();
   if i = 1 then
   begin
@@ -122,7 +125,7 @@ begin
             'Handle : '+IntToStr(FHandle)                                       +sLineBreak+
             'Data de Cadastro: '+FormatDateTime('dd-mm-yyyy',FDataCadastro)     +sLineBreak+
             'Vencimento: '+FormatDateTime('dd-mm-yyyy',FDataVencimento)         +sLineBreak+
-            'Valor Total: '+FormatCurr('#.##0,00',FValorTotal)                  +sLineBreak+
+            'Valor Total: '+FormatCurr('#.##0,00',FValor)                       +sLineBreak+
             'Pago: '+ListaPago()                                                +sLineBreak+
             '------------------------------------------------------------------'+sLineBreak;
 end;

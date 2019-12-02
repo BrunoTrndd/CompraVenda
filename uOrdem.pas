@@ -7,6 +7,7 @@ uses uProduto,
      uEnums,
      uPessoa,
      SysUtils,
+     DateUtils,
      Generics.Collections;
 
 type
@@ -46,7 +47,9 @@ TOrdem = class
 // PROCEDURE
   procedure SolicitarInformacoes(prTipoOrdem : TTipoOrdem; prPessoa : TPessoa; prProdutos : TList<TProduto>);
   procedure SolicitarItens(prProdutos : TList<TProduto>);
-  procedure AtualizaEstoque(prStatus : integer);
+  procedure AtualizaEstoque();
+  procedure EncerraOrdem();
+  procedure GeraParcela(prQtdParcela : Integer; prDataVencimento : TDateTime);
 
 // FUNCTION
   function ToString() : string;
@@ -67,6 +70,11 @@ vHandle       : Integer;
 implementation
 
 { TOrdem }
+
+procedure TOrdem.AtualizaEstoque;
+begin
+
+end;
 
 constructor TOrdem.Create;
 begin
@@ -95,6 +103,73 @@ begin
   Itens.Free;
   Parcelas.Free;
   FPessoa.Destroy();
+
+end;
+
+{
+  ENCERRAORDEM
+  ENCERRA A ORDEM
+  PARAM : NONE
+  ENCERRA A ORDEM ATUALIZANDO O ESTOQUE E GERANDO PARCELAS
+}
+procedure TOrdem.EncerraOrdem;
+var
+vQtdParcela    : Integer;
+vData          : TDateTime;
+vDiaVencimento : Integer;
+begin
+  if FStatus = TStatus.Cadastrado then
+  begin
+    //PEDIR QTD PARCELA
+    Writeln('Quantas parcelas deseja criar na ordem?');
+    Readln(vQtdParcela);
+
+    Writeln('Qual dia sera o vencimento das parcelas?');
+    Readln(vDiaVencimento);
+
+    vData := EncodeDate(YearOf(Now()),MonthOf(Now()), vDiaVencimento);
+    GeraParcela(vQtdParcela, vData);
+
+
+  end;
+end;
+
+
+{
+  GERAPARCELA
+  GERA AS PARCELAS DA ORDEM
+  PARAM : QUANTIDADE DE PARCELAS : INTEGER
+  GERA O INTEGER PASSADO COMO PARÂMETRO EM QUANTIDADE DE PARCELA
+}
+procedure TOrdem.GeraParcela(prQtdParcela: Integer; prDataVencimento : TDateTime);
+var
+vValorTotal     : Currency;
+vValorParcela   : Currency;
+vIndice         : Integer;
+vDataVencimento : TDateTime;
+
+begin
+
+  for vOrdemProduto in Itens do
+  begin
+    vValorTotal := vValorTotal + vOrdemProduto.Valor;
+  end;
+
+  vValorParcela := vValorTotal/prQtdParcela;
+  vDataVencimento := prDataVencimento;
+
+  for vIndice := 1 to prQtdParcela do
+  begin
+    if vIndice <> 1 then
+    begin
+      IncMonth(vDataVencimento);
+    end;
+
+    vParcela := TParcela.Create(FTipoOrdem, vValorParcela, vDataVencimento);
+    FParcelas.Add(vParcela);
+
+  end;
+
 
 end;
 
@@ -162,23 +237,6 @@ begin
   FPessoa := prPessoa;
 
   SolicitarItens(prProdutos);
-  try
-    Writeln('Em quantas parcelas deseja fazer o pagamento?');
-    Readln(vNumero);
-
-    for i := 1 to vNumero do
-    begin
-      vParcela := TParcela.Create;
-      vParcela.CriarParcelas(vNumero, vValorTotal, i);     // VALORTOTAL NAO INSTANCIADO
-    end;
-
-
-  except
-    on E : Exception do
-      Writeln('Erro: ' + E.Message);
-  end;
-
-
 
 end;
 
