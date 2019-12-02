@@ -1,4 +1,4 @@
-﻿unit uProduto;
+unit uProduto;
 
 interface
 
@@ -32,7 +32,7 @@ type
 
   //PROCEDURES
   procedure SolicitarInformacao();
-  procedure AtualizaEstoque(prQuantidade : integer; prTipoMovimentacao : integer; prStatus : TEnums);
+  procedure AtualizaEstoque(prQuantidade : integer; prTipoMovimentacao : integer; prStatusOrdem : integer);
 
   //FUNCTIONS
   function ToString() : string;
@@ -130,17 +130,17 @@ begin
             '------------------------------------------------------------------'+sLineBreak;
 end;
 
-procedure TProduto.AtualizaEstoque(prQuantidade : integer; prTipoMovimentacao : integer; prStatus : TEnums);
+procedure TProduto.AtualizaEstoque(prQuantidade: integer; prTipoMovimentacao: integer; prStatusOrdem: integer);
 begin
   case prTipoMovimentacao of
   1: //Entrada-Compra
     begin
-      if (prStatus = 2) then
+      if (prStatusOrdem = 2) then
       begin
         FSaldoDisponivel := FSaldoDisponivel + prQuantidade;
       end;
 
-      if (prStatus = 3) then
+      if (prStatusOrdem = 3) then
       begin
         FSaldoDisponivel := FSaldoDisponivel - prQuantidade;
       end;
@@ -152,23 +152,23 @@ begin
         raise Exception.Create ('Não foi possível realizar a movimentacao de estoque.'                +sLineBreak+
                                 'Quantiade a ser movimentada é maior do que a quantidade em estoque.' +sLineBreak+
                                 'Quantidade disponivel: ' + IntToStr(FSaldoDisponivel)                +sLineBreak+
-                                'Quantidade movimentada: ' + IntToStr(prQuantidade)                   +sLineBreak+);
+                                'Quantidade movimentada: ' + IntToStr(prQuantidade)                   +sLineBreak);
 
       //Status Cadastrado
-      if (prStatus = 1) then
+      if (prStatusOrdem = 1) then
       begin
         FSaldoDisponivel := FSaldoDisponivel - prQuantidade;
         FSaldoVenda := FSaldoVenda + prQuantidade;
       end;
 
       //Status Encerrado
-      if (prStatus = 2) then
+      if (prStatusOrdem = 2) then
       begin
         FSaldoVenda := FSaldoVenda - prQuantidade;
       end;
 
       //Status Cancelado
-      if (prStatus = 3) then
+      if (prStatusOrdem = 3) then
       begin
         FSaldoDisponivel := FSaldoDisponivel + prQuantidade;
         FSaldoVenda := FSaldoVenda - prQuantidade;
