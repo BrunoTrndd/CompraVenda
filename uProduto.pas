@@ -91,7 +91,7 @@ begin
   write('Nome do produto: ');
   readln(FNome);
 
-  write('Valor unitário: ');
+  write('Valor unitario: ');
   readln(FValorUnit);
 
   write('1 - Produto | 2 - Servico: ');
@@ -133,7 +133,7 @@ begin
             'Valor compra: ' + FormatCurr('#.##0,00',FValorCompra)              +sLineBreak+
             'Valor venda: ' + FormatCurr('#.##0,00',FValorVenda)                +sLineBreak+
             'Saldo disponivel: ' + IntToStr(FSaldoDisponivel)                   +sLineBreak+
-            'Saldo reservado: ' IntToSrt(FSaldoVenda)                           +sLineBreak+
+            'Saldo reservado: ' + IntToStr(FSaldoVenda)                           +sLineBreak+
 //            'Natureza: ' + FNaturezaMercadoria                                  +sLineBreak+      CORRIGIR O TIPO UTILIZANDO O METODO PARA RETORNAR UMA STRING
             '------------------------------------------------------------------'+sLineBreak;
 end;
@@ -157,9 +157,10 @@ begin
   if prTipoMovimentacao= TTipoOrdem.Venda then //Saída-Venda
   begin
     if (FSaldoDisponivel - prQuantidade) < 0 then
-      raise Exception.Create ('Não foi possível realizar a movimentacao de estoque.'                +sLineBreak+
-                              'Quantiade a ser movimentada é maior do que a quantidade em estoque.' +sLineBreak+
+      raise Exception.Create ('Nao foi possivel realizar a movimentacao de estoque.'                +sLineBreak+
+                              'Quantidade da venda e maior que a quantidade disponivel.'            +sLineBreak+
                               'Quantidade disponivel: ' + IntToStr(FSaldoDisponivel)                +sLineBreak+
+                              'Quantidade reservada: ' + IntToStr(FSaldoDisponivel)                 +sLineBreak+
                               'Quantidade movimentada: ' + IntToStr(prQuantidade)                   +sLineBreak);
 
     //Status Cadastrado
