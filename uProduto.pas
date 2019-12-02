@@ -32,6 +32,7 @@ type
 
   //PROCEDURES
   procedure SolicitarInformacao();
+  procedure AtualizaEstoque(prQuantidade : integer; prTipoMovimentacao : integer; prStatus : TEnums);
 
   //FUNCTIONS
   function ToString() : string;
@@ -127,6 +128,53 @@ begin
             'Saldo disponivel: ' + IntToStr(FSaldoDisponivel)                   +sLineBreak+
 //            'Natureza: ' + FNaturezaMercadoria                                  +sLineBreak+      CORRIGIR O TIPO UTILIZANDO O METODO PARA RETORNAR UMA STRING
             '------------------------------------------------------------------'+sLineBreak;
+end;
+
+procedure TProduto.AtualizaEstoque(prQuantidade : integer; prTipoMovimentacao : integer; prStatus : TEnums);
+begin
+  case prTipoMovimentacao of
+  1: //Entrada-Compra
+    begin
+      if (prStatus = 2) then
+      begin
+        FSaldoDisponivel := FSaldoDisponivel + prQuantidade;
+      end;
+
+      if (prStatus = 3) then
+      begin
+        FSaldoDisponivel := FSaldoDisponivel - prQuantidade;
+      end;
+    end;
+
+  2: //Saída-Venda
+    begin
+      if (FSaldoDisponivel - prQuantidade) < 0 then
+        raise Exception.Create ('Não foi possível realizar a movimentacao de estoque.'                +sLineBreak+
+                                'Quantiade a ser movimentada é maior do que a quantidade em estoque.' +sLineBreak+
+                                'Quantidade disponivel: ' + IntToStr(FSaldoDisponivel)                +sLineBreak+
+                                'Quantidade movimentada: ' + IntToStr(prQuantidade)                   +sLineBreak+);
+
+      //Status Cadastrado
+      if (prStatus = 1) then
+      begin
+        FSaldoDisponivel := FSaldoDisponivel - prQuantidade;
+        FSaldoVenda := FSaldoVenda + prQuantidade;
+      end;
+
+      //Status Encerrado
+      if (prStatus = 2) then
+      begin
+        FSaldoVenda := FSaldoVenda - prQuantidade;
+      end;
+
+      //Status Cancelado
+      if (prStatus = 3) then
+      begin
+        FSaldoDisponivel := FSaldoDisponivel + prQuantidade;
+        FSaldoVenda := FSaldoVenda - prQuantidade;
+      end;
+    end;
+  end;
 end;
 
 end.
