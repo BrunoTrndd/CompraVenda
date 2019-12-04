@@ -19,7 +19,7 @@ TBaixaParcela = class
   constructor Create();
 
 // DESTRUCTOR
-  destructor Destroy();
+  destructor Destroy();override;
 
 // FUNCTIONS
   function ToString()      : string;

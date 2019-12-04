@@ -25,7 +25,7 @@ type
     constructor Create(prProduto : TProduto);
 
     //DESTRUCTOR
-    destructor Destroy();
+    destructor Destroy();override;
 
     //PROCEDURE
     procedure SolicitarInformacoes();

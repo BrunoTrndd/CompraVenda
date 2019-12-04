@@ -27,7 +27,7 @@ TParcela = class
   constructor Create(prAbrangencia : TTipoOrdem; prValor : Currency; prDataVencimento : TDateTime);
 
 // DESTRUCTOR
-  destructor Destroy();
+  destructor Destroy();override;
 
 // FUNCTIONS
   function ToString()  : string;
@@ -35,7 +35,6 @@ TParcela = class
   function GetDate(prTipoData : string)   : TDateTime;
 
 // PROCEDURES
-  procedure CriarParcelas(prQtd : Integer; prValorTotal: Currency; prSequencia : Integer);
 
 end;
 
@@ -43,8 +42,6 @@ var
 vHandle : Integer;
 
 implementation
-
-
 
 { TParcela }
 
@@ -77,35 +74,6 @@ destructor TParcela.Destroy;
 begin
   inherited;
 end;
-
-procedure TParcela.CriarParcelas(prQtd: Integer; prValorTotal: Currency; prSequencia : Integer);
-var
-vValorParcela : Currency;
-i : Integer;
-vData : TDateTime;
-begin
-//DATA PADRÃO: 01/01/2019 e adicionando um mes a cada parcela
-  vData := GetDate('Data da primeira parcela');
-  vHandle := vHandle + 1;
-  vValorParcela := prValorTotal/prQtd;
-
-  FSequencia      := prSequencia;
-  FValor          := vValorParcela;
-  FDataCadastro   := Now();
-  if i = 1 then
-  begin
-    FDataVencimento := vData;
-  end else
-  begin
-    vData := IncMonth(vData);
-    FDataVencimento := vData;
-  end;
-end;
-
-
-
-
-
 
 function TParcela.ListaPago: string;
 begin
