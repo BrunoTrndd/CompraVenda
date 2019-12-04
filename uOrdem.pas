@@ -50,6 +50,7 @@ TOrdem = class
   procedure EncerraOrdem();
   procedure GeraParcela(prQtdParcela : Integer; prDataVencimento : TDateTime);
   procedure ImprimirItens();
+  procedure ImprimirParcelas();
 
 // FUNCTION
   function ToString() : string; override;
@@ -162,6 +163,18 @@ begin
   end;
 
 end;
+procedure TOrdem.ImprimirParcelas;
+var
+vParcela : TParcela;
+begin
+  Writeln('------------------Ordem : ' + IntToStr(FHandle) + '-----------------------');
+  for vParcela in FParcelas do
+  begin
+    Writeln('Parcela : '+ IntToStr(vParcela.Handle) + 'Tipo : '+ ListaTipo());
+  end;
+  Writeln('--------------------------------------------------');
+end;
+
 {
   LISTAITENS
   PARAM: NONE
