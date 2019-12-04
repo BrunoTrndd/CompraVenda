@@ -22,10 +22,13 @@ var FEmpresa            : TEmpresa;
     FProduto            : TProduto;
     FPessoa             : TPessoa;
     FNaturezaMercadoria : TNaturezaMercadoria;
+    FBaixa              : TBaixaParcela;
     FOrdens             : TList<TOrdem>;
     FPessoas            : TList<TPessoa>;
     FProdutos           : TList<TProduto>;
     FNaturezas          : TList<TNaturezaMercadoria>;
+    FBaixas             : TList<TBaixaParcela>;
+
 //PROCEDURES
 
 procedure ListarNaturezas();
@@ -171,6 +174,67 @@ begin
     raise Exception.Create('Ordem nao encontrada.');
 end;
 
+procedure BaixarTodasParcelas(prOrdem : TOrdem);
+var
+vParcela : TParcela;
+vBaixaParcela : TBaixaParcela;
+begin
+  vBaixaParcela := TBaixaParcela.Create();
+  try
+    for vParcela in prOrdem.Parcelas do
+    begin
+      vBaixaParcela.AdicionarParcela(vParcela);
+    end;
+    vBaixaParcela.BaixarParcelas();
+    FBaixas.Add(vBaixaParcela);
+  except
+    on E : Exception do
+      Writeln('Erro: '+ E.Message);
+  end;
+end;
+
+
+procedure MenuBaixa();
+var
+vTexto   : string;
+vOrdem   : TOrdem;
+begin
+  Writeln('----------------------BAIXAS---------------------'+sLineBreak+
+          '01 - Baixar todas as parcelas de uma ordem'       +sLineBreak+
+          '02 - Baixar todas as parcelas de varias ordens'   +sLineBreak+
+          '03 - Baixar parcela unica'                        +sLineBreak+
+          '04 - Baixar varias parcelas'                      +sLineBreak+
+          '-------------------------------------------------'+sLineBreak);
+  Readln(vTexto);
+
+  case vTexto of
+    01: //Baixar todas as parcelas de uma ordem
+    begin
+      ListarOrdens();
+      vOrdem := GetOrdem();
+      BaixarTodasParcelas(vOrdem);
+
+    end;
+
+    02: //Baixar todas as parcelas de varias ordens
+    begin
+
+    end;
+
+    03: //Baixar parcela unica
+    begin
+
+    end;
+
+    04: //Baixar varias parcelas
+    begin
+
+    end;
+  end;
+end;
+
+
+
 begin
   FormatSettings.DateSeparator:= '-';
   FormatSettings.ShortDateFormat := 'dd-mm-yyyy';
@@ -207,7 +271,7 @@ begin
               FPessoa   :=  TPessoa.Create;
               try
                 FPessoa.SolicitarInformacoes();
-                FPessoas.Add(vPessoa);
+                FPessoas.Add(FPessoa);
               except
                 on e : Exception do
                 begin
@@ -305,7 +369,8 @@ begin
             end;
           61:{Efetuar Baixa de Parcelas}
             begin
-
+              //BAIXAR ORDEM, BAIXAR PARCELA ESPECÍFICA, AO COMEÇAR A BAIXA PERGUNTAR QUAL O TIPO DE ORDEM QUE QUER BAIXAR
+              MenuBaixa();
             end;
         end;
       until (FIndice = 0);

@@ -92,7 +92,8 @@ procedure TParcela.BaixarParcela();
 begin
   if Now() > DataVencimento then
   begin
-    raise Exception.Create('A parcela ' + IntToStr(Handle) + ' esta vencida');
+    Writeln('A parcela ' + IntToStr(Handle) + ' esta vencida, mas foi baixada.');
+    Pago := True;
   end else if Pago then
     begin
       raise Exception.Create('A Parcela' + IntToStr(Handle) + ' ja esta paga.');
