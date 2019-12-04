@@ -187,6 +187,8 @@ var
   vPesquisa : Integer;
   vListaOrdem : TList<TOrdem>;
 begin
+  vPesquisa := 1;
+  vListaOrdem := TList<TOrdem>.Create;
   vEncontrou  := False;
   while vPesquisa <> 0 do
   begin
