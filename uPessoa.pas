@@ -25,6 +25,7 @@ type
 
     //FUNCTIONS
     function ToString(): string; override;
+    function BoolToString(prBool: Boolean): string;
 
   private
   protected
@@ -37,6 +38,14 @@ var
 implementation
 
 { TPessoa }
+
+function TPessoa.BoolToString(prBool: Boolean): string;
+begin
+  if prBool = True then
+    Result  :=  'Sim'
+  else
+    Result  :=  'Nao';
+end;
 
 constructor TPessoa.Create();
 begin
@@ -78,17 +87,9 @@ end;
 
 function TPessoa.ToString: string;
 begin
-  Writeln('Nome: ' + FNome);
-  Write('Cliente: ');
-  if EhCliente = True then
-    Writeln('Sim')
-  else
-    Writeln('Não');
-  Write('Fornecedor: ');
-  if EhFornecedor = True then
-    Writeln('Sim')
-  else
-    Writeln('Não');
+  Writeln('Nome       : ' + FNome);
+  Writeln('Cliente    : ' + BoolToString(EhCliente));
+  Writeln('Fornecedor : ' + BoolToString(EhFornecedor));
 end;
 
 end.
