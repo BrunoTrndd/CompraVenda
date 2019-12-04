@@ -76,7 +76,7 @@ procedure TOrdem.AtualizaEstoque;
 begin
 
 end;
-
+//CREATE
 constructor TOrdem.Create;
 begin
   Inc(vHandle);
@@ -90,7 +90,7 @@ begin
   FDataCadastro := 0;
   FParcelas     := TList<TParcela>.Create;
 end;
-
+//DESTROY
 destructor TOrdem.Destroy();
 begin
   for vOrdemProduto in Itens do
@@ -181,6 +181,11 @@ begin
 
 end;
 
+{
+  IMPRIMIRITENS
+  PARAM : NONE
+  CHAMA O TOSTRING DE TODOS OS ITENS DA ORDEM
+}
 procedure TOrdem.ImprimirItens;
 begin
   for vOrdemProduto in Itens do
@@ -189,7 +194,11 @@ begin
   end;
 
 end;
-
+{
+  LISTAITENS
+  PARAM: NONE
+  RETORNA UMA STRING COM TODOS OS HANDLES DE ORDEMPRODUTO VINCULADO À ORDEM SEPARADAS POR BARRA '/'
+}
 function TOrdem.ListaItens(): string;
 var
 vResultado : string;
@@ -201,6 +210,12 @@ begin
   Result := vResultado;
 end;
 
+{
+  LISTAPARCELAS
+  PARAM  : NONE
+  RETURN : STRING
+  RETORNA UMA STRING COM TODOS OS HANDLES DAS PARCELAS VINCULADAS A ORDEM SEPARADAS POR BARRA '/'
+}
 function TOrdem.ListaParcelas: string;
 var
 vResultado : string;
@@ -212,6 +227,12 @@ begin
   Result := vResultado;
 end;
 
+{
+  LISTASTATUS
+  PARAM  : NONE
+  RETURN : STRING
+  RETORNA O STATUS DA ORDEM COMO STRING
+}
 function TOrdem.ListaStatus: string;
 begin
   if FStatus = TStatus.Cadastrado then
@@ -226,7 +247,12 @@ begin
   end;
 
 end;
-
+{
+  LISTATIPO
+  PARAM  : NONE
+  RETURN : STRING
+  RETORNA O TIPO DA ORDEM COMO STRING
+}
 function TOrdem.ListaTipo: string;
 begin
   if FTipoOrdem = TTipoOrdem.Compra then
@@ -238,7 +264,12 @@ begin
   end;
 
 end;
-
+{
+  SOLICITARINFORMACOES
+  PARAM  : TIPO DA ORDEM, PESSOA DA ORDEM, LISTA DE PRODUTOS PARA QUE POSSA
+  ESCOLHER QUAL IRÁ COLOCAR NA ORDEM
+  METODO PARA POPULAR A ORDEM
+}
 procedure TOrdem.SolicitarInformacoes(prTipoOrdem: TTipoOrdem; prPessoa : TPessoa; prProdutos : TList<TProduto>);
 begin
 
@@ -255,22 +286,28 @@ var
   vProduto : TProduto;
   vTexto : string;
 begin
-  Writeln('Quais desses produtos deseja selecionar? '+sLineBreak+'0 - SAIR');
-  Writeln('--------------------');
-  for vProduto in prProdutos do
+  while vTexto <> '0' do
   begin
-    Writeln('Nome do produto : '+vProduto.Nome);
-  end;
-  Writeln('--------------------');
-  Readln(vTexto);
-
-  for vProduto in prProdutos do
-  begin
-    if(vProduto.Nome = vTexto) then
+    Writeln('Quais desses produtos deseja selecionar? ');
+    Writeln('--------------------');
+    for vProduto in prProdutos do
     begin
-      vOrdemProduto := TOrdemProduto.Create(vProduto);
-      vOrdemProduto.SolicitarInformacoes();
-      FItens.Add(vOrdemProduto);
+      Writeln('Nome do produto : '+vProduto.Nome);
+    end;
+    Writeln('SAIR - 0');
+    Writeln('--------------------');
+
+    Readln(vTexto);
+
+    for vProduto in prProdutos do
+    begin
+      if(vProduto.Nome = vTexto) then
+      begin
+        vOrdemProduto := TOrdemProduto.Create(vProduto);
+        vOrdemProduto.SolicitarInformacoes();
+        FItens.Add(vOrdemProduto);
+        Writeln('Produto '+ vProduto.Nome + ' foi adicionado na ordem'+sLineBreak+sLineBreak);
+      end;
     end;
   end;
 end;
