@@ -229,8 +229,7 @@ begin
 end;
 
 procedure BaixarVariasOrdens(prListaOrdem : TList<TOrdem>);
-var
-vOrdem : TOrdem;
+var vOrdem : TOrdem;
 begin
   for vOrdem in prListaOrdem do
   begin
@@ -239,11 +238,11 @@ begin
 end;
 
 function GetParcela():TParcela;
-var
-vTexto : string;
-vOrdem : TOrdem;
-vParcela : TParcela;
+var vTexto : string;
+    vOrdem : TOrdem;
+    vParcela : TParcela;
 begin
+  Result  :=  nil;
   Writeln('Qual o handle da parcela?');
   Readln(vTexto);
 
@@ -264,10 +263,9 @@ end;
 
 
 procedure MenuBaixa();
-var
-vIndice   : Integer;
-vOrdem    : TOrdem;
-vListaOrdem : TList<TOrdem>;
+var vIndice   : Integer;
+    vOrdem    : TOrdem;
+    vListaOrdem : TList<TOrdem>;
 begin
   Writeln('----------------------BAIXAS---------------------'+sLineBreak+
           '01 - Baixar todas as parcelas de uma ordem'       +sLineBreak+
@@ -277,38 +275,41 @@ begin
           '05 - Baixar ordem de venda'                       +sLineBreak+
           '-------------------------------------------------'+sLineBreak);
   Readln(vIndice);
+  try
+    case vIndice of
+      01: //Baixar todas as parcelas de uma ordem
+      begin
+        ListarOrdens();
+        vOrdem := GetOrdem();
+        BaixarTodasParcelas(vOrdem);
 
-  case vIndice of
-    01: //Baixar todas as parcelas de uma ordem
-    begin
-      ListarOrdens();
-      vOrdem := GetOrdem();
-      BaixarTodasParcelas(vOrdem);
+      end;
 
+      02: //Baixar todas as parcelas de varias ordens
+      begin
+        ListarOrdens();
+        vListaOrdem := GetVariasOrdens();
+        BaixarVariasOrdens(vListaOrdem);
+      end;
+
+      03: //Baixar parcela unica
+      begin
+        vParcela := GetParcela();
+        vParcela.BaixarParcela(); //CORRIGIR POIS NÃO PODE CHAMAR ESSE METODO AQUI ANTES DE PASSAR POR BAIXAPARCELA
+      end;
+
+      04: //Baixar ordem de compra
+      begin
+
+      end;
+
+      05: //Baixar ordem de venda
+      begin
+
+      end;
     end;
-
-    02: //Baixar todas as parcelas de varias ordens
-    begin
-      ListarOrdens();
-      vListaOrdem := GetVariasOrdens();
-      BaixarVariasOrdens(vListaOrdem);
-    end;
-
-    03: //Baixar parcela unica
-    begin
-      vParcela := GetParcela();
-      vParcela.BaixarParcela(); //CORRIGIR POIS NÃO PODE CHAMAR ESSE METODO AQUI ANTES DE PASSAR POR BAIXAPARCELA
-    end;
-
-    04: //Baixar ordem de compra
-    begin
-
-    end;
-
-    05: //Baixar ordem de venda
-    begin
-
-    end;
+  except
+    raise Exception.Create('Ocorreu um erro no menu de baixa');
   end;
 end;
 
@@ -325,132 +326,134 @@ begin
       FProdutos  := TList<TProduto>.Create;
       FNaturezas := tList<TNaturezaMercadoria>.Create;
       repeat
-        {MENU:}
-        Writeln('--------------------------------------------------------------');
-        Writeln('SISTEMA DE COMPRA E VENDA');
-        Writeln('--------------------------------------------------------------');
-        Writeln('11   : Cadastrar Pessoa                  | 12 : Cadastrar Produto    | 13 : Cadastrar Ordem');
-        Writeln('14   : Cadastrar Natureza de Mercadoria  |                           |');
-        Writeln('21   : Consultar Pessoa                  | 22 : Consultar Produto    | 23 : Consultar Ordem de Compra/Venda');
-        Writeln('31   : Alterar Pessoa                    | 32 : Alterar Produto      | 33 : Alterar Ordem de Compra/Venda');
-        Writeln('41   : Listar Parcelas de Compra Vencidas|                           | 42 : Listar Parcelas de Venda Vencidas');
-        Writeln('51   : Listar Itens da Ordem             | 52 - Encerrar Ordem       | 53 : Listar todas as ordens');
-        Writeln('54   : Listar Naturezas de Mercadoria    |                           |');
-        Writeln('61   : Efetuar Baixa de Parcelas         |                           |');
-        Writeln('0    : Sair');
-        Writeln('--------------------------------------------------------------');
-        Readln(FIndice);
-        case FIndice of
-          10:{Informacoes iniciais da empresa}
-            begin
-              Writeln(FEmpresa.ToString());
-            end;
-          11:{Cadastrar Pessoa}
-            begin
-              FPessoa   :=  TPessoa.Create;
-              try
-                FPessoa.SolicitarInformacoes();
-                FPessoas.Add(FPessoa);
-              except
-                on e : Exception do
-                begin
-                  Writeln(e.Message);
+        FIndice :=  0;
+        try
+          {MENU:}
+          Writeln('--------------------------------------------------------------');
+          Writeln('SISTEMA DE COMPRA E VENDA');
+          Writeln('--------------------------------------------------------------');
+          Writeln('11   : Cadastrar Pessoa                  | 12 : Cadastrar Produto    | 13 : Cadastrar Ordem');
+          Writeln('14   : Cadastrar Natureza de Mercadoria  |                           |');
+          Writeln('21   : Consultar Pessoa                  | 22 : Consultar Produto    | 23 : Consultar Ordem de Compra/Venda');
+          Writeln('31   : Alterar Pessoa                    | 32 : Alterar Produto      | 33 : Alterar Ordem de Compra/Venda');
+          Writeln('41   : Listar Parcelas de Compra Vencidas|                           | 42 : Listar Parcelas de Venda Vencidas');
+          Writeln('51   : Listar Itens da Ordem             | 52 - Encerrar Ordem       | 53 : Listar todas as ordens');
+          Writeln('54   : Listar Naturezas de Mercadoria    |                           |');
+          Writeln('61   : Efetuar Baixa de Parcelas         |                           |');
+          Writeln('0    : Sair');
+          Writeln('--------------------------------------------------------------');
+          Readln(FIndice);
+
+          case FIndice of
+            10:{Informacoes iniciais da empresa}
+              begin
+                Writeln(FEmpresa.ToString());
+              end;
+            11:{Cadastrar Pessoa}
+              begin
+                try
+                  FPessoa   :=  TPessoa.Create;
+                  FPessoa.SolicitarInformacoes();
+                  FPessoas.Add(FPessoa);
+                except
+                  FPessoa.Free;
+                  raise Exception.Create('Nao foi possivel cadastrar a pessoa.');
                 end;
               end;
-            end;
-          12:{Cadastrar Produto}
-            begin
-              FProduto := TProduto.Create;
-	            try
-                FProduto.SolicitarInformacao();
-                FProdutos.Add(FProduto);
-              except
-                on e : Exception do
-                begin
-                  Writeln(e.Message);
+            12:{Cadastrar Produto}
+              begin
+                try
+                  FProduto := TProduto.Create;
+                  FProduto.SolicitarInformacao();
+                  FProdutos.Add(FProduto);
+                except
+                  raise Exception.Create('Nao foi possivel cadastrar o produto.');
                 end;
               end;
-            end;
-          13:{Cadastrar Ordem}
-            begin
-              FOrdem := TOrdem.Create();
-              try
-                FPessoa := GetPessoa;
-                FOrdem.SolicitarInformacoes(EscolherTipoOrdem(), FPessoa, FProdutos);
-                FOrdens.Add(FOrdem);
-              except
-                on e : Exception do
-                begin
-                  Writeln(e.Message);
+            13:{Cadastrar Ordem}
+              begin
+                try
+                  FOrdem := TOrdem.Create();
+                  FPessoa := GetPessoa;
+                  FOrdem.SolicitarInformacoes(EscolherTipoOrdem(), FPessoa, FProdutos);
+                  FOrdens.Add(FOrdem);
+                except
+                  raise Exception.Create('Nao foi possivel cadastrar a ordem');
                 end;
               end;
-            end;
-          14:{Cadastrar Natureza de Mercadoria}
-            begin
-              FNaturezaMercadoria := TNaturezaMercadoria.Create;
-              try
-                FNaturezaMercadoria.SolicitarInformacao(FNaturezas.Count);
-                FNaturezas.Add(FNaturezaMercadoria);
-                Writeln('Cadastrado com sucesso!');
-              except
-                raise Exception.Create('Nao foi possivel criar a Natureza de Mercadoria.');
+            14:{Cadastrar Natureza de Mercadoria}
+              begin
+                try
+                  FNaturezaMercadoria := TNaturezaMercadoria.Create;
+                  FNaturezaMercadoria.SolicitarInformacao(FNaturezas.Count);
+                  FNaturezas.Add(FNaturezaMercadoria);
+                  Writeln('Cadastrado com sucesso!');
+                except
+                  FNaturezaMercadoria.Free;
+                  raise Exception.Create('Nao foi possivel criar a Natureza de Mercadoria.');
+                end;
               end;
-            end;
-          21:{Consultar Pessoa}
-            begin
-              Writeln(GetPessoa().ToString());
-            end;
-          22:{Consultar Produto}
-            begin
-	            Writeln(GetProduto().ToString());
-            end;
-          23:{Consultar Ordem de Compra/Venda}
-            begin
-              GetOrdem().ToString();
-            end;
-          31:{Alterar Pessoa}
-            begin
-              GetPessoa().SolicitarInformacoes();
-            end;
-          32:{Alterar Produto}
-            begin
-            	GetProduto().SolicitarInformacao();
-            end;
-          33:{Alterar Ordem de Compra/Venda}
-            begin
+            21:{Consultar Pessoa}
+              begin
+                Writeln(GetPessoa().ToString());
+              end;
+            22:{Consultar Produto}
+              begin
+                Writeln(GetProduto().ToString());
+              end;
+            23:{Consultar Ordem de Compra/Venda}
+              begin
+                GetOrdem().ToString();
+              end;
+            31:{Alterar Pessoa}
+              begin
+                GetPessoa().SolicitarInformacoes();
+              end;
+            32:{Alterar Produto}
+              begin
+                GetProduto().SolicitarInformacao();
+              end;
+            33:{Alterar Ordem de Compra/Venda}
+              begin
 
-            end;
-          41:{Listar Parcelas de Compra Vencidas}
-            begin
+              end;
+            41:{Listar Parcelas de Compra Vencidas}
+              begin
 
-            end;
-          42:{Listar Parcelas de Venda Vencidas}
-            begin
+              end;
+            42:{Listar Parcelas de Venda Vencidas}
+              begin
 
-            end;
-          51:{Listar Itens da Ordem}
-            begin
-              ListarOrdens();
-              Writeln(GetOrdem().ListaItens());
-            end;
-          52: {Encerra Ordem}
-            begin
-              ListarOrdens();
-              GetOrdem().EncerraOrdem();
-            end;
-          53:{Lista todas as ordens}
-            begin
-              ListarOrdens();
-            end;
-          54:{Listar Naturezas de Mercadoria}
-            begin
-              ListarNaturezas();
-            end;
-          61:{Efetuar Baixa de Parcelas}
-            begin
-              //BAIXAR ORDEM, BAIXAR PARCELA ESPECÍFICA, AO COMEÇAR A BAIXA PERGUNTAR QUAL O TIPO DE ORDEM QUE QUER BAIXAR
-              MenuBaixa();
-            end;
+              end;
+            51:{Listar Itens da Ordem}
+              begin
+                ListarOrdens();
+                Writeln(GetOrdem().ListaItens());
+              end;
+            52: {Encerra Ordem}
+              begin
+                ListarOrdens();
+                GetOrdem().EncerraOrdem();
+              end;
+            53:{Lista todas as ordens}
+              begin
+                ListarOrdens();
+              end;
+            54:{Listar Naturezas de Mercadoria}
+              begin
+                ListarNaturezas();
+              end;
+            61:{Efetuar Baixa de Parcelas}
+              begin
+                //BAIXAR ORDEM, BAIXAR PARCELA ESPECÍFICA, AO COMEÇAR A BAIXA PERGUNTAR QUAL O TIPO DE ORDEM QUE QUER BAIXAR
+                MenuBaixa();
+              end;
+          end;
+        except
+          on E: Exception do
+          begin
+            Writeln(E.ClassName, ': ', E.Message);
+          end;
         end;
       until (FIndice = 0);
     finally
