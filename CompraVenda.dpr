@@ -16,18 +16,16 @@ uses
   uInclude in 'uInclude.pas',
   uNaturezaMercadoria in 'uNaturezaMercadoria.pas';
 
-var vEmpresa            : TEmpresa;
-    vIndice             : Integer;
-    vOrdem              : TOrdem;
+var FEmpresa            : TEmpresa;
+    FIndice             : Integer;
+    FOrdem              : TOrdem;
     FProduto            : TProduto;
-    vPessoa             : TPessoa;
-    vNaturezaMercadoria : TNaturezaMercadoria;
-    vOrdens             : TList<TOrdem>;
-    vPessoas            : TList<TPessoa>;
-    vProdutos           : TList<TProduto>;
-    vNaturezas          : TList<TNaturezaMercadoria>;
-    vTexto : string;
-
+    FPessoa             : TPessoa;
+    FNaturezaMercadoria : TNaturezaMercadoria;
+    FOrdens             : TList<TOrdem>;
+    FPessoas            : TList<TPessoa>;
+    FProdutos           : TList<TProduto>;
+    FNaturezas          : TList<TNaturezaMercadoria>;
 //PROCEDURES
 
 procedure ListarNaturezas();
@@ -35,7 +33,7 @@ var vNatureza: TNaturezaMercadoria;
 
 begin
   Writeln('----------------------------- Naturezas de Mercadoria -------------------------------');
-  for vNatureza in vNaturezas do
+  for vNatureza in FNaturezas do
   begin
     Writeln(vNatureza.ToString);
   end;
@@ -44,9 +42,10 @@ end;
 
 procedure ListarOrdens();
 var vOrdem : TOrdem;
+
 begin
   Writeln('--------------------------------- Ordens Cadastradas --------------------------------');
-  for vOrdem in vOrdens do
+  for vOrdem in FOrdens do
   begin
     if vOrdem.Status = Cadastrado then
       Writeln('Handle : ' + IntToStr(vOrdem.Handle) + ' Tipo : ' + vOrdem.ListaTipo + ' Status : ' + vOrdem.ListaStatus);
@@ -57,22 +56,21 @@ begin
 //FUNCTIONS
 
 function GetPessoa(): TPessoa;
-var
-  vConsulta       : string;
-  vPessoaConsulta : TPessoa;
-  vEncontrou      : Boolean;
+var vConsulta       : string;
+    vPessoa         : TPessoa;
+    vEncontrou      : Boolean;
 
 begin
   vEncontrou := False;
   Result := nil;
   Writeln('Informe o nome da pessoa: ');
   Readln(vConsulta);
-  for vPessoaConsulta in vPessoas do
+  for vPessoa in FPessoas do
   begin
-    if vPessoaConsulta.Nome = vConsulta then
+    if vPessoa.Nome = vConsulta then
     begin
       vEncontrou  := True;
-      Result      := vPessoaConsulta;
+      Result      := vPessoa;
       Exit;
     end;
   end;
@@ -81,7 +79,10 @@ begin
 end;
 
 function EscolherTipoOrdem():TTipoOrdem;
+var vTexto : string;
+
 begin
+  Result  := TTipoOrdem.Compra;
   repeat
     Writeln('Qual o tipo da ordem que deseja criar?');
     Writeln('1 - Compra');
@@ -103,40 +104,38 @@ begin
 end;
 
 function GetProduto(): TProduto;
-var
-  vEncontrou : boolean;
-  vProduto : TProduto;
-  vConsulta : string;
+var vEncontrou  : boolean;
+    vProduto    : TProduto;
+    vConsulta   : string;
+
 begin
   result:= nil;
-
   write('Produto: ');
   readln(vConsulta);
   vEncontrou:= false;
-
-  for vProduto in vProdutos do
+  for vProduto in FProdutos do
   begin
-   if(vConsulta = vProduto.Nome )then
-   begin
-     Result := vProduto;
-     vEncontrou := true;
-   end;
+    if(vConsulta = vProduto.Nome )then
+    begin
+      Result := vProduto;
+      vEncontrou := true;
+    end;
   end;
-
   if not vEncontrou then
- raise Exception.Create('Verifique o produto informado.');
+    raise Exception.Create('Verifique o produto informado.');
 end;
 
 function GetNatureza(): TNaturezaMercadoria;
 var vNatureza  : TNaturezaMercadoria;
     vEncontrou : Boolean;
     vPesquisa  : string;
+
 begin
   result  := nil;
   Writeln('Informe o nome da natureza de mercadoria: ');
   readln(vPesquisa);
   vEncontrou := False;
-  for vNatureza in vNaturezas do
+  for vNatureza in FNaturezas do
   begin
     if vPesquisa = vNatureza.Nome then
     begin
@@ -152,13 +151,14 @@ end;
 function GetOrdem(): TOrdem;
 var vOrdem    : TOrdem;
     vEncontrou: Boolean;
-    vPesquisa : string;
+    vPesquisa : Integer;
+
 begin
   Result  :=  nil;
   vEncontrou  := False;
   Writeln('Informe o handle da Ordem: ');
   Readln(vPesquisa);
-  for vOrdem in vOrdens do
+  for vOrdem in FOrdens do
   begin
     if vPesquisa = vOrdem.Handle then
     begin
@@ -176,11 +176,11 @@ begin
   FormatSettings.ShortDateFormat := 'dd-mm-yyyy';
   try
     try
-      vEmpresa   := TEmpresa.Create;
-      vOrdens    := TList<TOrdem>.Create;
-      vPessoas   := TList<TPessoa>.Create;
-      vProdutos  := TList<TProduto>.Create;
-      vNaturezas := tList<TNaturezaMercadoria>.Create;
+      FEmpresa   := TEmpresa.Create;
+      FOrdens    := TList<TOrdem>.Create;
+      FPessoas   := TList<TPessoa>.Create;
+      FProdutos  := TList<TProduto>.Create;
+      FNaturezas := tList<TNaturezaMercadoria>.Create;
       repeat
         {MENU:}
         Writeln('--------------------------------------------------------------');
@@ -196,20 +196,23 @@ begin
         Writeln('61   : Efetuar Baixa de Parcelas         |                           |');
         Writeln('0    : Sair');
         Writeln('--------------------------------------------------------------');
-        Readln(vIndice);
-        case vIndice of
+        Readln(FIndice);
+        case FIndice of
           10:{Informacoes iniciais da empresa}
             begin
-              Writeln(vEmpresa.ToString());
+              Writeln(FEmpresa.ToString());
             end;
           11:{Cadastrar Pessoa}
             begin
-              vPessoa   :=  TPessoa.Create;  //EVERTON
+              FPessoa   :=  TPessoa.Create;
               try
-                vPessoa.SolicitarInformacoes();
-                vPessoas.Add(vPessoa);
+                FPessoa.SolicitarInformacoes();
+                FPessoas.Add(vPessoa);
               except
-                raise Exception.Create('Nao foi possivel cadastrar a pessoa.');
+                on e : Exception do
+                begin
+                  Writeln(e.Message);
+                end;
               end;
             end;
           12:{Cadastrar Produto}
@@ -217,19 +220,21 @@ begin
               FProduto := TProduto.Create;
 	            try
                 FProduto.SolicitarInformacao();
-                vProdutos.Add(FProduto);
-
+                FProdutos.Add(FProduto);
               except
-                FProduto.Free;
+                on e : Exception do
+                begin
+                  Writeln(e.Message);
+                end;
               end;
             end;
           13:{Cadastrar Ordem}
             begin
+              FOrdem := TOrdem.Create();
               try
-                vOrdem := TOrdem.Create();
-                vPessoa := GetPessoa;
-                vOrdem.SolicitarInformacoes(EscolherTipoOrdem(), vPessoa, vProdutos);
-                vOrdens.Add(vOrdem);
+                FPessoa := GetPessoa;
+                FOrdem.SolicitarInformacoes(EscolherTipoOrdem(), FPessoa, FProdutos);
+                FOrdens.Add(FOrdem);
               except
                 on e : Exception do
                 begin
@@ -239,10 +244,10 @@ begin
             end;
           14:{Cadastrar Natureza de Mercadoria}
             begin
-              vNaturezaMercadoria := TNaturezaMercadoria.Create;
+              FNaturezaMercadoria := TNaturezaMercadoria.Create;
               try
-                vNaturezaMercadoria.SolicitarInformacao(vNaturezas.Count);
-                vNaturezas.Add(vNaturezaMercadoria);
+                FNaturezaMercadoria.SolicitarInformacao(FNaturezas.Count);
+                FNaturezas.Add(FNaturezaMercadoria);
                 Writeln('Cadastrado com sucesso!');
               except
                 raise Exception.Create('Nao foi possivel criar a Natureza de Mercadoria.');
@@ -254,24 +259,15 @@ begin
             end;
           22:{Consultar Produto}
             begin
-	            write(GetProduto().ToString());
+	            Writeln(GetProduto().ToString());
             end;
           23:{Consultar Ordem de Compra/Venda}
             begin
-              Writeln('Qual ordem deseja consultar? (handle)');
-              Readln(vTexto);
-
-              for vOrdem in vOrdens do
-              begin
-                if(vOrdem.Handle = StrToInt(vTexto)) then
-                begin
-                  vOrdem.ToString;
-                end;
-              end;
+              GetOrdem().ToString();
             end;
           31:{Alterar Pessoa}
             begin
-
+              GetPessoa().SolicitarInformacoes();
             end;
           32:{Alterar Produto}
             begin
@@ -291,24 +287,14 @@ begin
             end;
           51:{Listar Itens da Ordem}
             begin
-              Writeln('Qual ordem deseja listar os produtos? (handle)');
-              Readln(vTexto);
-
-              for vOrdem in vOrdens do
-              begin
-                if vOrdem.Handle = StrToInt(vTexto) then
-                begin
-                  vOrdem.ImprimirItens();
-                end;
-              end;
-
+              ListarOrdens();
+              Writeln(GetOrdem().ListaItens());
             end;
           52: {Encerra Ordem}
             begin
               ListarOrdens();
               GetOrdem().EncerraOrdem();
             end;
-
           53:{Lista todas as ordens}
             begin
               ListarOrdens();
@@ -322,7 +308,7 @@ begin
 
             end;
         end;
-      until (vIndice = 0);
+      until (FIndice = 0);
     finally
 
     end;
