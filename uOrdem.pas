@@ -42,7 +42,7 @@ TOrdem = class
   constructor Create();
 
 // DESTRUCTOR
-  destructor Destroy();
+  destructor Destroy();override;
 
 // PROCEDURE
   procedure SolicitarInformacoes(prTipoOrdem : TTipoOrdem; prPessoa : TPessoa; prProdutos : TList<TProduto>);
