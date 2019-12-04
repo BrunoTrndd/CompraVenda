@@ -149,6 +149,28 @@ begin
     raise  Exception.Create('Natureza de Mercadoria não encontrada.');
 end;
 
+function GetOrdem(): TOrdem;
+var vOrdem    : TOrdem;
+    vEncontrou: Boolean;
+    vPesquisa : string;
+begin
+  Result  :=  nil;
+  vEncontrou  := False;
+  Writeln('Informe o handle da Ordem: ');
+  Readln(vPesquisa);
+  for vOrdem in vOrdens do
+  begin
+    if vPesquisa = vOrdem.Handle then
+    begin
+      vEncontrou  := True;
+      Result      := vOrdem;
+      Exit;
+    end;
+  end;
+  if vEncontrou = False then
+    raise Exception.Create('Ordem nao encontrada.');
+end;
+
 begin
   FormatSettings.DateSeparator:= '-';
   FormatSettings.ShortDateFormat := 'dd-mm-yyyy';
@@ -283,26 +305,8 @@ begin
             end;
           52: {Encerra Ordem}
             begin
-
-              Writeln('---------------Ordens---------------');
-              for vOrdem in vOrdens do
-              begin
-                Writeln('Handle :' + IntToStr(vOrdem.Handle) + ' Tipo: '+ vOrdem.ListaTipo);
-              end;
-              Writeln('------------------------------------');
-
-
-              Writeln('Qual ordem deseja encerrar? (handle)');
-              Readln(vTexto);
-
-
-              for vOrdem in vOrdens do
-              begin
-                if vOrdem.Handle = StrToInt(vTexto) then
-                begin
-                  vOrdem.EncerraOrdem();
-                end;
-              end;
+              ListarOrdens();
+              GetOrdem().EncerraOrdem();
             end;
 
           53:{Lista todas as ordens}
