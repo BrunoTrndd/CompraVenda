@@ -1,4 +1,4 @@
-﻿program CompraVenda;
+program CompraVenda;
 
 {$APPTYPE CONSOLE}
 
@@ -176,9 +176,8 @@ begin
             end;
           12:{Cadastrar Produto}
             begin
+              FProduto := TProduto.Create;
 	            try
-
-                FProduto := TProduto.Create;
                 FProduto.SolicitarInformacao();
                 vProdutos.Add(FProduto);
 
