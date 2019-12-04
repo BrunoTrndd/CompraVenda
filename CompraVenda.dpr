@@ -34,15 +34,28 @@ procedure ListarNaturezas();
 var vNatureza: TNaturezaMercadoria;
 
 begin
-  Writeln('--------------------- Naturezas de Mercadoria ---------------------------');
+  Writeln('----------------------------- Naturezas de Mercadoria -------------------------------');
   for vNatureza in vNaturezas do
   begin
     Writeln(vNatureza.ToString);
   end;
-  Writeln('-------------------------------------------------------------------------');
+  Writeln('-------------------------------------------------------------------------------------');
 end;
 
+procedure ListarOrdens();
+var vOrdem : TOrdem;
+begin
+  Writeln('--------------------------------- Ordens Cadastradas --------------------------------');
+  for vOrdem in vOrdens do
+  begin
+    if vOrdem.Status = Cadastrado then
+      Writeln('Handle : ' + IntToStr(vOrdem.Handle) + ' Tipo : ' + vOrdem.ListaTipo + ' Status : ' + vOrdem.ListaStatus);
+  end;
+  Writeln('-------------------------------------------------------------------------------------');
+  end;
+
 //FUNCTIONS
+
 function GetPessoa(): TPessoa;
 var
   vConsulta       : string;
@@ -294,10 +307,7 @@ begin
 
           53:{Lista todas as ordens}
             begin
-              for vOrdem in vOrdens do
-              begin
-                Writeln(vOrdem.ToString);
-              end;
+              ListarOrdens();
             end;
           54:{Listar Naturezas de Mercadoria}
             begin
