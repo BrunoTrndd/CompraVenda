@@ -268,8 +268,19 @@ begin
             end;
           52: {Encerra Ordem}
             begin
+
+              Writeln('---------------Ordens---------------');
+              for vOrdem in vOrdens do
+              begin
+                Writeln('Handle :' + IntToStr(vOrdem.Handle) + ' Tipo: '+ vOrdem.ListaTipo);
+              end;
+              Writeln('------------------------------------');
+
+
               Writeln('Qual ordem deseja encerrar? (handle)');
               Readln(vTexto);
+
+
               for vOrdem in vOrdens do
               begin
                 if vOrdem.Handle = StrToInt(vTexto) then

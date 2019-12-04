@@ -240,12 +240,7 @@ begin
 end;
 
 procedure TOrdem.SolicitarInformacoes(prTipoOrdem: TTipoOrdem; prPessoa : TPessoa; prProdutos : TList<TProduto>);
-var
-vNumero : Integer;
-i       : Integer;
-vValorTotal : Currency;
 begin
-
 
   FTipoOrdem := prTipoOrdem;
   FDataCadastro := Now();
