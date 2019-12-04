@@ -10,11 +10,9 @@ type
     FNome     : string;
     FSaldo    : currency;
 
-
   public
     property Nome     : string          read FNome     write FNome;
     property Saldo    : currency        read FSaldo    write FSaldo;
-
 
   //CONSTRUCTOR
   constructor Create;
@@ -44,8 +42,6 @@ destructor TEmpresa.Destroy();
 begin
   inherited
 end;
-
-
 
 function TEmpresa.ToString : string;
 begin
