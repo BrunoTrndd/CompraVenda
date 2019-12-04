@@ -52,7 +52,7 @@ TOrdem = class
   procedure ImprimirItens();
 
 // FUNCTION
-  function ToString() : string;
+  function ToString() : string; override;
   function ListaTipo() : string;
   function ListaItens() : string;
   function ListaParcelas():string;
@@ -61,11 +61,7 @@ TOrdem = class
 
 
 end;
-var
-vOrdemProduto : TOrdemProduto;
-vPessoa       : TPessoa;
-vParcela      : TParcela;
-vHandle       : Integer;
+var vHandle : Integer;
 
 implementation
 
@@ -87,93 +83,69 @@ begin
 end;
 //DESTROY
 destructor TOrdem.Destroy();
+var vParcela      : TParcela;
+    vOrdemProduto : TOrdemProduto;
 begin
-  for vOrdemProduto in Itens do
+  for vOrdemProduto in FItens do
   begin
     vOrdemProduto.Destroy();
   end;
-  for vParcela in Parcelas do
+  for vParcela in FParcelas do
   begin
     vParcela.Destroy();
   end;
 
-  Itens.Free;
-  Parcelas.Free;
-  FPessoa.Destroy();
-
+  FItens.Free;
+  FParcelas.Free;
 end;
 
-{
-  ENCERRAORDEM
-  ENCERRA A ORDEM
-  PARAM : NONE
-  ENCERRA A ORDEM ATUALIZANDO O ESTOQUE E GERANDO PARCELAS
-}
 procedure TOrdem.EncerraOrdem;
-var
-vQtdParcela    : Integer;
-vData          : TDateTime;
-vDiaVencimento : Integer;
+var vQtdParcela     : Integer;
+    vData           : TDateTime;
+    vDiaVencimento  : Integer;
+    vOrdemProduto   : TOrdemProduto;
 begin
   if FStatus = TStatus.Cadastrado then
   begin
     Writeln('Quantas parcelas deseja criar na ordem?');
     Readln(vQtdParcela);
-
     Writeln('Qual dia sera o vencimento das parcelas?');
     Readln(vDiaVencimento);
-
     vData := EncodeDate(YearOf(Now()),MonthOf(Now()), vDiaVencimento);
     GeraParcela(vQtdParcela, vData);
     FDataEmissao := Now();
     FStatus := TStatus.Encerrado;
-
     for vOrdemProduto in Itens do
     begin
-      vOrdemProduto.AtualizaEstoque(TipoOrdem, FStatus);
+      vOrdemProduto.AtualizaEstoque(FTipoOrdem, FStatus);
     end;
-
-
   end;
 end;
 
-
-{
-  GERAPARCELA
-  GERA AS PARCELAS DA ORDEM
-  PARAM : QUANTIDADE DE PARCELAS : INTEGER
-  GERA O INTEGER PASSADO COMO PARÂMETRO EM QUANTIDADE DE PARCELA
-}
 procedure TOrdem.GeraParcela(prQtdParcela: Integer; prDataVencimento : TDateTime);
-var
-vValorTotal     : Currency;
-vValorParcela   : Currency;
-vIndice         : Integer;
-vDataVencimento : TDateTime;
-
+var vValorTotal     : Currency;
+    vValorParcela   : Currency;
+    vIndice         : Integer;
+    vDataVencimento : TDateTime;
+    vOrdemProduto   : TOrdemProduto;
+    vParcela        : TParcela;
 begin
   vValorTotal := 0;
-  for vOrdemProduto in Itens do
+  for vOrdemProduto in FItens do
   begin
     vValorTotal := vValorTotal + vOrdemProduto.ValorTotal;
   end;
-
   vValorParcela := vValorTotal/prQtdParcela;
   vDataVencimento := prDataVencimento;
-
   for vIndice := 1 to prQtdParcela do
   begin
     if vIndice <> 1 then
     begin
       vDataVencimento := IncMonth(vDataVencimento);
     end;
-
     vParcela := TParcela.Create(FTipoOrdem, vValorParcela, vDataVencimento);
     FParcelas.Add(vParcela);
-
   end;
-
-
 end;
 
 {
@@ -182,8 +154,9 @@ end;
   CHAMA O TOSTRING DE TODOS OS ITENS DA ORDEM
 }
 procedure TOrdem.ImprimirItens;
+var vOrdemProduto : TOrdemProduto;
 begin
-  for vOrdemProduto in Itens do
+  for vOrdemProduto in FItens do
   begin
     Writeln(vOrdemProduto.ToString());
   end;
@@ -195,8 +168,8 @@ end;
   RETORNA UMA STRING COM TODOS OS HANDLES DE ORDEMPRODUTO VINCULADO À ORDEM SEPARADAS POR BARRA '/'
 }
 function TOrdem.ListaItens(): string;
-var
-vResultado : string;
+var vResultado    : string;
+    vOrdemProduto : TOrdemProduto;
 begin
   for vOrdemProduto in Itens do
   begin
@@ -212,10 +185,10 @@ end;
   RETORNA UMA STRING COM TODOS OS HANDLES DAS PARCELAS VINCULADAS A ORDEM SEPARADAS POR BARRA '/'
 }
 function TOrdem.ListaParcelas: string;
-var
-vResultado : string;
+var vResultado  : string;
+    vParcela    : TParcela;
 begin
-  for vParcela in Parcelas do
+  for vParcela in FParcelas do
   begin
     vResultado := vResultado + ' / '+ IntToStr(vParcela.Handle);
   end;
@@ -259,27 +232,19 @@ begin
   end;
 
 end;
-{
-  SOLICITARINFORMACOES
-  PARAM  : TIPO DA ORDEM, PESSOA DA ORDEM, LISTA DE PRODUTOS PARA QUE POSSA
-  ESCOLHER QUAL IRÁ COLOCAR NA ORDEM
-  METODO PARA POPULAR A ORDEM
-}
+
 procedure TOrdem.SolicitarInformacoes(prTipoOrdem: TTipoOrdem; prPessoa : TPessoa; prProdutos : TList<TProduto>);
 begin
-
   FTipoOrdem := prTipoOrdem;
   FDataCadastro := Now();
   FPessoa := prPessoa;
-
   SolicitarItens(prProdutos);
-
 end;
 
 procedure TOrdem.SolicitarItens(prProdutos: TList<TProduto>);
-var
-  vProduto : TProduto;
-  vTexto : string;
+var vOrdemProduto : TOrdemProduto;
+    vProduto      : TProduto;
+    vTexto        : string;
 begin
   while vTexto <> '0' do
   begin
@@ -291,16 +256,14 @@ begin
     end;
     Writeln('SAIR - 0');
     Writeln('--------------------');
-
     Readln(vTexto);
-
     for vProduto in prProdutos do
     begin
       if(vProduto.Nome = vTexto) then
       begin
         vOrdemProduto := TOrdemProduto.Create(vProduto);
         vOrdemProduto.SolicitarInformacoes();
-        vOrdemProduto.AtualizaEstoque(TipoOrdem, FStatus);
+        vOrdemProduto.AtualizaEstoque(FTipoOrdem, FStatus);
         FItens.Add(vOrdemProduto);
         Writeln('Produto '+ vProduto.Nome + ' foi adicionado na ordem'+sLineBreak+sLineBreak);
       end;
