@@ -47,7 +47,6 @@ TOrdem = class
 // PROCEDURE
   procedure SolicitarInformacoes(prTipoOrdem : TTipoOrdem; prPessoa : TPessoa; prProdutos : TList<TProduto>);
   procedure SolicitarItens(prProdutos : TList<TProduto>);
-  procedure AtualizaEstoque();
   procedure EncerraOrdem();
   procedure GeraParcela(prQtdParcela : Integer; prDataVencimento : TDateTime);
   procedure ImprimirItens();
@@ -72,10 +71,6 @@ implementation
 
 { TOrdem }
 
-procedure TOrdem.AtualizaEstoque;
-begin
-
-end;
 //CREATE
 constructor TOrdem.Create;
 begin
@@ -305,6 +300,7 @@ begin
       begin
         vOrdemProduto := TOrdemProduto.Create(vProduto);
         vOrdemProduto.SolicitarInformacoes();
+        vOrdemProduto.AtualizaEstoque(TipoOrdem, FStatus);
         FItens.Add(vOrdemProduto);
         Writeln('Produto '+ vProduto.Nome + ' foi adicionado na ordem'+sLineBreak+sLineBreak);
       end;
