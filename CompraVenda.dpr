@@ -173,6 +173,39 @@ begin
   if vEncontrou = False then
     raise Exception.Create('Ordem nao encontrada.');
 end;
+{
+  GETVARIASORDENS
+  PARAM : NONE
+  RETURN : TLIST<TORDEM>
+  ENQUANTO O USUARIO NÃO DIGITAR O HANDLE 0, VAI CONTINUAR BUSCANDO AS ORDENS
+  E ADICIONANDO A LISTA DE ORDENS
+}
+function GetVariasOrdens(): TList<TOrdem>;
+var
+  vOrdem    : TOrdem;
+  vEncontrou: Boolean;
+  vPesquisa : Integer;
+  vListaOrdem : TList<TOrdem>;
+begin
+  vEncontrou  := False;
+  while vPesquisa <> 0 do
+  begin
+    Writeln('Informe o handle da ordem que deseja adicionar para baixar (Digite "0" para sair): ');
+    Readln(vPesquisa);
+    for vOrdem in FOrdens do
+    begin
+      if vPesquisa = vOrdem.Handle then
+      begin
+        vEncontrou  := True;
+        vListaOrdem.Add(vOrdem);
+      end;
+    end;
+    if vEncontrou = False then
+      Writeln('Ordem nao encontrada.');
+    vEncontrou := False;
+  end;
+  Result:= vListaOrdem;
+end;
 
 procedure BaixarTodasParcelas(prOrdem : TOrdem);
 var
@@ -193,21 +226,57 @@ begin
   end;
 end;
 
+procedure BaixarVariasOrdens(prListaOrdem : TList<TOrdem>);
+var
+vOrdem : TOrdem;
+begin
+  for vOrdem in prListaOrdem do
+  begin
+    BaixarTodasParcelas(vOrdem);
+  end;
+end;
+
+function GetParcela():TParcela;
+var
+vTexto : string;
+vOrdem : TOrdem;
+vParcela : TParcela;
+begin
+  Writeln('Qual o handle da parcela?');
+  Readln(vTexto);
+
+  for vOrdem in FOrdens do
+  begin
+    for vParcela in vOrdem.Parcelas do
+    begin
+      if vParcela.Handle = StrToInt(vTexto) then
+      begin
+        Exit(vParcela);
+      end;
+    end;
+  end;
+
+  Writeln('Esse handle de parcela nao existe');
+
+end;
+
 
 procedure MenuBaixa();
 var
-vTexto   : string;
-vOrdem   : TOrdem;
+vIndice   : Integer;
+vOrdem    : TOrdem;
+vListaOrdem : TList<TOrdem>;
 begin
   Writeln('----------------------BAIXAS---------------------'+sLineBreak+
           '01 - Baixar todas as parcelas de uma ordem'       +sLineBreak+
           '02 - Baixar todas as parcelas de varias ordens'   +sLineBreak+
           '03 - Baixar parcela unica'                        +sLineBreak+
-          '04 - Baixar varias parcelas'                      +sLineBreak+
+          '04 - Baixar ordem de compra'                      +sLineBreak+
+          '05 - Baixar ordem de venda'                       +sLineBreak+
           '-------------------------------------------------'+sLineBreak);
-  Readln(vTexto);
+  Readln(vIndice);
 
-  case vTexto of
+  case vIndice of
     01: //Baixar todas as parcelas de uma ordem
     begin
       ListarOrdens();
@@ -218,15 +287,23 @@ begin
 
     02: //Baixar todas as parcelas de varias ordens
     begin
-
+      ListarOrdens();
+      vListaOrdem := GetVariasOrdens();
+      BaixarVariasOrdens(vListaOrdem);
     end;
 
     03: //Baixar parcela unica
     begin
+      vParcela := GetParcela();
+      vParcela.BaixarParcela(); //CORRIGIR POIS NÃO PODE CHAMAR ESSE METODO AQUI ANTES DE PASSAR POR BAIXAPARCELA
+    end;
+
+    04: //Baixar ordem de compra
+    begin
 
     end;
 
-    04: //Baixar varias parcelas
+    05: //Baixar ordem de venda
     begin
 
     end;
