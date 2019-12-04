@@ -94,21 +94,23 @@ begin
   write('Valor unitario: ');
   readln(FValorUnit);
 
-  write('1 - Produto | 2 - Servico: ');
-  readln(vTipo);
+  while (vTipo <> 1) and (vTipo <> 2) do
+  begin
+    write('1 - Produto | 2 - Servico: ');
+    readln(vTipo);
 
-  case vTipo of
-    1:
-    begin
-      FTipoProduto := TTipoProduto.Produto;
-    end;
+    case vTipo of
+      1:
+      begin
+        FTipoProduto := TTipoProduto.Produto;
+      end;
 
-    2:
-    begin
-      FTipoProduto := TTipoProduto.Servico;
+      2:
+      begin
+        FTipoProduto := TTipoProduto.Servico;
+      end;
     end;
   end;
-
 
   write('Valor de compra: ');
   readln(FValorCompra);
@@ -128,16 +130,17 @@ function TProduto.ToString: String;
 begin
   Result := '-------------------------------Produto----------------------------'+sLineBreak+
             'Nome: '+ FNome                                                     +sLineBreak+
-            'Valor unitario: ' + FormatCurr('#.#00,00',FValorUnit)              +sLineBreak+
+            'Valor unitario: R$' + FormatCurr('#.#00,00',FValorUnit)            +sLineBreak+
             'Tipo: ' + ListaTipo()                                              +sLineBreak+
-            'Valor compra: ' + FormatCurr('#.##0,00',FValorCompra)              +sLineBreak+
-            'Valor venda: ' + FormatCurr('#.##0,00',FValorVenda)                +sLineBreak+
+            'Valor compra: R$' + FormatCurr('#.##0,00',FValorCompra)            +sLineBreak+
+            'Valor venda: R$' + FormatCurr('#.##0,00',FValorVenda)              +sLineBreak+
             'Saldo disponivel: ' + IntToStr(FSaldoDisponivel)                   +sLineBreak+
-            'Saldo reservado: ' + IntToStr(FSaldoVenda)                           +sLineBreak+
-//            'Natureza: ' + FNaturezaMercadoria                                  +sLineBreak+      CORRIGIR O TIPO UTILIZANDO O METODO PARA RETORNAR UMA STRING
+            'Saldo reservado: ' + IntToStr(FSaldoVenda)                         +sLineBreak+
+//            'Natureza: ' + FNaturezaMercadoria                                +sLineBreak+      CORRIGIR O TIPO UTILIZANDO O METODO PARA RETORNAR UMA STRING
             '------------------------------------------------------------------'+sLineBreak;
 end;
 
+{Atualiza o estoque com base no tipo da ordem e o status no momento}
 procedure TProduto.AtualizaEstoque(prQuantidade: integer; prTipoMovimentacao: TTipoOrdem; prStatusOrdem: TStatus);
 begin
   if prTipoMovimentacao = TTipoOrdem.Compra then //Entrada-Compra
@@ -160,7 +163,7 @@ begin
       raise Exception.Create ('Nao foi possivel realizar a movimentacao de estoque.'                +sLineBreak+
                               'Quantidade da venda e maior que a quantidade disponivel.'            +sLineBreak+
                               'Quantidade disponivel: ' + IntToStr(FSaldoDisponivel)                +sLineBreak+
-                              'Quantidade reservada: ' + IntToStr(FSaldoDisponivel)                 +sLineBreak+
+                              'Quantidade reservada: ' + IntToStr(FSaldoVenda)                      +sLineBreak+
                               'Quantidade movimentada: ' + IntToStr(prQuantidade)                   +sLineBreak);
 
     //Status Cadastrado

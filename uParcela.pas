@@ -16,12 +16,12 @@ TParcela = class
     FAbrangencia    : TTipoOrdem;
 
   public
-    property Handle         : Integer read FHandle write FHandle;
-    property DataCadastro   : TDateTime read FDataCadastro write FDataCadastro;
-    property DataVencimento : TDateTime read FDataVencimento write FDataVencimento;
-    property ValorTotal     : Currency read FValor write FValor;
-    property Pago           : Boolean read FPago write FPago;
-    property Sequencia      : Integer read FSequencia write FSequencia;
+    property Handle         : Integer   read FHandle          write FHandle;
+    property DataCadastro   : TDateTime read FDataCadastro    write FDataCadastro;
+    property DataVencimento : TDateTime read FDataVencimento  write FDataVencimento;
+    property ValorTotal     : Currency  read FValor           write FValor;
+    property Pago           : Boolean   read FPago            write FPago;
+    property Sequencia      : Integer   read FSequencia       write FSequencia;
 
 // CONSTRUCTOR
   constructor Create(prAbrangencia : TTipoOrdem; prValor : Currency; prDataVencimento : TDateTime);
@@ -35,6 +35,7 @@ TParcela = class
   function GetDate(prTipoData : string)   : TDateTime;
 
 // PROCEDURES
+  procedure BaixarParcela();
 
 end;
 
@@ -86,6 +87,22 @@ begin
   end;
 
 end;
+
+procedure TParcela.BaixarParcela();
+begin
+  if Now() > DataVencimento then
+  begin
+    raise Exception.Create('A parcela ' + IntToStr(Handle) + ' esta vencida');
+  end else if Pago then
+    begin
+      raise Exception.Create('A Parcela' + IntToStr(Handle) + ' ja esta paga.');
+    end else
+    begin
+      Pago := True;
+    end;
+end;
+
+
 
 function TParcela.ToString: String;
 begin
