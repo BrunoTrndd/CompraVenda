@@ -94,6 +94,8 @@ begin
   write('Valor unitario: ');
   readln(FValorUnit);
 
+  vTipo:= 0;
+
   while (vTipo <> 1) and (vTipo <> 2) do
   begin
     write('1 - Produto | 2 - Servico: ');
