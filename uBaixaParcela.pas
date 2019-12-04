@@ -8,12 +8,11 @@ TBaixaParcela = class
   private
   FHandle    : Integer;
   FParcelas  : TList<TParcela>;
-  FTipoOrdem : TTipoOrdem;
 
   public
-  property Handle : Integer read FHandle write FHandle;
-  property Parcelas : TList<TParcela> read FParcelas write FParcelas;
-  property TipoOrdem : TTipoORdem read FTipoOrdem write FTipoOrdem;
+  property Handle   : Integer            read FHandle   write FHandle;
+  property Parcelas : TList<TParcela>    read FParcelas write FParcelas;
+
 
 // CONSTRUCTOR
   constructor Create();
@@ -27,7 +26,8 @@ TBaixaParcela = class
   function ListarTipo()    : string;
 
 // PROCEDURES
-
+  procedure AdicionarParcela(prParcela : TParcela);
+  procedure BaixarParcelas();
 
 
 end;
@@ -38,12 +38,36 @@ implementation
 
 { TBaixaParcela }
 
+{
+  ADICIONARPARCELA
+  PARAM : PARCELA
+  ADICIONA A PARCELA NA LISTA DE PARCELAS DA BAIXA
+}
+procedure TBaixaParcela.AdicionarParcela(prParcela : TParcela);
+begin
+  Parcelas.Add(prParcela);
+end;
+
+
+
 //CREATE
+procedure TBaixaParcela.BaixarParcelas;
+begin
+  try
+    for vParcela in Parcelas do
+    begin
+      vParcela.BaixarParcela();
+    end;
+  except
+    on E : Exception do
+      Writeln('Erro: ' + E.Message);
+  end;
+end;
+
 constructor TBaixaParcela.Create;
 begin
   FHandle     := 0;
   FParcelas   := TList<TParcela>.Create;
-  FTipoOrdem  := TTipoOrdem.Compra;
 end;
 //DESTROY
 destructor TBaixaParcela.Destroy;
@@ -55,6 +79,17 @@ begin
   Parcelas.Destroy;
 end;
 
+
+
+
+
+
+{
+  LISTARPARCELAS
+  PARAM  : NONE
+  RETURN : STRING
+  RETORNA EM UMA LINHA TODOS OS HANDLES DAS PARCELAS QUE ESTAO VINCULADOS A ORDEM
+}
 function TBaixaParcela.ListarParcelas: string;
 var
 vRetorno : string;
@@ -66,16 +101,10 @@ begin
   Result := vRetorno;
 end;
 
-//RETORNA O TIPO EM STRING
+
 function TBaixaParcela.ListarTipo: string;
 begin
-if FTipoOrdem = TTipoOrdem.Compra then
-  begin
-    Result := 'Compra';
-  end else
-  begin
-    Result := 'Venda';
-  end;
+
 end;
 
 //TO STRING
@@ -84,7 +113,6 @@ begin
   Result := '-----------------------Baixa das Parcelas-------------------------'+sLineBreak+
             'Handle: '+IntToStr(FHandle)                                        +sLineBreak+
             'Parcelas: '+ListarParcelas()                                       +sLineBreak+
-            'Tipo da Baixa: '+ListarTipo()                                      +sLineBreak+
             '------------------------------------------------------------------'+sLineBreak;
 end;
 
