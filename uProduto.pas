@@ -1,4 +1,4 @@
-unit uProduto;
+﻿unit uProduto;
 
 interface
 
@@ -34,11 +34,11 @@ type
   destructor  Destroy;override;
 
   //PROCEDURES
-  procedure SolicitarInformacao();
+  procedure SolicitarInformacao(prNatureza : TNaturezaMercadoria);
   procedure AtualizaEstoque(prQuantidade : integer; prTipoMovimentacao : TTipoOrdem; prStatusOrdem : TStatus);
 
   //FUNCTIONS
-  function ToString() : string;
+  function ToString() : string; override;
   function ListaTipo() : string;
 
 
@@ -82,7 +82,7 @@ begin
 
 end;
 
-procedure TProduto.SolicitarInformacao;
+procedure TProduto.SolicitarInformacao(prNatureza : TNaturezaMercadoria);
 var
   vTipo : integer;
   vNatureza : string;
@@ -131,14 +131,14 @@ end;
 function TProduto.ToString: String;
 begin
   Result := '-------------------------------Produto----------------------------'+sLineBreak+
-            'Nome: '+ FNome                                                     +sLineBreak+
-            'Valor unitario: R$' + FormatCurr('#.#00,00',FValorUnit)            +sLineBreak+
-            'Tipo: ' + ListaTipo()                                              +sLineBreak+
-            'Valor compra: R$' + FormatCurr('#.##0,00',FValorCompra)            +sLineBreak+
-            'Valor venda: R$' + FormatCurr('#.##0,00',FValorVenda)              +sLineBreak+
-            'Saldo disponivel: ' + IntToStr(FSaldoDisponivel)                   +sLineBreak+
-            'Saldo reservado: ' + IntToStr(FSaldoVenda)                         +sLineBreak+
-//            'Natureza: ' + FNaturezaMercadoria                                +sLineBreak+      CORRIGIR O TIPO UTILIZANDO O METODO PARA RETORNAR UMA STRING
+            'Nome             : '+ FNome                                        +sLineBreak+
+            'Valor unitario   : R$' + FormatCurr('#.#00,00',FValorUnit)         +sLineBreak+
+            'Tipo             : ' + ListaTipo()                                 +sLineBreak+
+            'Valor compra     : R$' + FormatCurr('#.##0,00',FValorCompra)       +sLineBreak+
+            'Valor venda      : R$' + FormatCurr('#.##0,00',FValorVenda)        +sLineBreak+
+            'Saldo disponivel : ' + IntToStr(FSaldoDisponivel)                  +sLineBreak+
+            'Saldo reservado  : ' + IntToStr(FSaldoVenda)                       +sLineBreak+
+            'Natureza         : ' + FNaturezaMercadoria.Nome                    +sLineBreak+
             '------------------------------------------------------------------'+sLineBreak;
 end;
 
