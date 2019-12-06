@@ -52,6 +52,7 @@ TOrdem = class
   procedure ImprimirItens();
   procedure ImprimirParcelas();
   procedure CancelarOrdem();
+  procedure ExcluirOrdem();
 
 // FUNCTION
   function ToString() : string; override;
@@ -90,11 +91,11 @@ var vParcela      : TParcela;
 begin
   for vOrdemProduto in FItens do
   begin
-    vOrdemProduto.Destroy();
+    vOrdemProduto.Free();
   end;
   for vParcela in FParcelas do
   begin
-    vParcela.Destroy();
+    vParcela.Free();
   end;
 
   FItens.Free;
@@ -165,6 +166,30 @@ begin
 
 end;
 
+procedure TOrdem.ExcluirOrdem;
+var
+  vOrdemProduto : TOrdemProduto;
+
+begin
+
+  if FStatus <> TStatus.Cadastrado then
+    raise exception.Create('Nao foi possivel excluir a ordem.'   + sLineBreak +
+                           'A ordem nao pode estar neste status.' + sLineBreak +
+                           'Status da ordem: ' + ListaStatus()    + sLineBreak +
+                           'Ordem: ' + IntToStr(FHandle))
+  else
+
+  FStatus := TStatus.Excluido;
+
+  if FTipoOrdem = TTipoOrdem.Venda then
+  begin
+    for vOrdemProduto in Itens do
+    begin
+      vOrdemProduto.AtualizaEstoque(FTipoOrdem, FStatus);
+    end;
+  end;
+end;
+
 procedure TOrdem.GeraParcela(prQtdParcela: Integer; prDataVencimento : TDateTime);
 var vValorTotal     : Currency;
     vValorParcela   : Currency;
@@ -205,6 +230,7 @@ begin
   end;
 
 end;
+
 procedure TOrdem.ImprimirParcelas;
 var
 vParcela : TParcela;
