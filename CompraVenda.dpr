@@ -394,19 +394,20 @@ begin
         FIndice :=  0;
         try
           {MENU:}
-          Writeln('--------------------------------------------------------------');
-          Writeln('SISTEMA DE COMPRA E VENDA');
-          Writeln('--------------------------------------------------------------');
+          Writeln('-------------------------------------------------------------------------------------------------------------');
+          Writeln('------------------------------------------SISTEMA DE COMPRA E VENDA------------------------------------------');
+          Writeln('-------------------------------------------------------------------------------------------------------------');
           Writeln('11   : Cadastrar Pessoa                  | 12 : Cadastrar Produto    | 13 : Cadastrar Ordem');
           Writeln('14   : Cadastrar Natureza de Mercadoria  |                           |');
           Writeln('21   : Consultar Pessoa                  | 22 : Consultar Produto    | 23 : Consultar Ordem de Compra/Venda');
           Writeln('31   : Alterar Pessoa                    | 32 : Alterar Produto      | 33 : Alterar Ordem de Compra/Venda');
           Writeln('41   : Listar Parcelas de Compra Vencidas|                           | 42 : Listar Parcelas de Venda Vencidas');
-          Writeln('51   : Listar Itens da Ordem             | 52 - Encerrar Ordem       | 53 : Listar todas as ordens');
+          Writeln('51   : Listar Itens da Ordem             | 52 : Encerrar Ordem       | 53 : Listar todas as ordens');
           Writeln('54   : Listar Naturezas de Mercadoria    |                           |');
           Writeln('61   : Efetuar Baixa de Parcelas         |                           |');
+          Writeln('71   : Cancelar Ordem                    | 72 : Excluir Ordem        |');
           Writeln('0    : Sair');
-          Writeln('--------------------------------------------------------------');
+          Writeln('-------------------------------------------------------------------------------------------------------------');
           Readln(FIndice);
 
           case FIndice of
@@ -517,6 +518,17 @@ begin
             61:{Efetuar Baixa de Parcelas}
               begin
                 MenuBaixa();
+              end;
+            71:{Cancelar Ordem}
+              begin
+                GetOrdem().CancelarOrdem();
+              end;
+            72:{Excluir Ordem}
+              begin
+                FOrdem := GetOrdem();
+                FOrdem.ExcluirOrdem();
+                FOrdens.Remove(FOrdem);
+                FOrdem.Free;
               end;
           end;
         except
