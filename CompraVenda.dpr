@@ -167,7 +167,6 @@ begin
     begin
       vEncontrou  := True;
       Result      := vOrdem;
-      Exit;
     end;
   end;
   if vEncontrou = False then
@@ -351,6 +350,7 @@ begin
               end;
             11:{Cadastrar Pessoa}
               begin
+                FPessoa := nil;
                 try
                   FPessoa   :=  TPessoa.Create;
                   FPessoa.SolicitarInformacoes();
@@ -362,6 +362,7 @@ begin
               end;
             12:{Cadastrar Produto}
               begin
+                FProduto := nil;
                 try
                   FProduto := TProduto.Create;
                   FProduto.SolicitarInformacao();
@@ -372,6 +373,7 @@ begin
               end;
             13:{Cadastrar Ordem}
               begin
+                FOrdem := nil;
                 try
                   FOrdem := TOrdem.Create();
                   FPessoa := GetPessoa;
@@ -383,6 +385,7 @@ begin
               end;
             14:{Cadastrar Natureza de Mercadoria}
               begin
+                FNaturezaMercadoria := nil;
                 try
                   FNaturezaMercadoria := TNaturezaMercadoria.Create;
                   FNaturezaMercadoria.SolicitarInformacao(FNaturezas.Count);
@@ -457,7 +460,22 @@ begin
         end;
       until (FIndice = 0);
     finally
-
+      for FNaturezaMercadoria in FNaturezas do
+      begin
+        FNaturezaMercadoria.Free;
+      end;
+      for FOrdem in FOrdens do
+      begin
+        FOrdem.Free;
+      end;
+      for FPessoa in FPessoas do
+      begin
+        FPessoa.Free;
+      end;
+      for FProduto in FProdutos do
+      begin
+        FProduto.Free;
+      end;
     end;
   except
     on E: Exception do
