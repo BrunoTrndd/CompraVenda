@@ -527,7 +527,22 @@ begin
         end;
       until (FIndice = 0);
     finally
-
+      for FNaturezaMercadoria in FNaturezas do
+      begin
+        FNaturezaMercadoria.Free;
+      end;
+      for FOrdem in FOrdens do
+      begin
+        FOrdem.Free;
+      end;
+      for FPessoa in FPessoas do
+      begin
+        FPessoa.Free;
+      end;
+      for FProduto in FProdutos do
+      begin
+        FProduto.Free;
+      end;
     end;
   except
     on E: Exception do
