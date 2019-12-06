@@ -51,7 +51,7 @@ begin
   for vOrdem in FOrdens do
   begin
     if vOrdem.Status = Cadastrado then
-      Writeln('Handle : ' + IntToStr(vOrdem.Handle) + ' Tipo : ' + vOrdem.ListaTipo + ' Status : ' + vOrdem.ListaStatus);
+      Writeln('Handle : ' + IntToStr(vOrdem.Handle) + ' | Tipo : ' + vOrdem.ListaTipo + ' | Status : ' + vOrdem.ListaStatus);
   end;
   Writeln('-------------------------------------------------------------------------------------');
   end;
@@ -334,7 +334,7 @@ begin
     case vIndice of
       01: //Baixar parcelas individuais
       begin
-
+        ListaParcela();
         Writeln('Qual o tipo de ordem que deseja baixar? (1 - Compra/ 2 - Venda)');
         Readln(vEscolha);
         if vEscolha = 1 then
@@ -416,38 +416,44 @@ begin
               end;
             11:{Cadastrar Pessoa}
               begin
+                FPessoa := nil;
                 try
                   FPessoa   :=  TPessoa.Create;
                   FPessoa.SolicitarInformacoes();
                   FPessoas.Add(FPessoa);
                 except
                   FPessoa.Free;
-                  raise Exception.Create('Nao foi possivel cadastrar a pessoa.');
+                  Exception.RaiseOuterException(EArgumentOutOfRangeException.Create('Nao foi possivel cadastrar a pessoa.'));
                 end;
               end;
             12:{Cadastrar Produto}
               begin
+                FProduto := nil;
                 try
                   FProduto := TProduto.Create();
                   FProduto.SolicitarInformacao((GetNatureza()));
                   FProdutos.Add(FProduto);
                 except
-                  raise Exception.Create('Nao foi possivel cadastrar o produto.');
+                  FProduto.Free;
+                  Exception.RaiseOuterException(EArgumentOutOfRangeException.Create('Nao foi possivel cadastrar o produto.'));
                 end;
               end;
             13:{Cadastrar Ordem}
               begin
+                FOrdem := nil;
                 try
                   FOrdem := TOrdem.Create();
                   FPessoa := GetPessoa;
                   FOrdem.SolicitarInformacoes(EscolherTipoOrdem(), FPessoa, FProdutos);
                   FOrdens.Add(FOrdem);
                 except
-                  raise Exception.Create('Nao foi possivel cadastrar a ordem');
+                  FOrdem.Free;
+                  Exception.RaiseOuterException(EArgumentOutOfRangeException.Create('Nao foi possivel cadastrar a ordem'));
                 end;
               end;
             14:{Cadastrar Natureza de Mercadoria}
               begin
+                FNaturezaMercadoria := nil;
                 try
                   FNaturezaMercadoria := TNaturezaMercadoria.Create;
                   FNaturezaMercadoria.SolicitarInformacao(FNaturezas.Count);
@@ -455,7 +461,7 @@ begin
                   Writeln('Cadastrado com sucesso!');
                 except
                   FNaturezaMercadoria.Free;
-                  raise Exception.Create('Nao foi possivel criar a Natureza de Mercadoria.');
+                  Exception.RaiseOuterException(EArgumentOutOfRangeException.Create('Nao foi possivel criar a Natureza de Mercadoria.'));
                 end;
               end;
             21:{Consultar Pessoa}
