@@ -1,10 +1,10 @@
 unit uParcela;
 
 interface
-uses DateUtils, SysUtils, uEnums;
+uses DateUtils, SysUtils, uEnums, uInclude;
 
 type
-TParcela = class
+TParcela = class(TInclude)
 
   private
     FHandle         : Integer;
@@ -32,7 +32,6 @@ TParcela = class
 // FUNCTIONS
   function ToString()  : string;
   function ListaPago() : string;
-  function GetDate(prTipoData : string)   : TDateTime;
 
 // PROCEDURES
   procedure BaixarParcela();
@@ -46,16 +45,6 @@ implementation
 
 { TParcela }
 
-function TParcela.GetDate(prTipoData: string): TDateTime;
-var
-  vTexto: string;
-begin
-  repeat
-    Writeln(prTipoData + ' (dd-mm-yyyy) : ');
-    Readln(vTexto);
-    Result := StrToDateTimeDef(vTexto, 0, FormatSettings);
-  until Result <> 0;
-end;
 
 
 //CREATE

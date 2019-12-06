@@ -167,145 +167,211 @@ begin
     begin
       vEncontrou  := True;
       Result      := vOrdem;
+      Exit;
     end;
   end;
   if vEncontrou = False then
     raise Exception.Create('Ordem nao encontrada.');
 end;
-{
-  GETVARIASORDENS
-  PARAM : NONE
-  RETURN : TLIST<TORDEM>
-  ENQUANTO O USUARIO NÃO DIGITAR O HANDLE 0, VAI CONTINUAR BUSCANDO AS ORDENS
-  E ADICIONANDO A LISTA DE ORDENS
-}
-function GetVariasOrdens(): TList<TOrdem>;
+
+procedure ListaParcela();
 var
-  vOrdem    : TOrdem;
-  vEncontrou: Boolean;
-  vPesquisa : Integer;
-  vListaOrdem : TList<TOrdem>;
+  vOrdem : TOrdem;
+  vParcela : TParcela;
 begin
-  vPesquisa := 1;
-  vListaOrdem := TList<TOrdem>.Create;
-  vEncontrou  := False;
-  while vPesquisa <> 0 do
+
+  for vOrdem in FOrdens do
   begin
-    Writeln('Informe o handle da ordem que deseja adicionar para baixar (Digite "0" para sair): ');
-    Readln(vPesquisa);
-    for vOrdem in FOrdens do
+
+    for vParcela in vOrdem.Parcelas do
     begin
-      if vPesquisa = vOrdem.Handle then
-      begin
-        vEncontrou  := True;
-        vListaOrdem.Add(vOrdem);
-      end;
+      Writeln('Parcela :' + IntToStr(vParcela.Handle) + ', ordem: '+ IntToStr(vOrdem.Handle) + ', Tipo : ' + vOrdem.ListaTipo );
     end;
-    if vEncontrou = False then
-      Writeln('Ordem nao encontrada.');
-    vEncontrou := False;
+
   end;
-  Result:= vListaOrdem;
+
 end;
 
-procedure BaixarTodasParcelas(prOrdem : TOrdem);
-var
-vParcela : TParcela;
-vBaixaParcela : TBaixaParcela;
-begin
-  vBaixaParcela := TBaixaParcela.Create();
-  try
-    for vParcela in prOrdem.Parcelas do
-    begin
-      vBaixaParcela.AdicionarParcela(vParcela);
-    end;
-    vBaixaParcela.BaixarParcelas();
-    FBaixas.Add(vBaixaParcela);
-  except
-    on E : Exception do
-      Writeln('Erro: '+ E.Message);
-  end;
-end;
 
-procedure BaixarVariasOrdens(prListaOrdem : TList<TOrdem>);
-var vOrdem : TOrdem;
-begin
-  for vOrdem in prListaOrdem do
-  begin
-    BaixarTodasParcelas(vOrdem);
-  end;
-end;
-
-function GetParcela():TParcela;
+function GetParcela(prHandle : Integer = 0):TParcela;
 var vTexto : string;
     vOrdem : TOrdem;
     vParcela : TParcela;
 begin
-  Result  :=  nil;
-  Writeln('Qual o handle da parcela?');
-  Readln(vTexto);
+
+  if prHandle = 0 then
+  begin
+    Result  :=  nil;
+    Writeln('Qual o handle da parcela?');
+    Readln(vTexto);
+  end;
 
   for vOrdem in FOrdens do
   begin
     for vParcela in vOrdem.Parcelas do
     begin
-      if vParcela.Handle = StrToInt(vTexto) then
+
+      if prHandle = 0 then
       begin
-        Exit(vParcela);
+
+        if vParcela.Handle = StrToInt(vTexto) then
+        begin
+          Exit(vParcela);
+        end;
+
+      end else
+      begin
+
+        if vParcela.Handle = prHandle then
+        begin
+          Exit(vParcela);
+        end;
+
       end;
+
     end;
   end;
 
   Writeln('Esse handle de parcela nao existe');
+end;
+
+function GetTipoOrdemParcela(prParcela : TParcela) : TTipoOrdem;
+var
+vOrdem : TOrdem;
+vParcela : TParcela;
+begin
+  for vOrdem in FOrdens do
+  begin
+    for vParcela in vOrdem.Parcelas do
+    begin
+      if vParcela = prParcela then
+      begin
+        Exit(vOrdem.TipoOrdem);
+      end;
+    end;
+  end;
+end;
+
+function MontaListaParcela(prTipo : TTipoOrdem) : TList<TParcela>;
+var
+  vOrdem         : TOrdem;
+  vParcela       : TParcela;
+  vEscolha       : Integer;
+  vListaParcelas : TList<TParcela>;
+  vTipo          : TTipoOrdem;
+  vTipoPost      : TTipoOrdem;
+begin
+  vListaParcelas := TList<TParcela>.Create;
+  vEscolha := 1;
+  while vEscolha <> 0 do
+  begin
+    ListaParcela();
+    Writeln('Handle da parcela que deseja adicionar');
+    Readln(vEscolha);
+
+    vParcela := GetParcela(vEscolha);
+
+    if(GetTipoOrdemParcela(vParcela) <> prTipo) then
+    begin
+      raise Exception.Create('Tipo da parcela diferente do que foi informado');
+    end;
+
+    vListaParcelas.Add(vParcela);
+
+    Writeln('Deseja adicionar outra parcela? Digite em numeros (1 - SIM / 0 - NAO)');
+    Readln(vEscolha);
+  end;
+
+  Result := vListaParcelas;
 
 end;
 
+function GetParcelasVencidas(prData: TDateTime; prTipo : TTipoOrdem) : TList<TParcela>;
+var
+vOrdem : TOrdem;
+vParcela : TParcela;
+vListaParcela : TList<TParcela>;
+begin
+  for vOrdem in FOrdens do
+  begin
+
+    for vParcela in vOrdem.Parcelas do
+    begin
+      if (vParcela.DataVencimento < prData) and (GetTipoOrdemParcela(vParcela) = prTipo) then
+      begin
+        vListaParcela.Add(vParcela);
+      end;
+    end;
+
+  end;
+
+  Result := vListaParcela;
+end;
+
+
 
 procedure MenuBaixa();
-var vIndice   : Integer;
-    vOrdem    : TOrdem;
-    vListaOrdem : TList<TOrdem>;
+var vIndice        : Integer;
+    vOrdem         : TOrdem;
+    vListaOrdem    : TList<TOrdem>;
+    vParcela       : TParcela;
+    vListaParcelas : TList<TParcela>;
+    vEscolha       : Integer;
+    vTipo          : TTipoOrdem;
+    vBaixaParcela  : TBaixaParcela;
+    vInclude       : TInclude;
+    vData          : TDateTime;
 begin
+  vListaParcelas := TList<TParcela>.Create;
+  vBaixaParcela := TBaixaParcela.Create;
   Writeln('----------------------BAIXAS---------------------'+sLineBreak+
-          '01 - Baixar todas as parcelas de uma ordem'       +sLineBreak+
-          '02 - Baixar todas as parcelas de varias ordens'   +sLineBreak+
-          '03 - Baixar parcela unica'                        +sLineBreak+
-          '04 - Baixar ordem de compra'                      +sLineBreak+
-          '05 - Baixar ordem de venda'                       +sLineBreak+
+          '01 - Baixar parcelas individuais'                 +sLineBreak+
+          '02 - Baixar parcelas vencidas ordem de compra'    +sLineBreak+
+          '03 - Baixar parcelas vencidas ordem de venda'     +sLineBreak+
           '-------------------------------------------------'+sLineBreak);
   Readln(vIndice);
   try
     case vIndice of
-      01: //Baixar todas as parcelas de uma ordem
+      01: //Baixar parcelas individuais
       begin
-        ListarOrdens();
-        vOrdem := GetOrdem();
-        BaixarTodasParcelas(vOrdem);
+        ListaParcela();
+        Writeln('Qual o tipo de ordem que deseja baixar? (1 - Compra/ 2 - Venda)');
+        Readln(vEscolha);
+        if vEscolha = 1 then
+        begin
+          vTipo := TTipoOrdem.Compra;
+        end else
+          vTipo := TTipoOrdem.Venda;
+
+        vBaixaParcela.Parcelas := MontaListaParcela(vTipo);
+
+        vBaixaParcela.BaixarParcelas();
+
 
       end;
 
-      02: //Baixar todas as parcelas de varias ordens
+      02: //Baixar parcelas vencidas ordem de compra
       begin
-        ListarOrdens();
-        vListaOrdem := GetVariasOrdens();
-        BaixarVariasOrdens(vListaOrdem);
-      end;
+        vData := vInclude.GetDate('Qual a data que deseja ter de posicao?');
+        vTipo := TTipoOrdem.Compra;
 
-      03: //Baixar parcela unica
-      begin
-        vParcela := GetParcela();
-        vParcela.BaixarParcela(); //CORRIGIR POIS NÃO PODE CHAMAR ESSE METODO AQUI ANTES DE PASSAR POR BAIXAPARCELA
-      end;
+        vBaixaParcela.Parcelas := GetParcelasVencidas(vData, vTipo);
+        vBaixaParcela.BaixarParcelas;
 
-      04: //Baixar ordem de compra
-      begin
 
       end;
 
-      05: //Baixar ordem de venda
+      03: //Baixar parcelas vencidas ordem de venda
       begin
+        vData := vInclude.GetDate('Qual a data que deseja ter de posicao?');
+        vTipo := TTipoOrdem.Venda;
+
+        vBaixaParcela.Parcelas := GetParcelasVencidas(vData, vTipo);
+        vBaixaParcela.BaixarParcelas;
 
       end;
+
+
     end;
   except
     raise Exception.Create('Ocorreu um erro no menu de baixa');
@@ -350,7 +416,6 @@ begin
               end;
             11:{Cadastrar Pessoa}
               begin
-                FPessoa := nil;
                 try
                   FPessoa   :=  TPessoa.Create;
                   FPessoa.SolicitarInformacoes();
@@ -362,7 +427,6 @@ begin
               end;
             12:{Cadastrar Produto}
               begin
-                FProduto := nil;
                 try
                   FProduto := TProduto.Create;
                   FProduto.SolicitarInformacao();
@@ -373,7 +437,6 @@ begin
               end;
             13:{Cadastrar Ordem}
               begin
-                FOrdem := nil;
                 try
                   FOrdem := TOrdem.Create();
                   FPessoa := GetPessoa;
@@ -385,7 +448,6 @@ begin
               end;
             14:{Cadastrar Natureza de Mercadoria}
               begin
-                FNaturezaMercadoria := nil;
                 try
                   FNaturezaMercadoria := TNaturezaMercadoria.Create;
                   FNaturezaMercadoria.SolicitarInformacao(FNaturezas.Count);
@@ -448,7 +510,6 @@ begin
               end;
             61:{Efetuar Baixa de Parcelas}
               begin
-                //BAIXAR ORDEM, BAIXAR PARCELA ESPECÍFICA, AO COMEÇAR A BAIXA PERGUNTAR QUAL O TIPO DE ORDEM QUE QUER BAIXAR
                 MenuBaixa();
               end;
           end;
@@ -460,22 +521,7 @@ begin
         end;
       until (FIndice = 0);
     finally
-      for FNaturezaMercadoria in FNaturezas do
-      begin
-        FNaturezaMercadoria.Free;
-      end;
-      for FOrdem in FOrdens do
-      begin
-        FOrdem.Free;
-      end;
-      for FPessoa in FPessoas do
-      begin
-        FPessoa.Free;
-      end;
-      for FProduto in FProdutos do
-      begin
-        FProduto.Free;
-      end;
+
     end;
   except
     on E: Exception do
