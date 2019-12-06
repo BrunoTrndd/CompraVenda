@@ -185,7 +185,7 @@ begin
 
     for vParcela in vOrdem.Parcelas do
     begin
-      Writeln('Parcela :' + IntToStr(vParcela.Handle) + ', ordem: '+ IntToStr(vOrdem.Handle) + ', Tipo : ' + vOrdem.ListaTipo );
+      Writeln('Parcela :' + IntToStr(vParcela.Handle) + ', ordem: '+ IntToStr(vOrdem.Handle) + ', Tipo : ' + vOrdem.ListaTipo + ', Status da ordem : ' + vOrdem.ListaStatus());
     end;
 
   end;
@@ -334,7 +334,7 @@ begin
     case vIndice of
       01: //Baixar parcelas individuais
       begin
-        ListaParcela();
+
         Writeln('Qual o tipo de ordem que deseja baixar? (1 - Compra/ 2 - Venda)');
         Readln(vEscolha);
         if vEscolha = 1 then
