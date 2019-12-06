@@ -309,7 +309,6 @@ begin
 end;
 
 
-
 procedure MenuBaixa();
 var vIndice        : Integer;
     vOrdem         : TOrdem;
@@ -345,7 +344,16 @@ begin
 
         vBaixaParcela.Parcelas := MontaListaParcela(vTipo);
 
-        vBaixaParcela.BaixarParcelas();
+        vBaixaParcela.BaixarParcelas(procedure (prValorTotal:Currency)
+                                      begin
+                                        if vTipo = TTipoOrdem.Venda then
+                                        begin
+                                          FEmpresa.Saldo := FEmpresa.Saldo + prValorTotal;
+                                        end else
+                                        begin
+                                          FEmpresa.Saldo := FEmpresa.Saldo - prValorTotal;
+                                        end;
+                                      end );
 
 
       end;
@@ -356,7 +364,16 @@ begin
         vTipo := TTipoOrdem.Compra;
 
         vBaixaParcela.Parcelas := GetParcelasVencidas(vData, vTipo);
-        vBaixaParcela.BaixarParcelas;
+        vBaixaParcela.BaixarParcelas(procedure (prValorTotal:Currency)
+                                      begin
+                                        if vTipo = TTipoOrdem.Venda then
+                                        begin
+                                          FEmpresa.Saldo := FEmpresa.Saldo + prValorTotal;
+                                        end else
+                                        begin
+                                          FEmpresa.Saldo := FEmpresa.Saldo - prValorTotal;
+                                        end;
+                                      end );
 
 
       end;
@@ -367,7 +384,17 @@ begin
         vTipo := TTipoOrdem.Venda;
 
         vBaixaParcela.Parcelas := GetParcelasVencidas(vData, vTipo);
-        vBaixaParcela.BaixarParcelas;
+        vBaixaParcela.BaixarParcelas(procedure (prValorTotal:Currency)
+                                      begin
+                                        if vTipo = TTipoOrdem.Venda then
+                                        begin
+                                          FEmpresa.Saldo := FEmpresa.Saldo + prValorTotal;
+                                        end else
+                                        begin
+                                          FEmpresa.Saldo := FEmpresa.Saldo - prValorTotal;
+                                        end;
+                                      end );
+                                      Writeln('Saldo da empresa: R$'+FormatCurr('#,##0.00', FEmpresa.Saldo));
 
       end;
 

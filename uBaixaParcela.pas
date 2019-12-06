@@ -27,7 +27,7 @@ TBaixaParcela = class
 
 // PROCEDURES
   procedure AdicionarParcela(prParcela : TParcela);
-  procedure BaixarParcelas();
+  procedure BaixarParcelas(prCallBack : TProc<Currency>);
 
 
 end;
@@ -51,13 +51,18 @@ end;
 
 
 //CREATE
-procedure TBaixaParcela.BaixarParcelas;
+procedure TBaixaParcela.BaixarParcelas(prCallBack: TProc<Currency>);
+var
+vValorTotal : Currency; 
 begin
+vValorTotal := 0;
   try
     for vParcela in Parcelas do
     begin
+      vValorTotal := vValorTotal + vParcela.ValorTotal;
       vParcela.BaixarParcela();
     end;
+    prCallBack(vValorTotal);
   except
     on E : Exception do
       Writeln('Erro: ' + E.Message);
