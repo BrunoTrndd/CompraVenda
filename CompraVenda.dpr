@@ -428,8 +428,8 @@ begin
             12:{Cadastrar Produto}
               begin
                 try
-                  FProduto := TProduto.Create;
-                  FProduto.SolicitarInformacao();
+                  FProduto := TProduto.Create();
+                  FProduto.SolicitarInformacao((GetNatureza()));
                   FProdutos.Add(FProduto);
                 except
                   raise Exception.Create('Nao foi possivel cadastrar o produto.');
@@ -476,7 +476,7 @@ begin
               end;
             32:{Alterar Produto}
               begin
-                GetProduto().SolicitarInformacao();
+                GetProduto().SolicitarInformacao(GetNatureza());
               end;
             33:{Alterar Ordem de Compra/Venda}
               begin
