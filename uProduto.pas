@@ -1,4 +1,4 @@
-﻿unit uProduto;
+unit uProduto;
 
 interface
 
@@ -164,21 +164,27 @@ begin
                               'Quantidade reservada: ' + IntToStr(FSaldoVenda)                      +sLineBreak+
                               'Quantidade movimentada: ' + IntToStr(prQuantidade)                   +sLineBreak);
 
-    //Status Cadastrado
+    //Cadastrando a ordem
     if (prStatusOrdem = TStatus.Cadastrado) then
     begin
       FSaldoDisponivel := FSaldoDisponivel - prQuantidade;
       FSaldoVenda := FSaldoVenda + prQuantidade;
     end;
 
-    //Status Encerrado
+    //Encerrando a ordem
     if (prStatusOrdem = TStatus.Encerrado) then
     begin
       FSaldoVenda := FSaldoVenda - prQuantidade;
     end;
 
-    //Status Cancelado
+    //Cancelando a ordem
     if (prStatusOrdem = TStatus.Cancelado) then
+    begin
+      FSaldoDisponivel := FSaldoDisponivel + prQuantidade;
+    end;
+
+    //Excluindo a ordem
+    if (prStatusOrdem = TStatus.Excluido) then
     begin
       FSaldoDisponivel := FSaldoDisponivel + prQuantidade;
       FSaldoVenda := FSaldoVenda - prQuantidade;
