@@ -85,9 +85,9 @@ end;
 procedure TProduto.SolicitarInformacao(prNatureza : TNaturezaMercadoria);
 var
   vTipo : integer;
-  vNatureza : string;
 
 begin
+  FNaturezaMercadoria := prNatureza;
   write('Nome do produto: ');
   readln(FNome);
 
@@ -122,10 +122,6 @@ begin
 
   write('Saldo inicial: ');
   readln(FSaldoDisponivel);
-
-  write('Natureza de mercadoria: ');
-//  readln(vNatureza);
-
 end;
 
 function TProduto.ToString: String;
