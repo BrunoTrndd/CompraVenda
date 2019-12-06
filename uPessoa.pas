@@ -69,6 +69,8 @@ begin
   repeat
   Writeln('A Pessoa e um cliente?(S/N)');
   Readln(vOpcao);
+  if (vOpcao <> 'S') and (vOpcao <> 'N') then
+    Writeln('Somente aceito S ou N.');
   until (vOpcao = 'S') or (vOpcao = 'N');
   case vOpcao of
     'S':  FEhCliente  := True;
@@ -77,6 +79,8 @@ begin
   repeat
   Writeln('A Pessoa e um fornecedor?(S/N)');
   Readln(vOpcao);
+  if (vOpcao <> 'S') and (vOpcao <> 'N') then
+    Writeln('Somente aceito S ou N.');
   until (vOpcao = 'S') or (vOpcao = 'N');
   case vOpcao of
     'S':  FEhFornecedor  := True;
