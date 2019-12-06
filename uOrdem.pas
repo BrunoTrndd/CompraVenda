@@ -162,8 +162,9 @@ begin
     begin
       vOrdemProduto.AtualizaEstoque(FTipoOrdem, FStatus);
     end;
-  end;
 
+    writeln('Ordem cancelada com sucesso!');
+  end;
 end;
 
 procedure TOrdem.ExcluirOrdem;
@@ -187,7 +188,9 @@ begin
     begin
       vOrdemProduto.AtualizaEstoque(FTipoOrdem, FStatus);
     end;
+    writeln('Ordem excluída com sucesso!');
   end;
+
 end;
 
 procedure TOrdem.GeraParcela(prQtdParcela: Integer; prDataVencimento : TDateTime);
