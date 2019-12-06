@@ -22,12 +22,10 @@ var FEmpresa            : TEmpresa;
     FProduto            : TProduto;
     FPessoa             : TPessoa;
     FNaturezaMercadoria : TNaturezaMercadoria;
-    FBaixa              : TBaixaParcela;
     FOrdens             : TList<TOrdem>;
     FPessoas            : TList<TPessoa>;
     FProdutos           : TList<TProduto>;
     FNaturezas          : TList<TNaturezaMercadoria>;
-    FBaixas             : TList<TBaixaParcela>;
 
 //PROCEDURES
 
@@ -292,9 +290,9 @@ vOrdem : TOrdem;
 vParcela : TParcela;
 vListaParcela : TList<TParcela>;
 begin
+  vListaParcela.Create();
   for vOrdem in FOrdens do
   begin
-
     for vParcela in vOrdem.Parcelas do
     begin
       if (vParcela.DataVencimento < prData) and (GetTipoOrdemParcela(vParcela) = prTipo) then
@@ -311,9 +309,6 @@ end;
 
 procedure MenuBaixa();
 var vIndice        : Integer;
-    vOrdem         : TOrdem;
-    vListaOrdem    : TList<TOrdem>;
-    vParcela       : TParcela;
     vListaParcelas : TList<TParcela>;
     vEscolha       : Integer;
     vTipo          : TTipoOrdem;
@@ -421,24 +416,27 @@ begin
         FIndice :=  0;
         try
           {MENU:}
-          Writeln('-------------------------------------------------------------------------------------------------------------');
-          Writeln('------------------------------------------SISTEMA DE COMPRA E VENDA------------------------------------------');
-          Writeln('-------------------------------------------------------------------------------------------------------------');
-          Writeln('11   : Cadastrar Pessoa                  | 12 : Cadastrar Produto    | 13 : Cadastrar Ordem');
-          Writeln('14   : Cadastrar Natureza de Mercadoria  |                           |');
-          Writeln('21   : Consultar Pessoa                  | 22 : Consultar Produto    | 23 : Consultar Ordem de Compra/Venda');
-          Writeln('31   : Alterar Pessoa                    | 32 : Alterar Produto      | 33 : Alterar Ordem de Compra/Venda');
-          Writeln('41   : Listar Parcelas de Compra Vencidas|                           | 42 : Listar Parcelas de Venda Vencidas');
-          Writeln('51   : Listar Itens da Ordem             | 52 : Encerrar Ordem       | 53 : Listar todas as ordens');
-          Writeln('54   : Listar Naturezas de Mercadoria    |                           |');
-          Writeln('61   : Efetuar Baixa de Parcelas         |                           |');
-          Writeln('71   : Cancelar Ordem                    | 72 : Excluir Ordem        |');
-          Writeln('0    : Sair');
-          Writeln('-------------------------------------------------------------------------------------------------------------');
+          Writeln('---------------------------------------------------------------------------------------------------------------------------------------');
+          Writeln('-------------------------------------------------------SISTEMA DE COMPRA E VENDA-------------------------------------------------------');
+          Writeln('---------------------------------------------------------------------------------------------------------------------------------------');
+          Writeln('1    : Informacoes da empresa            |                                        |                                                    ');
+          Writeln('11   : Cadastrar Pessoa                  | 21 : Cadastrar Produto                 | 31 : Cadastrar Ordem                               ');
+          Writeln('12   : Consultar Pessoa                  | 22 : Cadastrar Natureza de Mercadoria  | 32 : Consultar Ordem de Compra/Venda               ');
+          Writeln('13   : Alterar Pessoa                    | 23 : Consultar Produto                 | 33 : Alterar Ordem de Compra/Venda                 ');
+          Writeln('                                         | 24 : Alterar Produto                   | 34 : Listar Parcelas de Compra Vencidas            ');
+          Writeln('                                         | 25 : Listar todas Naturezas            | 35 : Listar Parcelas de Venda Vencidas             ');
+          Writeln('                                                                                  | 36 : Listar Itens da Ordem                         ');
+          Writeln('                                                                                  | 37 : Encerrar Ordem                                ');
+          Writeln('                                                                                  | 38 : Listar todas as ordens                        ');
+          Writeln('                                                                                  | 39 : Efetuar Baixa de Parcelas                     ');
+          Writeln('                                                                                  | 40 : Cancelar Ordem                                ');
+          Writeln('                                                                                  | 41 : Excluir Ordem                                 ');
+          Writeln('0    : Sair                                                                                                                            ');
+          Writeln('---------------------------------------------------------------------------------------------------------------------------------------');
           Readln(FIndice);
 
           case FIndice of
-            10:{Informacoes iniciais da empresa}
+             1:{Informacoes iniciais da empresa}
               begin
                 Writeln(FEmpresa.ToString());
               end;
@@ -454,7 +452,15 @@ begin
                   Exception.RaiseOuterException(EArgumentOutOfRangeException.Create('Nao foi possivel cadastrar a pessoa.'));
                 end;
               end;
-            12:{Cadastrar Produto}
+            12:{Consultar Pessoa}
+              begin
+                Writeln(GetPessoa().ToString());
+              end;
+            13:{Alterar Pessoa}
+              begin
+                GetPessoa().SolicitarInformacoes();
+              end;
+            21:{Cadastrar Produto}
               begin
                 FProduto := nil;
                 try
@@ -466,20 +472,7 @@ begin
                   Exception.RaiseOuterException(EArgumentOutOfRangeException.Create('Nao foi possivel cadastrar o produto.'));
                 end;
               end;
-            13:{Cadastrar Ordem}
-              begin
-                FOrdem := nil;
-                try
-                  FOrdem := TOrdem.Create();
-                  FPessoa := GetPessoa;
-                  FOrdem.SolicitarInformacoes(EscolherTipoOrdem(), FPessoa, FProdutos);
-                  FOrdens.Add(FOrdem);
-                except
-                  FOrdem.Free;
-                  Exception.RaiseOuterException(EArgumentOutOfRangeException.Create('Nao foi possivel cadastrar a ordem'));
-                end;
-              end;
-            14:{Cadastrar Natureza de Mercadoria}
+            22:{Cadastrar Natureza de Mercadoria}
               begin
                 FNaturezaMercadoria := nil;
                 try
@@ -492,65 +485,70 @@ begin
                   Exception.RaiseOuterException(EArgumentOutOfRangeException.Create('Nao foi possivel criar a Natureza de Mercadoria.'));
                 end;
               end;
-            21:{Consultar Pessoa}
-              begin
-                Writeln(GetPessoa().ToString());
-              end;
-            22:{Consultar Produto}
+            23:{Consultar Produto}
               begin
                 Writeln(GetProduto().ToString());
               end;
-            23:{Consultar Ordem de Compra/Venda}
-              begin
-                GetOrdem().ToString();
-              end;
-            31:{Alterar Pessoa}
-              begin
-                GetPessoa().SolicitarInformacoes();
-              end;
-            32:{Alterar Produto}
+            24:{Alterar Produto}
               begin
                 GetProduto().SolicitarInformacao(GetNatureza());
+              end;
+            25:{Listar Naturezas de Mercadoria}
+              begin
+                ListarNaturezas();
+              end;
+            31:{Cadastrar Ordem}
+              begin
+                FOrdem := nil;
+                try
+                  FOrdem := TOrdem.Create();
+                  FPessoa := GetPessoa;
+                  FOrdem.SolicitarInformacoes(EscolherTipoOrdem(), FPessoa, FProdutos);
+                  FOrdens.Add(FOrdem);
+                except
+                  FOrdem.Free;
+                  Exception.RaiseOuterException(EArgumentOutOfRangeException.Create('Nao foi possivel cadastrar a ordem'));
+                end;
+              end;
+            32:{Consultar Ordem de Compra/Venda}
+              begin
+                GetOrdem().ToString();
               end;
             33:{Alterar Ordem de Compra/Venda}
               begin
 
               end;
-            41:{Listar Parcelas de Compra Vencidas}
+            34:{Listar Parcelas de Compra Vencidas}
               begin
 
               end;
-            42:{Listar Parcelas de Venda Vencidas}
+            35:{Listar Parcelas de Venda Vencidas}
               begin
 
               end;
-            51:{Listar Itens da Ordem}
+            36:{Listar Itens da Ordem}
               begin
                 ListarOrdens();
                 Writeln(GetOrdem().ListaItens());
               end;
-            52: {Encerra Ordem}
+            37: {Encerra Ordem}
               begin
                 ListarOrdens();
                 GetOrdem().EncerraOrdem();
               end;
-            53:{Lista todas as ordens}
+            38:{Lista todas as ordens}
               begin
                 ListarOrdens();
               end;
-            54:{Listar Naturezas de Mercadoria}
-              begin
-                ListarNaturezas();
-              end;
-            61:{Efetuar Baixa de Parcelas}
+            39:{Efetuar Baixa de Parcelas}
               begin
                 MenuBaixa();
               end;
-            71:{Cancelar Ordem}
+            40:{Cancelar Ordem}
               begin
                 GetOrdem().CancelarOrdem();
               end;
-            72:{Excluir Ordem}
+            41:{Excluir Ordem}
               begin
                 FOrdem := GetOrdem();
                 FOrdem.ExcluirOrdem();
@@ -582,6 +580,11 @@ begin
       begin
         FProduto.Free;
       end;
+      FOrdens.Free;
+      FPessoas.Free;
+      FProdutos.Free;
+      FNaturezas.Free;
+      FEmpresa.Free;
     end;
   except
     on E: Exception do
