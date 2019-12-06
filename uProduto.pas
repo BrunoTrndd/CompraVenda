@@ -185,7 +185,6 @@ begin
     if (prStatusOrdem = TStatus.Cancelado) then
     begin
       FSaldoDisponivel := FSaldoDisponivel + prQuantidade;
-      FSaldoVenda := FSaldoVenda - prQuantidade;
     end;
   end;
 end;
