@@ -51,6 +51,7 @@ TOrdem = class
   procedure GeraParcela(prQtdParcela : Integer; prDataVencimento : TDateTime);
   procedure ImprimirItens();
   procedure ImprimirParcelas();
+  procedure CancelarOrdem();
 
 // FUNCTION
   function ToString() : string; override;
@@ -121,6 +122,47 @@ begin
       vOrdemProduto.AtualizaEstoque(FTipoOrdem, FStatus);
     end;
   end;
+end;
+
+procedure TOrdem.CancelarOrdem;
+var
+  vOrdemProduto : TOrdemProduto;
+  vParcela : TParcela;
+
+begin
+
+  if FStatus = TStatus.Cancelado then
+    raise exception.Create('Nao foi possivel cancelar a ordem.'   + sLineBreak +
+                           'A ordem nao pode estar neste status.' + sLineBreak +
+                           'Status da ordem: ' + ListaStatus()    + sLineBreak +
+                           'Ordem: ' + IntToStr(FHandle));
+
+  if FStatus = TStatus.Cadastrado then
+  begin
+    raise exception.Create('Nao foi possivel cancelar a ordem.'   + sLineBreak +
+                           'A ordem nao pode estar neste status.' + sLineBreak +
+                           'Status da ordem: ' + ListaStatus()    + sLineBreak +
+                           'Ordem: ' + IntToStr(FHandle));
+  end;
+
+  if FStatus = TStatus.Encerrado then
+  begin
+    for vParcela in Parcelas do
+    begin
+      if vParcela.Pago = true then
+        raise exception.Create('Não foi possivel cancelar a ordem.'       + sLineBreak +
+                               'Já existem baixas para está ordem.'       + sLineBreak +
+                               'Parcela: ' + IntToStr(vParcela.Handle)    + sLineBreak +
+                               'Valor: ' + CurrToStr(vParcela.ValorTotal)
+                               );
+    end;
+    FStatus := TStatus.Cancelado;
+    for vOrdemProduto in Itens do
+    begin
+      vOrdemProduto.AtualizaEstoque(FTipoOrdem, FStatus);
+    end;
+  end;
+
 end;
 
 procedure TOrdem.GeraParcela(prQtdParcela: Integer; prDataVencimento : TDateTime);
